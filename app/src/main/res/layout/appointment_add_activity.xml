@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/layoutGrey"
+        android:orientation="vertical"
+        android:paddingBottom="28dp"
+        tools:context=".AddAppointmentActivity">
+
+        <ImageView
+            android:id="@+id/iv_header_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_header_appointment_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/vazir_bold"
+            android:text="مورد جدید"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_header_appointment_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginEnd="24dp" />
+
+        <Button
+            android:id="@+id/btn_back_appointment_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_arrow_left"
+            android:fontFamily="@font/vazir_regular"
+            android:text="بازگشت"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_header_appointment_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_name_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            android:fontFamily="@font/vazir_regular"
+            android:gravity="right"
+            android:hint="نام کامل"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hintGrey"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/iv_header_appointment_add" />
+
+        <EditText
+            android:id="@+id/et_number_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            android:fontFamily="@font/vazir_regular"
+            android:gravity="right"
+            android:hint="شماره موبایل"
+            android:inputType="phone"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hintGrey"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/et_name_appointment_add" />
+
+<!--        <Spinner -->
+
+        <Spinner
+            android:id="@+id/spinner_category_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            app:layout_constraintTop_toBottomOf="@id/et_number_appointment_add" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintBottom_toBottomOf="@id/spinner_category_appointment_add"
+            app:layout_constraintStart_toStartOf="@+id/spinner_category_appointment_add"
+            app:layout_constraintTop_toTopOf="@id/spinner_category_appointment_add" />
+
+        <EditText
+            android:id="@+id/et_price_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            android:fontFamily="@font/vazir_regular"
+            android:gravity="center"
+            android:hint="هزینه درمان"
+            android:inputType="time"
+            android:maxLines="1"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hintGrey"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/spinner_category_appointment_add" />
+
+        <EditText
+            android:id="@+id/et_allergy_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="164dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            android:fontFamily="@font/vazir_regular"
+            android:hint="آلرژی و حساسیت"
+            android:maxLines="1"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/et_price_appointment_add" />
+
+        <Button
+            android:id="@+id/btn_check_allergy_appointment_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="48dp"
+            android:background="@drawable/bg_circle_check"
+            app:layout_constraintBottom_toBottomOf="@id/et_allergy_appointment_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_allergy_appointment_add" />
+
+        <Button
+            android:id="@+id/btn_ignore_allergy_appointment_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_close"
+            app:layout_constraintBottom_toBottomOf="@id/et_allergy_appointment_add"
+            app:layout_constraintEnd_toStartOf="@+id/et_allergy_appointment_add"
+            app:layout_constraintStart_toEndOf="@+id/btn_check_allergy_appointment_add"
+            app:layout_constraintTop_toTopOf="@id/et_allergy_appointment_add" />
+
+        <Button
+            android:id="@+id/btn_time_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:drawablePadding="12dp"
+            android:fontFamily="@font/vazir_regular"
+            android:gravity="start"
+            android:inputType="datetime"
+            android:padding="16dp"
+            android:text="تاریخ و ساعت"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/et_allergy_appointment_add" />
+
+        <EditText
+            android:id="@+id/et_notes_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            android:fontFamily="@font/vazir_regular"
+            android:hint="اطلاعات تکمیلی"
+            android:maxLines="3"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hintGrey"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/btn_time_appointment_add" />
+
+        <TextView
+            android:id="@+id/tv_notes_counter_appointment_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vazir_regular"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/et_notes_appointment_add"
+            app:layout_constraintEnd_toStartOf="@id/et_notes_appointment_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_notes_appointment_add" />
+
+        <RelativeLayout
+            android:id="@+id/rl_photos_bg_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_rectangle"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/et_notes_appointment_add">
+
+            <Button
+                android:id="@+id/btn_add_photo_appointment_add"
+                android:layout_width="36dp"
+                android:layout_height="33dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_add_photo" />
+
+            <TextView
+                android:id="@+id/tv_add_photo_appointment_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_add_photo_appointment_add"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/vazir_regular"
+                android:text="افزودن تصویر"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_submit_appointment_add"
+            android:layout_width="132dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_rounded_btn"
+            android:fontFamily="@font/vazir_bold"
+            android:text="ثبت"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rl_photos_bg_appointment_add" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
