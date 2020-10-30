@@ -88,7 +88,7 @@
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/et_name_appointment_add" />
 
-<!--        <Spinner -->
+        <!--        <Spinner -->
 
         <Spinner
             android:id="@+id/spinner_category_appointment_add"
@@ -177,7 +177,6 @@
             android:drawablePadding="12dp"
             android:fontFamily="@font/vazir_regular"
             android:gravity="start"
-            android:inputType="datetime"
             android:padding="16dp"
             android:text="تاریخ و ساعت"
             android:textColor="@color/black"
