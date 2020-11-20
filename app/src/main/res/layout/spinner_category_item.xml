@@ -3,7 +3,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_rounded_rectangle"
+    android:background="@drawable/bg_et_rounded_rectangle"
     android:fontFamily="@font/vazir_regular"
     android:gravity="start"
     android:hint="دلیل ویزیت"

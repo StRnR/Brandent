@@ -15,7 +15,7 @@ public class AddAppointmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.appointment_add_activity);
+        setContentView(R.layout.activity_appointment_add);
 
         EditText nameEt = findViewById(R.id.et_name_appointment_add);
         EditText phoneEt = findViewById(R.id.et_number_appointment_add);
@@ -36,6 +36,10 @@ public class AddAppointmentActivity extends AppCompatActivity {
         categorySpinner.setAdapter(spinnerAdapter);
 
         PersianDate pDate = new PersianDate();
-        
+
+        backBtn.setOnClickListener(v -> {
+            onBackPressed();
+        });
+
     }
 }

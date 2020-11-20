@@ -10,17 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class TasksActivity extends AppCompatActivity {
+public class FinanceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tasks);
+        setContentView(R.layout.activity_finance);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set Selected NavBar item
-        bottomNavigationView.setSelectedItemId(R.id.tasks_page);
+        bottomNavigationView.setSelectedItemId(R.id.finance_page);
 
         // NavBar ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -33,14 +33,14 @@ public class TasksActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.finance_page:
-                        startActivity(new Intent(getApplicationContext(), FinanceActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.add_appointment_page:
                         startActivity(new Intent(getApplicationContext(), AddAppointmentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.tasks_page:
+                        startActivity(new Intent(getApplicationContext(), TasksActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.profile_page:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -50,14 +50,13 @@ public class TasksActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     @Override
     protected void onResume() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         // Set Selected NavBar item
-        bottomNavigationView.setSelectedItemId(R.id.tasks_page);
+        bottomNavigationView.setSelectedItemId(R.id.finance_page);
         super.onResume();
     }
 }
