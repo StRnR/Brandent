@@ -37,6 +37,9 @@ public class AddAppointmentActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(R.layout.appointment_add_spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
 
+        // Date & Time Picker
+
+
         backBtn.setOnClickListener(v -> {
             onBackPressed();
         });

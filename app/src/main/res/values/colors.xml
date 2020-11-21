@@ -7,6 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="layoutGrey">#F6F8FC</color>
     <color name="hintGrey">#878787</color>
+    <color name="textGrey">#a4a5a8</color>
     <color name="navBarGrey">#D8D8D8</color>
     <color name="fieldBorderGrey">#F0F0F0</color>
     <color name="navyBlue">#2C2E51</color>
@@ -14,4 +15,5 @@
     <color name="orange">#FF7603</color>
     <color name="checkGreen">#6BCF00</color>
     <color name="ignoreRed">#CF0000</color>
+    <color name="transparent">#00000000</color>
 </resources>

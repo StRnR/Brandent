@@ -11,15 +11,187 @@
         android:id="@+id/iv_blur_profile"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/orange"
+        android:background="#4d283858"
         app:layout_constraintDimensionRatio="5:3"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_user_pic_profile"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/user_profile_picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/vazir_bold"
+        android:gravity="center"
+        android:text="مسعود جعفری"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/civ_user_pic_profile" />
+
+    <TextView
+        android:id="@+id/tv_profession_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/vazir_thin"
+        android:text="ارتودونتیست"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_profile" />
+
+    <TextView
+        android:id="@+id/tv_premium_days_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_tv_profile_premium"
+        android:fontFamily="@font/vazir_medium"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="۱۶ روز اشتراک باقی مانده"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_blur_profile"
         app:layout_constraintTop_toBottomOf="@id/iv_blur_profile" />
+
+    <Button
+        android:id="@+id/btn_patients_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_tv_home"
+        android:drawableEnd="@drawable/ic_patients_profile"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_premium_days_profile" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:background="@color/transparent"
+        android:elevation="20dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="لیست بیماران"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_patients_profile"
+        app:layout_constraintEnd_toEndOf="@id/btn_patients_profile"
+        app:layout_constraintTop_toTopOf="@id/btn_patients_profile" />
+
+    <Button
+        android:id="@+id/btn_disease_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_tv_home"
+        android:drawableEnd="@drawable/ic_disease"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_patients_profile" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:background="@color/transparent"
+        android:elevation="20dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="بیماری های پیش فرض"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_disease_profile"
+        app:layout_constraintEnd_toEndOf="@id/btn_disease_profile"
+        app:layout_constraintTop_toTopOf="@id/btn_disease_profile" />
+
+    <Button
+        android:id="@+id/btn_clinics_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_tv_home"
+        android:drawableEnd="@drawable/ic_clinic"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_disease_profile" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:background="@color/transparent"
+        android:elevation="20dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="مطب های من"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_clinics_profile"
+        app:layout_constraintEnd_toEndOf="@id/btn_clinics_profile"
+        app:layout_constraintTop_toTopOf="@id/btn_clinics_profile" />
+
+    <Button
+        android:id="@+id/btn_settings_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_tv_home"
+        android:drawableEnd="@drawable/ic_settings"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_clinics_profile" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:background="@color/transparent"
+        android:elevation="20dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="تنظیمات"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_settings_profile"
+        app:layout_constraintEnd_toEndOf="@id/btn_settings_profile"
+        app:layout_constraintTop_toTopOf="@id/btn_settings_profile" />
+
+    <Button
+        android:id="@+id/btn_about_us_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_about_btn_profile"
+        android:drawableEnd="@drawable/ic_info"
+        android:drawablePadding="16dp"
+        android:fontFamily="@font/vazir_regular"
+        android:paddingStart="24dp"
+        android:paddingEnd="12dp"
+        android:text="درباره ما"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -60,7 +60,6 @@ public class HomeActivity extends AppCompatActivity {
         PersianDate pDate = new PersianDate();
         String date = pDate.dayName() + " " + pDate.getShDay() + " " + pDate.monthName();
         date_tv.setText(date);
-
     }
 
     @Override
