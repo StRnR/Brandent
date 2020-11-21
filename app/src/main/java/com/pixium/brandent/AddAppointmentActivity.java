@@ -1,5 +1,6 @@
 package com.pixium.brandent;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,12 +31,11 @@ public class AddAppointmentActivity extends AppCompatActivity {
         Button submitBtn = findViewById(R.id.btn_submit_appointment_add);
         Button backBtn = findViewById(R.id.btn_back_appointment_add);
 
+        // Visit Occasion Spinner
         Spinner categorySpinner = findViewById(R.id.spinner_category_appointment_add);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.appointment_category, R.layout.spinner_category_item);
         spinnerAdapter.setDropDownViewResource(R.layout.appointment_add_spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
-
-        PersianDate pDate = new PersianDate();
 
         backBtn.setOnClickListener(v -> {
             onBackPressed();

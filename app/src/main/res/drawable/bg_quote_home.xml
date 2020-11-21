@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:dither="true"
+            android:shape="rectangle">
+
+            <corners android:radius="20dp" />
+
+            <size
+                android:width="56dp"
+                android:height="56dp" />
+
+            <gradient
+                android:endColor="#92d445"
+                android:startColor="#a7dd5a" />
+        </shape>
+    </item>
+    <item
+        android:width="24dp"
+        android:height="20dp"
+        android:drawable="@drawable/ic_quote"
+        android:gravity="center" />
+
+</layer-list>

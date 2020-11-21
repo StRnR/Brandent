@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import saman.zamani.persiandate.PersianDate;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -18,6 +21,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        TextView date_tv = findViewById(R.id.tv_date_home);
 
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.home_page);
@@ -50,6 +55,12 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // Display Date
+        PersianDate pDate = new PersianDate();
+        String date = pDate.dayName() + " " + pDate.getShDay() + " " + pDate.monthName();
+        date_tv.setText(date);
+
     }
 
     @Override
