@@ -53,6 +53,8 @@ dependencies {
 
     // Persian Date Picker
     implementation 'ir.scriptestan.jalalimaterialdatetimepicker:library:0.1.2'
+    implementation 'com.github.aliab:Persian-Date-Picker-Dialog:1.5.2'
+    implementation 'com.mohamadamin:persianmaterialdatetimepicker:1.2.1'
 
     // Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'

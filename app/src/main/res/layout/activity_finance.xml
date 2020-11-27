@@ -20,6 +20,173 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btn_add_finance"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/bg_add_finance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txt_header_finance" />
+
+    <Button
+        android:id="@+id/btn_hide_finance"
+        android:layout_width="28dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/ic_hide"
+        app:layout_constraintBottom_toBottomOf="@id/btn_add_finance"
+        app:layout_constraintStart_toEndOf="@id/btn_add_finance"
+        app:layout_constraintTop_toTopOf="@id/btn_add_finance" />
+
+    <ImageView
+        android:id="@+id/iv_bg_month_sum_finance"
+        android:layout_width="match_parent"
+        android:layout_height="116dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_tv_home"
+        app:layout_constraintTop_toBottomOf="@id/txt_header_finance" />
+
+    <TextView
+        android:id="@+id/tv_header_month_sum_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="در آمد خالص این ماه"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_bg_month_sum_finance" />
+
+    <TextView
+        android:id="@+id/tv_month_sum_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="تومان"
+        android:textColor="@color/checkGreen"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_month_sum_finance"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_bg_visits_sum_finance"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_tv_home"
+        app:layout_constraintTop_toBottomOf="@id/iv_bg_month_sum_finance" />
+
+    <TextView
+        android:id="@+id/tv_header_visits_sum_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="ویزیت ها"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_visits_sum_finance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_bg_visits_sum_finance" />
+
+    <TextView
+        android:id="@+id/tv_visits_sum_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="تومان"
+        android:textColor="@color/checkGreen"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_visits_sum_finance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_bg_visits_sum_finance" />
+
+    <ImageView
+        android:id="@+id/iv_bg_manual_income_finance"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_tv_home"
+        app:layout_constraintTop_toBottomOf="@id/iv_bg_visits_sum_finance" />
+
+    <TextView
+        android:id="@+id/tv_header_manual_income_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="درآمد های خارجی"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_income_finance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_income_finance" />
+
+    <TextView
+        android:id="@+id/tv_manual_income_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="تومان"
+        android:textColor="@color/checkGreen"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_income_finance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_income_finance" />
+
+    <ImageView
+        android:id="@+id/iv_bg_manual_expense_finance"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_tv_home"
+        app:layout_constraintTop_toBottomOf="@id/iv_bg_manual_income_finance" />
+
+    <TextView
+        android:id="@+id/tv_header_manual_expense_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="خرج ها"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_expense_finance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_expense_finance" />
+
+    <TextView
+        android:id="@+id/tv_manual_expense_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/vazir_medium"
+        android:text="تومان"
+        android:textColor="@color/expenseRed"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_expense_finance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_expense_finance" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,9 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        Button clinicsBtn = findViewById(R.id.btn_clinics_profile);
+
 
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.profile_page);
@@ -49,6 +53,10 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 return false;
             }
+        });
+
+        clinicsBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, ClinicsActivity.class));
         });
     }
 

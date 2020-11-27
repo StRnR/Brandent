@@ -5,6 +5,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="numberPickerTheme">@style/customNumberPicker</item>
+    </style>
+
+    <style name="customNumberPicker">
+        <item name="android:textColorPrimary">@color/navyBlue</item>
+        <item name="colorControlNormal">@color/orange</item>
     </style>
 
 </resources>
