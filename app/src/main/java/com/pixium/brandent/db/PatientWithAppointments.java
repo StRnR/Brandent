@@ -1,7 +1,10 @@
-package com.pixium.brandent;
+package com.pixium.brandent.db;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
+
+import com.pixium.brandent.db.Appointment;
+import com.pixium.brandent.db.Patient;
 
 import java.util.List;
 

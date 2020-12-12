@@ -1,10 +1,12 @@
-package com.pixium.brandent;
+package com.pixium.brandent.db;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.pixium.brandent.db.Patient;
 
 import java.util.List;
 
@@ -15,8 +17,6 @@ public interface PatientDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertPatients(Patient... patients);
-
-    @Query("SELECT * from patient ")
 
     @Delete
     public void deletePatients(Patient... patients);

@@ -21,6 +21,7 @@ public class ClinicsActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         Button backBtn = findViewById(R.id.btn_back_clinics);
+        Button clinicAddBtn = findViewById(R.id.btn_add_clinic_clinics);
 
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.profile_page);
@@ -52,6 +53,10 @@ public class ClinicsActivity extends AppCompatActivity {
                 }
                 return false;
             }
+        });
+
+        clinicAddBtn.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), AddClinicActivity.class));
         });
 
         backBtn.setOnClickListener(v -> {

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutGrey"
+    tools:context=".AddClinicActivity">
+
+    <ImageView
+        android:id="@+id/iv_header_clinic_add"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header_clinic_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/vazir_bold"
+        android:text="افزودن مطب"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_header_clinic_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_header_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_back_clinic_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/ic_arrow_left"
+        android:fontFamily="@font/vazir_medium"
+        android:text="بازگشت"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_header_clinic_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_name_clinic_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_et_rounded_rectangle"
+        android:fontFamily="@font/vazir_regular"
+        android:gravity="right"
+        android:hint="نام مطب"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hintGrey"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/iv_header_clinic_add" />
+
+    <EditText
+        android:id="@+id/et_address_clinic_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_et_rounded_rectangle"
+        android:fontFamily="@font/vazir_regular"
+        android:gravity="right"
+        android:hint="آدرس ( اختیاری)"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hintGrey"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/et_name_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_red_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicRed"
+        app:layout_constraintStart_toStartOf="@id/et_address_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_pink_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicPink"
+        app:layout_constraintStart_toEndOf="@id/btn_color_red_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_purple_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicPurple"
+        app:layout_constraintStart_toEndOf="@id/btn_color_pink_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_blue_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicBlue"
+        app:layout_constraintStart_toEndOf="@id/btn_color_purple_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_cyan_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicCyan"
+        app:layout_constraintStart_toEndOf="@id/btn_color_blue_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_teal_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicTeal"
+        app:layout_constraintStart_toEndOf="@id/btn_color_cyan_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_green_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicGreen"
+        app:layout_constraintStart_toEndOf="@id/btn_color_teal_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_color_light_green_clinic_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_clinic_color"
+        android:backgroundTint="@color/clinicLightGreen"
+        app:layout_constraintStart_toEndOf="@id/btn_color_green_clinic_add"
+        app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
+
+    <Button
+        android:id="@+id/btn_submit_clinic_add"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_rounded_orange_btn"
+        android:fontFamily="@font/vazir_bold"
+        android:text="ثبت"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_color_red_clinic_add" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

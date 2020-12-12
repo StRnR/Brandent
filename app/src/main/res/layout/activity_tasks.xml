@@ -12,21 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/bg_layout_header"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/rv_calendar_tasks"/>
+        app:layout_constraintBottom_toBottomOf="@id/rv_calendar_tasks"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_header_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/vazir_bold"
         android:text="برنامه روزانه"
         android:textColor="@color/black"
-        android:textSize="26sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_add_task_tasks"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/bg_add_finance"
+        app:layout_constraintBottom_toBottomOf="@id/tv_header_tasks"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_header_tasks" />
 
     <TextView
         android:id="@+id/tv_month_tasks"
@@ -40,28 +50,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_header_tasks" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_today_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="24dp"
         android:background="@color/transparent"
         android:fontFamily="@font/vazir_regular"
         android:text="امروز"
         android:textColor="@color/orange"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    
+        app:layout_constraintBottom_toBottomOf="@id/tv_header_tasks"
+        app:layout_constraintStart_toEndOf="@id/btn_add_task_tasks"
+        app:layout_constraintTop_toTopOf="@id/tv_header_tasks" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_calendar_tasks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/transparent"
         android:padding="4dp"
         android:scrollbars="horizontal"
-        android:background="@color/transparent"
-        app:layout_constraintTop_toBottomOf="@id/tv_month_tasks"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_month_tasks" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

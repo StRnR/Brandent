@@ -12,9 +12,17 @@
     <color name="fieldBorderGrey">#F0F0F0</color>
     <color name="navyBlue">#2C2E51</color>
     <color name="carbonBlue">#6582BC</color>
-    <color name="orange">#FF7603</color>
+    <color name="clinicBlue">#0098fd</color>
+    <color name="clinicCyan">#00c0da</color>
+    <color name="clinicTeal">#009989</color>
+    <color name="clinicGreen">#17b243</color>
     <color name="checkGreen">#6BCF00</color>
+    <color name="clinicLightGreen">#7ec630</color>
+    <color name="orange">#FF7603</color>
     <color name="ignoreRed">#CF0000</color>
     <color name="expenseRed">#e02020</color>
+    <color name="clinicRed">#ff2927</color>
+    <color name="clinicPink">#fc2479</color>
+    <color name="clinicPurple">#7033bf</color>
     <color name="transparent">#00000000</color>
 </resources>

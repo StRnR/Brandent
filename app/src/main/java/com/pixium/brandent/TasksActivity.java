@@ -18,9 +18,6 @@ import java.util.ArrayList;
 import saman.zamani.persiandate.PersianDate;
 
 public class TasksActivity extends AppCompatActivity {
-    private RecyclerView calendarRecyclerView;
-    private RecyclerView.Adapter calendarAdapter;
-    private RecyclerView.LayoutManager calendarLayoutManager;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -92,10 +89,10 @@ public class TasksActivity extends AppCompatActivity {
                 tasksCalendarItems.add(new TasksCalendarItem("ج", Integer.toString(i)));
         }
 
-        calendarRecyclerView = findViewById(R.id.rv_calendar_tasks);
+        RecyclerView calendarRecyclerView = findViewById(R.id.rv_calendar_tasks);
         calendarRecyclerView.setHasFixedSize(true);
-        calendarLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        calendarAdapter = new CalendarAdapter(tasksCalendarItems);
+        RecyclerView.LayoutManager calendarLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
+        RecyclerView.Adapter calendarAdapter = new CalendarAdapter(tasksCalendarItems);
 
         calendarRecyclerView.setLayoutManager(calendarLayoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);

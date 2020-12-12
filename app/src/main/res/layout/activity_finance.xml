@@ -8,15 +8,15 @@
     tools:context=".FinanceActivity">
 
     <TextView
-        android:id="@+id/txt_header_finance"
+        android:id="@+id/tv_header_finance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/vazir_bold"
         android:text="مدیریت مالی"
         android:textColor="@color/black"
-        android:textSize="26sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +27,8 @@
         android:layout_marginStart="24dp"
         android:background="@drawable/bg_add_finance"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/txt_header_finance" />
+        app:layout_constraintTop_toTopOf="@id/tv_header_finance"
+        app:layout_constraintBottom_toBottomOf="@id/tv_header_finance"/>
 
     <Button
         android:id="@+id/btn_hide_finance"
@@ -48,7 +49,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_tv_home"
-        app:layout_constraintTop_toBottomOf="@id/txt_header_finance" />
+        app:layout_constraintTop_toBottomOf="@id/tv_header_finance" />
 
     <TextView
         android:id="@+id/tv_header_month_sum_finance"

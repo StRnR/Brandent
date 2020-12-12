@@ -1,10 +1,10 @@
-package com.pixium.brandent;
+package com.pixium.brandent.db;
 
 import androidx.room.TypeConverter;
 
 import java.util.Date;
 
-public class Converters {
+public class DateConverters {
     @TypeConverter
     public static Date fromTimestamp(Long value) {
         return value == null ? null : new Date(value);
