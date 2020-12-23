@@ -1,21 +1,22 @@
 package com.pixium.brandent;
 
+import android.app.TimePickerDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import ir.hamsaa.persiandatepicker.Listener;
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import saman.zamani.persiandate.PersianDate;
 
-public class AddAppointmentActivity extends AppCompatActivity {
+public class AddAppointmentActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,8 @@ public class AddAppointmentActivity extends AppCompatActivity {
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getPersianMonthName()); //اسفند
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.isPersianLeapYear());//false
                             dateTimeBtn.setText(persianCalendar.getPersianLongDate());
-                            Toast.makeText(getApplicationContext(), persianCalendar.getPersianYear() + "/" + persianCalendar.getPersianMonth() + "/" + persianCalendar.getPersianDay(), Toast.LENGTH_SHORT).show();
+                            DialogFragment timePicker = new TimePickerFragment();
+                            timePicker.show(getSupportFragmentManager(), "time picker");
                         }
 
                         @Override
@@ -78,4 +80,8 @@ public class AddAppointmentActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//        TextView textView = findViewB
+    }
 }

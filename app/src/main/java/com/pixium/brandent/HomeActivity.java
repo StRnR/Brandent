@@ -69,10 +69,10 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.home_page);
-        super.onResume();
     }
 
 }

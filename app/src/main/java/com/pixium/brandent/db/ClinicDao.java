@@ -1,23 +1,31 @@
 package com.pixium.brandent.db;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import com.pixium.brandent.db.Clinic;
+import androidx.room.Update;
 
 import java.util.List;
 
 @Dao
 public interface ClinicDao {
-    @Query("SELECT * FROM clinic")
-    List<Clinic> getAllClinics();
+    @Insert
+    void insert(Clinic clinic);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertClinics(Clinic... clinics);
+    @Update
+    void update(Clinic clinic);
 
     @Delete
-    public void deleteClinics(Clinic... clinics);
+    void delete(Clinic clinic);
+
+    @Query("SELECT * FROM clinics")
+    LiveData<List<Clinic>> getAllClinics();
+
+    @Query("SELECT * FROM clinics WHERE title LIKE :argTitle")
+    List<Clinic> loadClinicByTitle(String argTitle);
+
+    @Query("SELECT * FROM clinics WHERE color LIKE :argColor")
+    List<Clinic> loadClinicByColor(String argColor);
 }

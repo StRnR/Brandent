@@ -9,11 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddPatientActivity"></activity>
+        <activity android:name=".AddPatientActivity" />
         <activity android:name=".PatientsActivity" />
-        <activity android:name=".AddFinanceActivity" />
-        <activity android:name=".AddClinicActivity" />
-        <activity android:name=".ClinicsActivity" />
+        <activity
+            android:name=".AddFinanceActivity"
+            android:parentActivityName=".ClinicActivity" />
+        <activity android:name=".AddEditClinicActivity" />
+        <activity
+            android:name=".ClinicActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".FinanceActivity" />
         <activity android:name=".HomeActivity">

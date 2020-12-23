@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
-    tools:context=".ClinicsActivity">
+    tools:context=".ClinicActivity">
 
     <ImageView
         android:id="@+id/iv_header_clinics"
@@ -57,17 +57,17 @@
         android:text="افزودن مطب"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_clinics"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_navigation"
-        app:itemIconTint="@drawable/selector_bottom_nav_item"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_clinic_clinics"
+        app:layout_constraintTop_toBottomOf="@id/iv_header_clinics"
+        tools:listitem="@layout/clinic_item" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

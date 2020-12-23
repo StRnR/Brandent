@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
-    tools:context=".AddClinicActivity">
+    tools:context=".AddEditClinicActivity">
 
     <ImageView
         android:id="@+id/iv_header_clinic_add"
@@ -87,8 +87,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicRed"
+        android:background="@drawable/bg_red_clinic"
         app:layout_constraintStart_toStartOf="@id/et_address_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 
@@ -98,8 +97,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicPink"
+        android:background="@drawable/bg_pink_clinic"
         app:layout_constraintStart_toEndOf="@id/btn_color_red_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 
@@ -109,8 +107,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicPurple"
+        android:background="@drawable/bg_purple_clinic"
         app:layout_constraintStart_toEndOf="@id/btn_color_pink_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 
@@ -120,8 +117,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicBlue"
+        android:background="@drawable/bg_blue_clinic"
         app:layout_constraintStart_toEndOf="@id/btn_color_purple_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 
@@ -131,8 +127,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicCyan"
+        android:background="@drawable/bg_cyan_clinic"
         app:layout_constraintStart_toEndOf="@id/btn_color_blue_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 
@@ -142,8 +137,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicTeal"
+        android:background="@drawable/bg_teal_clinic"
         app:layout_constraintStart_toEndOf="@id/btn_color_cyan_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 
@@ -153,8 +147,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicGreen"
+        android:background="@drawable/bg_green_clinic"
         app:layout_constraintStart_toEndOf="@id/btn_color_teal_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 
@@ -164,8 +157,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_clinic_color"
-        android:backgroundTint="@color/clinicLightGreen"
+        android:background="@drawable/bg_light_green_clinic"
         app:layout_constraintStart_toEndOf="@id/btn_color_green_clinic_add"
         app:layout_constraintTop_toBottomOf="@id/et_address_clinic_add" />
 

@@ -1,30 +1,30 @@
 package com.pixium.brandent.db;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
+@Entity(tableName = "clinics")
 public class Clinic {
-    @PrimaryKey
-    @NonNull
-    public UUID clinicId;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
-    public Date modifiedAt;
+    private Date modifiedAt;
 
-    public String color;
-    public String address;
-    public String title;
+    private UUID uuid;
 
-    public Clinic(UUID clinicId, Date modifiedAt, String title, String address, String color) {
-        if (clinicId == null) {
-            this.clinicId = UUID.randomUUID();
+    private String color;
+    private String address;
+    private String title;
+
+
+    public Clinic(UUID uuid, Date modifiedAt, String title, String address, String color) {
+        if (uuid == null) {
+            this.uuid = UUID.randomUUID();
         } else {
-            this.clinicId = clinicId;
+            this.uuid = uuid;
         }
 
         if (modifiedAt == null) {
@@ -36,5 +36,41 @@ public class Clinic {
         this.title = title;
         this.address = address;
         this.color = color;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
