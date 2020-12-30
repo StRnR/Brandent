@@ -1,43 +1,40 @@
 package com.pixium.brandent.db;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
 public class Appointment {
-    @PrimaryKey
-    @NonNull
-    public UUID appointmentId;
-    public UUID clinicForId;
-    public UUID patientForId;
+    @PrimaryKey(autoGenerate = true)
+    private int appointmentId;
 
-    public boolean deleted = false;
+    private int clinicForId;
+    private int patientForId;
 
-    public int price;
+    private UUID uuid;
 
-    public Date modifiedAt;
-    public Date visitTime;
+    private int price;
 
-    public String disease;
-    public String notes;
-    public String state;
+    private Long modifiedAt;
+    private Long visitTime;
 
-    public Appointment(UUID appointmentId, UUID clinicForId, UUID patientForId, Date modifiedAt, Date visitTime, int price, String disease, String notes, String state) {
-        if (appointmentId == null) {
-            this.appointmentId = UUID.randomUUID();
+    private String title;
+    private String state;
+
+    public Appointment(UUID uuid, Long modifiedAt, int clinicForId, int patientForId, Long visitTime, int price, String title, String state) {
+        if (uuid == null) {
+            this.uuid = UUID.randomUUID();
         } else {
-            this.appointmentId = appointmentId;
+            this.uuid = uuid;
         }
 
         this.clinicForId = clinicForId;
         this.patientForId = patientForId;
 
         if (modifiedAt == null) {
-            this.modifiedAt = new Date();
+            this.modifiedAt = System.currentTimeMillis();
         } else {
             this.modifiedAt = modifiedAt;
         }
@@ -46,8 +43,47 @@ public class Appointment {
 
         this.price = price;
 
-        this.disease = disease;
-        this.notes = notes;
+        this.title = title;
         this.state = state;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public int getAppointmentId() {
+        return appointmentId;
+    }
+
+    public int getClinicForId() {
+        return clinicForId;
+    }
+
+    public int getPatientForId() {
+        return patientForId;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Long getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public Long getVisitTime() {
+        return visitTime;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getState() {
+        return state;
     }
 }

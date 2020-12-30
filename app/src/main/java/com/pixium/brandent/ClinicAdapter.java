@@ -14,9 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pixium.brandent.db.Clinic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ClinicAdapter extends ListAdapter<Clinic, ClinicAdapter.ClinicHolder> {
     private OnItemClickListener listener;
 
@@ -27,7 +24,7 @@ public class ClinicAdapter extends ListAdapter<Clinic, ClinicAdapter.ClinicHolde
     private static final DiffUtil.ItemCallback<Clinic> DIFF_CALLBACK = new DiffUtil.ItemCallback<Clinic>() {
         @Override
         public boolean areItemsTheSame(@NonNull Clinic oldItem, @NonNull Clinic newItem) {
-            return oldItem.getId() == newItem.getId();
+            return oldItem.getClinicId() == newItem.getClinicId();
         }
 
         @Override

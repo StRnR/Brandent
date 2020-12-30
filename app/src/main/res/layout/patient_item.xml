@@ -6,38 +6,40 @@
     android:layout_marginStart="24dp"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="24dp"
+    android:outlineProvider="none"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/iv_clinic_color_cv"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:background="@drawable/bg_clinic_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
-            android:id="@+id/tv_clinic_title_cv"
+            android:id="@+id/tv_patient_phone_cv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toStartOf="@id/tv_patient_name_cv"
+            android:fontFamily="@font/vazir_thin"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_patient_name_cv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/vazir_bold"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_clinic_color_cv"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="14sp" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

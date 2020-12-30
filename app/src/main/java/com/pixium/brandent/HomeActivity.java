@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,10 @@ public class HomeActivity extends AppCompatActivity {
 
         TextView date_tv = findViewById(R.id.tv_date_home);
 
+        ImageButton patientsBtn = findViewById(R.id.btn_patients_home);
+        ImageButton financeBtn = findViewById(R.id.btn_finance_home);
+
+
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.home_page);
 
@@ -45,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.add_appointment_page:
-                        startActivity(new Intent(getApplicationContext(), AddAppointmentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(getApplicationContext(), AddPatientActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.tasks_page:
@@ -65,6 +70,14 @@ public class HomeActivity extends AppCompatActivity {
         PersianDate pDate = new PersianDate();
         String date = pDate.dayName() + " " + pDate.getShDay() + " " + pDate.monthName();
         date_tv.setText(date);
+
+        patientsBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, PatientsActivity.class));
+        });
+
+        financeBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, FinanceActivity.class));
+        });
     }
 
     @Override

@@ -1,24 +1,32 @@
 package com.pixium.brandent.db;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import com.pixium.brandent.db.Patient;
+import androidx.room.Update;
 
 import java.util.List;
 
 @Dao
 public interface PatientDao {
-    @Query("SELECT * FROM patient")
-    List<Patient> getAllPatients();
+    @Insert
+    void insert(Patient patient);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertPatients(Patient... patients);
+    @Update
+    void update(Patient patient);
 
     @Delete
-    public void deletePatients(Patient... patients);
+    void delete(Patient patient);
+
+    @Query("SELECT * FROM patient")
+    LiveData<List<Patient>> getAllPatients();
+
+    @Query("SELECT * FROM patient WHERE name LIKE '%' || :arg || '%'")
+    List<Patient> findPatientsByName(String arg);
+
+    @Query("SELECT * FROM patient WHERE phone LIKE :arg")
+    List<Patient> getPatientByNumber(String arg);
 
 }

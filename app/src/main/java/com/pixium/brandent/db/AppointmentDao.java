@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -15,8 +14,17 @@ public interface AppointmentDao {
     @Query("SELECT * FROM appointment")
     List<Appointment> getAll();
 
-    @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :from AND :to")
-    List<Appointment> findAppointmentsBetweenDates(Date from, Date to);
+    @Insert
+    public void insert(Appointment appointment);
+
+    @Update
+    public void update(Appointment appointment);
+
+    @Delete
+    public void delete(Appointment appointment);
+
+    @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end ORDER BY visitTime ASC")
+    public List<Appointment> getByDate(long start, long end);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertAppointments(Appointment... appointments);

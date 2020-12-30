@@ -21,10 +21,16 @@ public interface ClinicDao {
     void delete(Clinic clinic);
 
     @Query("SELECT * FROM clinics")
-    LiveData<List<Clinic>> getAllClinics();
+    LiveData<List<Clinic>> getAllClinicsLive();
+
+    @Query("SELECT * FROM clinics")
+    List<Clinic> getAllClinics();
 
     @Query("SELECT * FROM clinics WHERE title LIKE :argTitle")
-    List<Clinic> loadClinicByTitle(String argTitle);
+    List<Clinic> getClinicByTitle(String argTitle);
+
+    @Query("SELECT * FROM clinics WHERE clinicId=:argId")
+    LiveData<Clinic> getClinicById(int argId);
 
     @Query("SELECT * FROM clinics WHERE color LIKE :argColor")
     List<Clinic> loadClinicByColor(String argColor);

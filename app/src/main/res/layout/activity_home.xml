@@ -82,7 +82,8 @@
                         android:textColor="@color/navyBlue"
                         android:textSize="14sp" />
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/btn_patients_home"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_alignParentTop="true"
@@ -121,7 +122,8 @@
                         android:textColor="@color/navyBlue"
                         android:textSize="14sp" />
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/btn_finance_home"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_alignParentTop="true"

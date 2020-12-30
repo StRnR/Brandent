@@ -21,6 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         Button clinicsBtn = findViewById(R.id.btn_clinics_profile);
+        Button patientsBtn = findViewById(R.id.btn_patients_profile);
 
 
         // Set Selected NavBar item
@@ -41,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.add_appointment_page:
-                        startActivity(new Intent(getApplicationContext(), AddAppointmentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(getApplicationContext(), AddPatientActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.tasks_page:
@@ -58,6 +59,12 @@ public class ProfileActivity extends AppCompatActivity {
         clinicsBtn.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(), ClinicActivity.class));
         });
+
+        patientsBtn.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), PatientsActivity.class));
+        });
+
+
     }
 
     @Override

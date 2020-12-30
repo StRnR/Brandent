@@ -47,7 +47,7 @@ public class FinanceActivity extends AppCompatActivity {
                     case R.id.finance_page:
                         return true;
                     case R.id.add_appointment_page:
-                        startActivity(new Intent(getApplicationContext(), AddAppointmentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(getApplicationContext(), AddPatientActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.tasks_page:

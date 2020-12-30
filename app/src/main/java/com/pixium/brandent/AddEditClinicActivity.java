@@ -9,8 +9,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.concurrent.ExecutionException;
 
 public class AddEditClinicActivity extends AppCompatActivity {
+    private ClinicViewModel clinicViewModel;
+
     public static final String EXTRA_ID =
             "com.pixium.brandent.EXTRA_ID";
     public static final String EXTRA_UUID =
@@ -46,9 +51,12 @@ public class AddEditClinicActivity extends AppCompatActivity {
 
         TextView headerTv = findViewById(R.id.tv_header_clinic_add);
 
+        clinicViewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
+                get(ClinicViewModel.class);
+
         redBtn.setOnClickListener(v -> {
             clinicColor = getResources().getString(R.color.clinicRed);
-            Toast.makeText(this, getResources().getString(R.color.clinicRed), Toast.LENGTH_SHORT).show();
             redBtn.setBackground(getDrawable(R.drawable.bg_selected_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
             purpleBtn.setBackground(getDrawable(R.drawable.bg_purple_clinic));
@@ -185,6 +193,15 @@ public class AddEditClinicActivity extends AppCompatActivity {
             } else if (nameEt.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter a name for your clinic", Toast.LENGTH_SHORT).show();
                 return;
+            } else {
+                try {
+                    if (clinicViewModel.getClinicByTitle(nameEt.getText().toString()).size() != 0) {
+                        Toast.makeText(getApplicationContext(), "Please enter a unique name for your clinic", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             Intent data = new Intent();
             data.putExtra(EXTRA_TITLE, nameEt.getText().toString());

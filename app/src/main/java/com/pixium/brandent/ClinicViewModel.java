@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.pixium.brandent.db.Clinic;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ClinicViewModel extends AndroidViewModel {
     private ClinicRepository repository;
@@ -17,7 +18,7 @@ public class ClinicViewModel extends AndroidViewModel {
     public ClinicViewModel(@NonNull Application application) {
         super(application);
         repository = new ClinicRepository(application);
-        allClinics = repository.getAllClinics();
+        allClinics = repository.getAllClinicsLive();
     }
 
     public void insert(Clinic cLinic) {
@@ -34,5 +35,9 @@ public class ClinicViewModel extends AndroidViewModel {
 
     public LiveData<List<Clinic>> getAllClinics() {
         return allClinics;
+    }
+
+    public List<Clinic> getClinicByTitle(String title) throws ExecutionException, InterruptedException {
+        return repository.getClinicBytTitle(title);
     }
 }

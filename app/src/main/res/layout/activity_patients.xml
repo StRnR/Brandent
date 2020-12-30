@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@id/iv_header_patients" />
 
     <Button
-        android:id="@+id/btn_back_clinic_add"
+        android:id="@+id/btn_back_patients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -41,5 +41,32 @@
         app:layout_constraintBottom_toBottomOf="@+id/iv_header_patients"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_search_patients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_search_edit_text"
+        android:drawableEnd="@drawable/ic_search"
+        android:drawablePadding="12dp"
+        android:fontFamily="@font/vazir_bold"
+        android:hint="جست و جو"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:textColorHint="#222440"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/iv_header_patients" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_patients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/patient_item"
+        app:layout_constraintTop_toBottomOf="@id/et_search_patients" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,7 +73,7 @@ public class ClinicActivity extends AppCompatActivity {
             public void onItemClick(Clinic clinic) {
                 Intent intent = new Intent(ClinicActivity.this
                         , AddEditClinicActivity.class);
-                intent.putExtra(AddEditClinicActivity.EXTRA_ID, clinic.getId());
+                intent.putExtra(AddEditClinicActivity.EXTRA_ID, clinic.getClinicId());
                 intent.putExtra(AddEditClinicActivity.EXTRA_UUID, clinic.getUuid().toString());
                 intent.putExtra(AddEditClinicActivity.EXTRA_TITLE, clinic.getTitle());
                 intent.putExtra(AddEditClinicActivity.EXTRA_COLOR, clinic.getColor());
@@ -119,7 +119,7 @@ public class ClinicActivity extends AppCompatActivity {
             UUID uuid = UUID.fromString(data.getStringExtra(AddEditClinicActivity.EXTRA_UUID));
 
             Clinic clinic = new Clinic(uuid, null, title, address, color);
-            clinic.setId(id);
+            clinic.setClinicId(id);
             clinicViewModel.update(clinic);
 
             Toast.makeText(this, "Clinic Updated!", Toast.LENGTH_SHORT).show();
