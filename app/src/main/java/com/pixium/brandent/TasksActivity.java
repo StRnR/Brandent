@@ -92,10 +92,18 @@ public class TasksActivity extends AppCompatActivity {
         RecyclerView calendarRecyclerView = findViewById(R.id.rv_calendar_tasks);
         calendarRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager calendarLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
-        RecyclerView.Adapter calendarAdapter = new CalendarAdapter(tasksCalendarItems);
+        CalendarAdapter calendarAdapter = new CalendarAdapter(tasksCalendarItems, 0);
 
         calendarRecyclerView.setLayoutManager(calendarLayoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
+
+        calendarAdapter.setOnItemClickListener(new CalendarAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                calendarAdapter.setSelectedPos(position);
+                calendarAdapter.notifyDataSetChanged();
+            }
+        });
 
     }
 

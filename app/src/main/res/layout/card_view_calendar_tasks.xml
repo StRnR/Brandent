@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_calendar_item"
     android:layout_width="48dp"
     android:layout_height="80dp"
     android:layout_marginBottom="16dp"
     android:outlineProvider="none"
-    android:background="@drawable/bg_tasks_calendar_item"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="50dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="center"
             android:fontFamily="@font/vazir_bold"
+            android:gravity="center"
             android:textColor="@color/textGrey"
             android:textSize="12sp"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,8 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:gravity="center"
             android:fontFamily="@font/vazir_bold"
+            android:gravity="center"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent" />
