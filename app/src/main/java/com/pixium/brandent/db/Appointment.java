@@ -23,7 +23,8 @@ public class Appointment {
     private String title;
     private String state;
 
-    public Appointment(UUID uuid, Long modifiedAt, int clinicForId, int patientForId, Long visitTime, int price, String title, String state) {
+    public Appointment(UUID uuid, Long modifiedAt, int clinicForId, int patientForId, Long visitTime
+            , int price, String title, String state) {
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
         } else {

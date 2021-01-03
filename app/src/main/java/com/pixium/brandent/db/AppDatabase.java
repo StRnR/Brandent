@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {Appointment.class, Clinic.class, Patient.class}, version = 1)
+@Database(entities = {Appointment.class, Clinic.class, Patient.class, Finance.class}, version = 1)
 @TypeConverters({TimestampConverters.class, UUIDConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -18,6 +18,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PatientDao patientDao();
 
     public abstract ClinicDao clinicDao();
+
+    public abstract FinanceDao financeDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {

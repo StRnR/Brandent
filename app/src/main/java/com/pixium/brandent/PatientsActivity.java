@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pixium.brandent.db.Patient;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class PatientsActivity extends AppCompatActivity {
     private PatientsViewModel patientsViewModel;
@@ -53,11 +54,18 @@ public class PatientsActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().equals("")) {
+                    try {
+                        List<Patient> resPatients = patientsViewModel.findPatientsByName(s.toString());
+                        adapter.setPatients(resPatients);
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
