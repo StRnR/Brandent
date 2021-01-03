@@ -72,8 +72,17 @@
         android:background="@color/transparent"
         android:padding="4dp"
         android:scrollbars="horizontal"
-        tools:listitem="@layout/card_view_calendar_tasks"
         app:layout_constraintTop_toBottomOf="@id/tv_month_tasks" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_appointments_tasks"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="16dp"
+        tools:listitem="@layout/appointment_item"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/rv_calendar_tasks" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

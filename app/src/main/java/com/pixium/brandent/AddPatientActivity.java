@@ -83,7 +83,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                     List<Patient> patients = addPatientViewModel.getPatientByNumber(phoneEt.getText().toString());
 
                     if (patients.size() != 0) {
-                        intent.putExtra(EXTRA_PATIENT_ID, (Parcelable) patients.get(0));
+                        intent.putExtra(EXTRA_PATIENT_ID, patients.get(0).getPatientId());
                         startActivity(intent);
                     } else {
                         intent.putExtra(EXTRA_PATIENT_ID, -1);

@@ -17,6 +17,8 @@ import com.pixium.brandent.db.Appointment;
 import com.pixium.brandent.db.Clinic;
 import com.pixium.brandent.db.Patient;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -32,7 +34,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
     private int patientId;
     private int visitHour;
     private int visitMin;
-    private Long visitTimestamp;
+    private Calendar visitCalendar;
 
     private AddAppointmentViewModel addAppointmentViewModel;
 
@@ -72,8 +74,6 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
             clinicTitle = (String) savedInstanceState.getSerializable(AddPatientActivity.EXTRA_CLINIC_TITLE);
         }
 
-        Toast.makeText(this, String.valueOf(patientId), Toast.LENGTH_LONG).show();
-
         // Date & Time Picker
         PersianDate pDate = new PersianDate();
         PersianCalendar initDate = new PersianCalendar();
@@ -83,21 +83,21 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
 
         dateTimeBtn.setOnClickListener(v -> {
 
-            PersianDatePickerDialog picker = new PersianDatePickerDialog(this)
-                    .setPositiveButtonString("باشه")
-                    .setNegativeButton("بیخیال")
-                    .setTodayButton("امروز")
-                    .setTodayButtonVisible(true)
-                    .setMinYear(1300)
-                    .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
-                    .setInitDate(initDate)
-                    .setActionTextColor(getResources().getColor(R.color.orange))
-                    .setTypeFace(typeface)
-                    .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
-                    .setShowInBottomSheet(true)
-                    .setListener(new Listener() {
-                        @Override
-                        public void onDateSelected(PersianCalendar persianCalendar) {
+            PersianDatePickerDialog picker = new PersianDatePickerDialog(this);
+            picker.setPositiveButtonString("باشه");
+            picker.setNegativeButton("بیخیال");
+            picker.setTodayButton("امروز");
+            picker.setTodayButtonVisible(true);
+            picker.setMinYear(1300);
+            picker.setMaxYear(PersianDatePickerDialog.THIS_YEAR);
+            picker.setInitDate(initDate);
+            picker.setActionTextColor(getResources().getColor(R.color.orange));
+            picker.setTypeFace(typeface);
+            picker.setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR);
+            picker.setShowInBottomSheet(true);
+            picker.setListener(new Listener() {
+                @Override
+                public void onDateSelected(PersianCalendar persianCalendar) {
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getGregorianChange());//Fri Oct 15 03:25:44 GMT+04:30 1582
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getTimeInMillis());//1583253636577
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getTime());//Tue Mar 03 20:10:36 GMT+03:30 2020
@@ -106,17 +106,18 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getPersianLongDateAndTime()); //سه‌شنبه  13  اسفند  1398 ساعت 20:10:36
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getPersianMonthName()); //اسفند
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.isPersianLeapYear());//false
-                            String dateTimeStr = persianCalendar.getPersianLongDate();
-                            dateTimeBtn.setText(dateTimeStr);
-                            DialogFragment timePicker = new TimePickerFragment();
-                            timePicker.show(getSupportFragmentManager(), "time picker");
-                            visitTimestamp = persianCalendar.getTimeInMillis();
-                        }
+                    String dateTimeStr = persianCalendar.getPersianLongDate();
+                    dateTimeBtn.setText(dateTimeStr);
+                    visitCalendar = GregorianCalendar.getInstance();
+                    visitCalendar.setTimeInMillis(persianCalendar.getTimeInMillis());
+                    DialogFragment timePicker = new TimePickerFragment();
+                    timePicker.show(getSupportFragmentManager(), "time picker");
+                }
 
-                        @Override
-                        public void onDismissed() {
-                        }
-                    });
+                @Override
+                public void onDismissed() {
+                }
+            });
 
             picker.show();
         });
@@ -130,7 +131,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
                     Appointment appointment = new Appointment(null, null,
                             clinics.get(0).getClinicId(), patients.get(0).getPatientId(),
-                            visitTimestamp, Integer.parseInt(priceEt.getText().toString()),
+                            visitCalendar.getTimeInMillis(), Integer.parseInt(priceEt.getText().toString()),
                             diseaseEt.getText().toString(), "UNKNOWN");
                     addAppointmentViewModel.insertAppointment(appointment);
                     startActivity(new Intent(this, HomeActivity.class));
@@ -147,7 +148,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
                     Appointment appointment = new Appointment(null, null,
                             clinics.get(0).getClinicId(), patients.get(0).getPatientId(),
-                            visitTimestamp, Integer.parseInt(priceEt.getText().toString()),
+                            visitCalendar.getTimeInMillis(), Integer.parseInt(priceEt.getText().toString()),
                             diseaseEt.getText().toString(), "UNKNOWN");
                     addAppointmentViewModel.insertAppointment(appointment);
                     startActivity(new Intent(this, HomeActivity.class));
@@ -163,9 +164,8 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        visitHour = hourOfDay;
-        visitMin = minute;
-        visitTimestamp = visitTimestamp + 1000 * 3600 * visitHour + 60 * 1000 * visitMin;
+        visitCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        visitCalendar.set(Calendar.MINUTE, minute);
         String tmpStr = dateTimeBtn.getText().toString() + " - " + visitHour + ":" + visitMin;
         dateTimeBtn.setText(tmpStr);
     }

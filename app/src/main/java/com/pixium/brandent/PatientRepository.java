@@ -46,6 +46,10 @@ public class PatientRepository {
         return new GetPatientByNumberAsyncTask(patientDao).execute(string).get();
     }
 
+    public Patient getPatientById(int id) throws ExecutionException, InterruptedException {
+        return new GetPatientByIdAsyncTask(patientDao).execute(id).get();
+    }
+
 
     private static class InsertPatientAsyncTask extends AsyncTask<Patient, Void, Void> {
         private PatientDao patientDao;
@@ -112,6 +116,19 @@ public class PatientRepository {
         @Override
         protected List<Patient> doInBackground(String... strings) {
             return patientDao.getPatientByNumber(strings[0]);
+        }
+    }
+
+    private static class GetPatientByIdAsyncTask extends AsyncTask<Integer, Void, Patient> {
+        private PatientDao patientDao;
+
+        private GetPatientByIdAsyncTask(PatientDao patientDao) {
+            this.patientDao = patientDao;
+        }
+
+        @Override
+        protected Patient doInBackground(Integer... integers) {
+            return patientDao.getPatientById(integers[0]);
         }
     }
 }

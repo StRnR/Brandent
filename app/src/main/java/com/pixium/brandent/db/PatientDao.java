@@ -29,4 +29,7 @@ public interface PatientDao {
     @Query("SELECT * FROM patient WHERE phone LIKE :arg")
     List<Patient> getPatientByNumber(String arg);
 
+    @Query("SELECT * FROM patient WHERE patientId=:arg")
+    Patient getPatientById(int arg);
+
 }
