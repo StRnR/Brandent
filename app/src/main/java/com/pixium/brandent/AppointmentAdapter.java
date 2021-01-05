@@ -14,9 +14,37 @@ import com.pixium.brandent.db.Appointment;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
     private List<AppointmentCardModel> appointments = new ArrayList<>();
+    private OnItemCheckClickListener mCheckListener;
+    private OnItemCancelClickListener mCancelListener;
+    private OnItemUnknownClickListener mUnknownListener;
+
+    public interface OnItemCheckClickListener {
+        void onItemCheckClick(int id) throws ExecutionException, InterruptedException;
+    }
+
+    public interface OnItemCancelClickListener {
+        void onItemCancelClick(int id) throws ExecutionException, InterruptedException;
+    }
+
+    public interface OnItemUnknownClickListener {
+        void onItemUnknownClick(int id) throws ExecutionException, InterruptedException;
+    }
+
+    public void setOnItemCheckClickListener(OnItemCheckClickListener listener) {
+        mCheckListener = listener;
+    }
+
+    public void setOnItemCancelClickListener(OnItemCancelClickListener listener) {
+        mCancelListener = listener;
+    }
+
+    public void setOnItemUnknownClickListener(OnItemUnknownClickListener listener) {
+        mUnknownListener = listener;
+    }
 
     @NonNull
     @Override
@@ -43,34 +71,67 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         switch (curAppointment.getState()) {
             case "UNKNOWN":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.closeBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
+                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 break;
             case "DONE":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_enabled);
-                holder.closeBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
+                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 break;
             case "CANCELED":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.closeBtn.setBackgroundResource(R.drawable.bg_circle_close_enabled);
+                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_enabled);
                 break;
         }
 
-//        holder.checkBtn.setOnClickListener(v -> {
-//            if (curAppointment.getState().equals("UNKNOWN") ||
-//                    curAppointment.getState().equals("CANCELED")) {
-//                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_enabled);
-//                holder.closeBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
-//                Appointment updateAppointment = new Appointment(curAppointment.getUuid()
-//                        , null, curAppointment.getClinicForId(),
-//                        curAppointment.getPatientForId(), curAppointment.getVisitTime(),
-//                        curAppointment.getPrice(), curAppointment.getTitle(), "DONE");
-//
-//            } else {
-//                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-//                holder.closeBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
-//
-//            }
-//        });
+        holder.checkBtn.setOnClickListener(v -> {
+            if (curAppointment.getState().equals("UNKNOWN") ||
+                    curAppointment.getState().equals("CANCELED")) {
+                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_enabled);
+                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
+                if (mCheckListener != null) {
+                    try {
+                        mCheckListener.onItemCheckClick(curAppointment.getAppointmentId());
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
+                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
+                if (mUnknownListener != null) {
+                    try {
+                        mUnknownListener.onItemUnknownClick(curAppointment.getAppointmentId());
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        holder.cancelBtn.setOnClickListener(v -> {
+            if (curAppointment.getState().equals("UNKNOWN") ||
+                    curAppointment.getState().equals("DONE")) {
+                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
+                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_enabled);
+                if (mCancelListener != null) {
+                    try {
+                        mCancelListener.onItemCancelClick(curAppointment.getAppointmentId());
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
+                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
+                if (mUnknownListener != null) {
+                    try {
+                        mUnknownListener.onItemUnknownClick(curAppointment.getAppointmentId());
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -83,12 +144,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         notifyDataSetChanged();
     }
 
-    class AppointmentHolder extends RecyclerView.ViewHolder {
+    public static class AppointmentHolder extends RecyclerView.ViewHolder {
         private TextView timeTv;
         private TextView patientTv;
         private TextView titleTv;
         private Button checkBtn;
-        private Button closeBtn;
+        private Button cancelBtn;
 
         public AppointmentHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,7 +157,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             patientTv = itemView.findViewById(R.id.tv_patient_name_appointment_cv);
             titleTv = itemView.findViewById(R.id.tv_title_appointment_cv);
             checkBtn = itemView.findViewById(R.id.btn_check_appointment_cv);
-            closeBtn = itemView.findViewById(R.id.btn_close_appointment_cv);
+            cancelBtn = itemView.findViewById(R.id.btn_close_appointment_cv);
         }
     }
 }

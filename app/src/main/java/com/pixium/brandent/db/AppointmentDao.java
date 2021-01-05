@@ -15,28 +15,31 @@ public interface AppointmentDao {
     List<Appointment> getAll();
 
     @Insert
-    public void insert(Appointment appointment);
+    void insert(Appointment appointment);
 
     @Update
-    public void update(Appointment appointment);
+    void update(Appointment appointment);
 
     @Delete
-    public void delete(Appointment appointment);
+    void delete(Appointment appointment);
 
     @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end ORDER BY visitTime ASC")
-    public List<Appointment> getByDate(long start, long end);
+    List<Appointment> getByDate(long start, long end);
 
     @Query("SELECT price FROM appointment WHERE visitTime BETWEEN :start AND :end " +
             "AND state = :argState")
-    public List<Integer> getIncomeByDate(long start, long end, String argState);
+    List<Integer> getIncomeByDate(long start, long end, String argState);
+
+    @Query("SELECT * FROM appointment WHERE appointmentId=:arg")
+    Appointment getById(int arg);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertAppointments(Appointment... appointments);
+    void insertAppointments(Appointment... appointments);
 
     @Update
-    public void updateAppointments(Appointment... appointments);
+    void updateAppointments(Appointment... appointments);
 
     @Delete
-    public void deleteAppointments(Appointment... appointments);
+    void deleteAppointments(Appointment... appointments);
 
 }

@@ -39,6 +39,23 @@ public class AppointmentRepository {
         return new GetAppointmentIncomeByDateAsyncTask(appointmentDao).execute(params).get();
     }
 
+    public Appointment getById(int id) throws ExecutionException, InterruptedException {
+        return new GetAppointmentByIdAsyncTask(appointmentDao).execute(id).get();
+    }
+
+
+    private static class GetAppointmentByIdAsyncTask extends AsyncTask<Integer, Void, Appointment> {
+        private AppointmentDao appointmentDao;
+
+        private GetAppointmentByIdAsyncTask(AppointmentDao appointmentDao) {
+            this.appointmentDao = appointmentDao;
+        }
+
+        @Override
+        protected Appointment doInBackground(Integer... integers) {
+            return appointmentDao.getById(integers[0]);
+        }
+    }
 
     private static class GetAppointmentsByDateAsyncTask extends AsyncTask<Long, Void, List<Appointment>> {
         private AppointmentDao appointmentDao;

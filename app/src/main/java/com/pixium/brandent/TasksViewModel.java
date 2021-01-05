@@ -26,6 +26,14 @@ public class TasksViewModel extends AndroidViewModel {
         return appointmentRepository.getByDate(start, end);
     }
 
+    public Appointment getAppointmentById(int id) throws ExecutionException, InterruptedException {
+        return appointmentRepository.getById(id);
+    }
+
+    public void updateAppointment(Appointment appointment) {
+        appointmentRepository.update(appointment);
+    }
+
     public Patient getPatientById(int id) throws ExecutionException, InterruptedException {
         return patientRepository.getPatientById(id);
     }

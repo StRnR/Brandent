@@ -74,10 +74,40 @@ public class TasksActivity extends AppCompatActivity {
         // Appointments RecyclerView
         RecyclerView appointmentsRv = findViewById(R.id.rv_appointments_tasks);
         appointmentsRv.setLayoutManager(new LinearLayoutManager(this));
-//        appointmentsRv.setHasFixedSize(true);
+        appointmentsRv.setHasFixedSize(true);
 
         AppointmentAdapter appointmentAdapter = new AppointmentAdapter();
         appointmentsRv.setAdapter(appointmentAdapter);
+
+        appointmentAdapter.setOnItemCheckClickListener(id -> {
+            Appointment curAppointment = tasksViewModel.getAppointmentById(id);
+            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
+                    , null, curAppointment.getClinicForId()
+                    , curAppointment.getPatientForId(), curAppointment.getVisitTime()
+                    , curAppointment.getPrice(), curAppointment.getTitle(), "DONE");
+            updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
+            tasksViewModel.updateAppointment(updateAppointment);
+        });
+
+        appointmentAdapter.setOnItemCancelClickListener(id -> {
+            Appointment curAppointment = tasksViewModel.getAppointmentById(id);
+            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
+                    , null, curAppointment.getClinicForId()
+                    , curAppointment.getPatientForId(), curAppointment.getVisitTime()
+                    , curAppointment.getPrice(), curAppointment.getTitle(), "CANCELED");
+            updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
+            tasksViewModel.updateAppointment(updateAppointment);
+        });
+
+        appointmentAdapter.setOnItemUnknownClickListener(id -> {
+            Appointment curAppointment = tasksViewModel.getAppointmentById(id);
+            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
+                    , null, curAppointment.getClinicForId()
+                    , curAppointment.getPatientForId(), curAppointment.getVisitTime()
+                    , curAppointment.getPrice(), curAppointment.getTitle(), "UNKNOWN");
+            updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
+            tasksViewModel.updateAppointment(updateAppointment);
+        });
 
 
         // Calendar RecyclerView
@@ -117,7 +147,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Calendar Items
         ArrayList<TasksCalendarItem> tasksCalendarItems = new ArrayList<>();
-        int dow = 0;
+        int dow;
         for (int i = 1; i <= pDate.getMonthDays(); i++) {
             if (i > pDate.getShDay())
                 dow = (((i - pDate.getShDay()) % 7) + pDate.dayOfWeek()) % 7;
@@ -158,8 +188,6 @@ public class TasksActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 calendarAdapter.setSelectedPos(position);
                 pDate.setShDay(position + 1);
-//                PersianDateFormat pdformater1 = new PersianDateFormat("Y/m/d");
-//                String string = pdformater1.format(pDate);
                 startCal.set(Calendar.YEAR, pDate.getGrgYear());
                 startCal.set(Calendar.MONTH, pDate.getGrgMonth() - 1);
                 startCal.set(Calendar.DAY_OF_MONTH, pDate.getGrgDay());
