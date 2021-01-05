@@ -13,6 +13,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/user_profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:fontFamily="@font/vazir_medium"
-        android:text=" یک شنبه ۳۰ شهریور"
         android:textColor="#888aa6"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/civ_user_home"

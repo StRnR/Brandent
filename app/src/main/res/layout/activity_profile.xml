@@ -78,6 +78,7 @@
         android:drawableEnd="@drawable/ic_patients_profile"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:stateListAnimator="@null"
         app:layout_constraintTop_toBottomOf="@id/tv_premium_days_profile" />
 
     <TextView
@@ -105,6 +106,7 @@
         android:drawableEnd="@drawable/ic_disease"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:stateListAnimator="@null"
         app:layout_constraintTop_toBottomOf="@id/btn_patients_profile" />
 
     <TextView
@@ -132,6 +134,7 @@
         android:drawableEnd="@drawable/ic_clinic"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:stateListAnimator="@null"
         app:layout_constraintTop_toBottomOf="@id/btn_disease_profile" />
 
     <TextView
@@ -159,6 +162,7 @@
         android:drawableEnd="@drawable/ic_settings"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:stateListAnimator="@null"
         app:layout_constraintTop_toBottomOf="@id/btn_clinics_profile" />
 
     <TextView
@@ -186,6 +190,7 @@
         android:fontFamily="@font/vazir_regular"
         android:paddingStart="24dp"
         android:paddingEnd="12dp"
+        android:stateListAnimator="@null"
         android:text="درباره ما"
         android:textColor="@color/black"
         android:textSize="14sp"

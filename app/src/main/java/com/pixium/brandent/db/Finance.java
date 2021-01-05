@@ -1,5 +1,6 @@
 package com.pixium.brandent.db;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -12,6 +13,7 @@ public class Finance {
 
     private UUID uuid;
 
+    @ColumnInfo(name = "price")
     private int price;
 
     private String title;

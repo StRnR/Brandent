@@ -46,7 +46,7 @@
         android:id="@+id/et_title_finance_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_et_rounded_rectangle"
@@ -66,7 +66,7 @@
         android:id="@+id/et_amount_finance_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_et_rounded_rectangle"
@@ -74,13 +74,64 @@
         android:gravity="right"
         android:hint="مقدار (تومان)"
         android:imeOptions="actionNext"
-        android:inputType="text"
+        android:inputType="number"
         android:maxLines="1"
         android:padding="16dp"
         android:textColor="@color/black"
         android:textColorHint="@color/hintGrey"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/et_title_finance_add" />
+
+    <Spinner
+        android:id="@+id/spinner_type_finance_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_et_rounded_rectangle"
+        app:layout_constraintTop_toBottomOf="@id/et_amount_finance_add" />
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toBottomOf="@id/spinner_type_finance_add"
+        app:layout_constraintStart_toStartOf="@+id/spinner_type_finance_add"
+        app:layout_constraintTop_toTopOf="@id/spinner_type_finance_add" />
+
+    <Button
+        android:id="@+id/btn_date_finance_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_et_rounded_rectangle"
+        android:drawableEnd="@drawable/ic_calendar"
+        android:drawablePadding="12dp"
+        android:fontFamily="@font/vazir_regular"
+        android:gravity="start"
+        android:padding="16dp"
+        android:stateListAnimator="@null"
+        android:text="تاریخ"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/spinner_type_finance_add" />
+
+    <Button
+        android:id="@+id/btn_submit_finance_add"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_rounded_orange_btn"
+        android:fontFamily="@font/vazir_bold"
+        android:text="ثبت"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_date_finance_add" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

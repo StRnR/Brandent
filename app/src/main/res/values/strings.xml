@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Brandent</string>
-    <string-array name="appointment_category">
+
+    <string-array name="finance_type">
         <item></item>
-        <item>عصب کشی</item>
-        <item>پر کردن</item>
-        <item>ایمپلنت</item>
+        <item>خرج</item>
+        <item>درآمد</item>
     </string-array>
 </resources>

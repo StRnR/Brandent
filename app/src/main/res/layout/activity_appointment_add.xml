@@ -94,6 +94,7 @@
         android:fontFamily="@font/vazir_regular"
         android:gravity="start"
         android:padding="16dp"
+        android:stateListAnimator="@null"
         android:text="تاریخ و ساعت"
         android:textColor="@color/black"
         android:textSize="16sp"

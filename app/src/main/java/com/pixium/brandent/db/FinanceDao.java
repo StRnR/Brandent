@@ -3,7 +3,10 @@ package com.pixium.brandent.db;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.Query;
 import androidx.room.Update;
+
+import java.util.List;
 
 @Dao
 public interface FinanceDao {
@@ -15,4 +18,8 @@ public interface FinanceDao {
 
     @Delete
     void delete(Finance finance);
+
+    @Query("SELECT price FROM finances WHERE date BETWEEN :start AND :end AND type = :argType " +
+            "ORDER BY date ASC")
+    public List<Integer> getFinanceSumByDateAndType(long start, long end, String argType);
 }

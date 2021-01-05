@@ -10,10 +10,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pixium.brandent.db.FinanceViewModel;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import saman.zamani.persiandate.PersianDate;
 
 public class FinanceActivity extends AppCompatActivity {
+    private FinanceViewModel financeViewModel;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
@@ -30,6 +39,10 @@ public class FinanceActivity extends AppCompatActivity {
         TextView visitsSumTv = findViewById(R.id.tv_visits_sum_finance);
         TextView manualIncomeTv = findViewById(R.id.tv_manual_income_finance);
         TextView manualExpenseTv = findViewById(R.id.tv_manual_expense_finance);
+
+        financeViewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
+                get(FinanceViewModel.class);
 
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.finance_page);
@@ -62,6 +75,84 @@ public class FinanceActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        // Filling Finance Data
+        PersianDate pDate = new PersianDate();
+        pDate.setShDay(1);
+
+        Calendar startCal = Calendar.getInstance();
+        startCal.set(Calendar.YEAR, pDate.getGrgYear());
+        startCal.set(Calendar.MONTH, pDate.getGrgMonth() - 1);
+        startCal.set(Calendar.DAY_OF_MONTH, pDate.getGrgDay());
+        startCal.set(Calendar.HOUR_OF_DAY, 0);
+        startCal.set(Calendar.MINUTE, 0);
+        startCal.set(Calendar.SECOND, 0);
+        startCal.set(Calendar.MILLISECOND, 0);
+
+        pDate.setShDay(pDate.getMonthDays());
+        Calendar endCal = Calendar.getInstance();
+        endCal.set(Calendar.YEAR, pDate.getGrgYear());
+        endCal.set(Calendar.MONTH, pDate.getGrgMonth() - 1);
+        endCal.set(Calendar.DAY_OF_MONTH, pDate.getGrgDay());
+        endCal.set(Calendar.HOUR_OF_DAY, 0);
+        endCal.set(Calendar.MINUTE, 0);
+        endCal.set(Calendar.SECOND, 0);
+        endCal.set(Calendar.MILLISECOND, 0);
+
+        // Visits Sum
+        AppointmentIncomeTaskParams appointmentParams = new AppointmentIncomeTaskParams(
+                startCal.getTimeInMillis(), endCal.getTimeInMillis(), "DONE");
+        List<Integer> appointmentIncomes;
+        int visitSum = 0;
+        try {
+            appointmentIncomes = financeViewModel.getAppointmentIncomeByDate(appointmentParams);
+            for (Integer amount : appointmentIncomes) {
+                visitSum += amount;
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        String visitsStr = visitSum + " " + visitsSumTv.getText().toString();
+        visitsSumTv.setText(visitsStr);
+
+        // External Income Sum
+        FinanceTaskParams incomeParams = new FinanceTaskParams(startCal.getTimeInMillis()
+                , endCal.getTimeInMillis(), "INCOME");
+        List<Integer> externalIncomes;
+        int externalIncomeSum = 0;
+        try {
+            externalIncomes = financeViewModel.getFianceSumByDateAndType(incomeParams);
+            for (Integer amount : externalIncomes) {
+                externalIncomeSum += amount;
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        String externalIncomeStr = externalIncomeSum + " " + manualIncomeTv.getText().toString();
+        manualIncomeTv.setText(externalIncomeStr);
+
+        // External Expense Sum
+        FinanceTaskParams expenseParams = new FinanceTaskParams(startCal.getTimeInMillis()
+                , endCal.getTimeInMillis(), "EXPENSE");
+        List<Integer> externalExpenses;
+        int externalExpenseSum = 0;
+        try {
+            externalExpenses = financeViewModel.getFianceSumByDateAndType(expenseParams);
+            for (Integer amount : externalExpenses) {
+                externalExpenseSum += amount;
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        String externalExpenseStr = externalExpenseSum + " " + manualExpenseTv.getText().toString();
+        manualExpenseTv.setText(externalExpenseStr);
+
+        // Total Sum
+        String totalSumStr = (visitSum + externalIncomeSum - externalExpenseSum) + " "
+                + sumTv.getText().toString();
+        sumTv.setText(totalSumStr);
+
 
         addBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddFinanceActivity.class)));
 

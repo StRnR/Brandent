@@ -26,6 +26,10 @@ public interface AppointmentDao {
     @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end ORDER BY visitTime ASC")
     public List<Appointment> getByDate(long start, long end);
 
+    @Query("SELECT price FROM appointment WHERE visitTime BETWEEN :start AND :end " +
+            "AND state = :argState")
+    public List<Integer> getIncomeByDate(long start, long end, String argState);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertAppointments(Appointment... appointments);
 

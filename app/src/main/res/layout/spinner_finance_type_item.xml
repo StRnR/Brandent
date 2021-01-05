@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_et_rounded_rectangle"
     android:fontFamily="@font/vazir_medium"
-    android:gravity="right"
+    android:gravity="start"
+    android:hint="نوع"
     android:padding="16dp"
     android:textColor="@color/black"
-    android:textColorHint="@color/hintGrey"
+    android:textColorHint="@color/black"
     android:textSize="16sp" />

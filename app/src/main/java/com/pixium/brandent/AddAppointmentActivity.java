@@ -32,8 +32,6 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
     private String patientPhone;
     private String clinicTitle;
     private int patientId;
-    private int visitHour;
-    private int visitMin;
     private Calendar visitCalendar;
 
     private AddAppointmentViewModel addAppointmentViewModel;
@@ -166,7 +164,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         visitCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         visitCalendar.set(Calendar.MINUTE, minute);
-        String tmpStr = dateTimeBtn.getText().toString() + " - " + visitHour + ":" + visitMin;
+        String tmpStr = dateTimeBtn.getText().toString() + " - " + hourOfDay + ":" + minute;
         dateTimeBtn.setText(tmpStr);
     }
 }
