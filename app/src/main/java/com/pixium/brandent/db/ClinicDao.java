@@ -29,6 +29,9 @@ public interface ClinicDao {
     @Query("SELECT * FROM clinics WHERE title LIKE :argTitle")
     List<Clinic> getClinicByTitle(String argTitle);
 
+    @Query("SELECT * FROM clinics WHERE clinicId=:arg")
+    Clinic getById(int arg);
+
     @Query("SELECT * FROM clinics WHERE clinicId=:argId")
     LiveData<Clinic> getClinicById(int argId);
 

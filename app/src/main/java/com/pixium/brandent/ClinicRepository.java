@@ -46,6 +46,11 @@ public class ClinicRepository {
         return new GetClinicByTitleAsyncTask(clinicDao).execute(title).get();
     }
 
+    public Clinic getById(int id) throws ExecutionException, InterruptedException {
+        return new GetClinicByIdAsyncTask(clinicDao).execute(id).get();
+    }
+
+
     private static class InsertClinicAsyncTask extends AsyncTask<Clinic, Void, Void> {
         private ClinicDao clinicDao;
 
@@ -114,4 +119,16 @@ public class ClinicRepository {
         }
     }
 
+    private static class GetClinicByIdAsyncTask extends AsyncTask<Integer, Void, Clinic> {
+        private ClinicDao clinicDao;
+
+        private GetClinicByIdAsyncTask(ClinicDao clinicDao) {
+            this.clinicDao = clinicDao;
+        }
+
+        @Override
+        protected Clinic doInBackground(Integer... integers) {
+            return clinicDao.getById(integers[0]);
+        }
+    }
 }

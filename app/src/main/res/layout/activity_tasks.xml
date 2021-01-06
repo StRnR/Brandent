@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
+    android:layoutDirection="ltr"
     tools:context=".TasksActivity">
 
     <ImageView
@@ -80,9 +81,9 @@
         android:layout_height="0dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="16dp"
-        tools:listitem="@layout/appointment_item"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintTop_toBottomOf="@id/rv_calendar_tasks" />
+        app:layout_constraintTop_toBottomOf="@id/rv_calendar_tasks"
+        tools:listitem="@layout/appointment_item" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

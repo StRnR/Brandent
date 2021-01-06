@@ -149,9 +149,12 @@ public class FinanceActivity extends AppCompatActivity {
         manualExpenseTv.setText(externalExpenseStr);
 
         // Total Sum
-        String totalSumStr = (visitSum + externalIncomeSum - externalExpenseSum) + " "
-                + sumTv.getText().toString();
+        int totalSum = visitSum + externalIncomeSum - externalExpenseSum;
+        String totalSumStr = totalSum + " " + sumTv.getText().toString();
         sumTv.setText(totalSumStr);
+        if (totalSum < 0) {
+            sumTv.setTextColor(getResources().getColor(R.color.expenseRed));
+        }
 
 
         addBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddFinanceActivity.class)));

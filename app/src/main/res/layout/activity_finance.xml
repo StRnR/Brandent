@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
+    android:layoutDirection="ltr"
     tools:context=".FinanceActivity">
 
     <TextView
@@ -26,9 +27,9 @@
         android:layout_height="44dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/bg_add_finance"
+        app:layout_constraintBottom_toBottomOf="@id/tv_header_finance"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_header_finance"
-        app:layout_constraintBottom_toBottomOf="@id/tv_header_finance"/>
+        app:layout_constraintTop_toTopOf="@id/tv_header_finance" />
 
     <Button
         android:id="@+id/btn_hide_finance"
