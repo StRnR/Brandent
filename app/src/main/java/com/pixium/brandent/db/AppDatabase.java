@@ -7,6 +7,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.pixium.brandent.db.converters.TimestampConverters;
+import com.pixium.brandent.db.converters.UUIDConverters;
+import com.pixium.brandent.db.daos.AppointmentDao;
+import com.pixium.brandent.db.daos.ClinicDao;
+import com.pixium.brandent.db.daos.FinanceDao;
+import com.pixium.brandent.db.daos.PatientDao;
+import com.pixium.brandent.db.entities.Appointment;
+import com.pixium.brandent.db.entities.Clinic;
+import com.pixium.brandent.db.entities.Finance;
+import com.pixium.brandent.db.entities.Patient;
+
 @Database(entities = {Appointment.class, Clinic.class, Patient.class, Finance.class}, version = 1)
 @TypeConverters({TimestampConverters.class, UUIDConverters.class})
 public abstract class AppDatabase extends RoomDatabase {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
     android:layoutDirection="ltr"
-    tools:context=".FinanceActivity">
+    tools:context=".views.FinanceActivity">
 
     <TextView
         android:id="@+id/tv_header_finance"

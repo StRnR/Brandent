@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
     android:layoutDirection="ltr"
-    tools:context=".ClinicActivity">
+    tools:context=".views.ClinicActivity">
 
     <ImageView
         android:id="@+id/iv_header_clinics"

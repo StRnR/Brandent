@@ -3,8 +3,8 @@ package com.pixium.brandent.db;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import com.pixium.brandent.db.Appointment;
-import com.pixium.brandent.db.Clinic;
+import com.pixium.brandent.db.entities.Appointment;
+import com.pixium.brandent.db.entities.Clinic;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
     android:layoutDirection="ltr"
-    tools:context=".HomeActivity">
+    tools:context=".views.HomeActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_user_home"

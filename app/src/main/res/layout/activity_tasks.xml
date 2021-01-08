@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
     android:layoutDirection="ltr"
-    tools:context=".TasksActivity">
+    tools:context=".views.TasksActivity">
 
     <ImageView
         android:id="@+id/iv_header_bg_tasks"

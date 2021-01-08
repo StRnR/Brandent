@@ -9,27 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PatientDetailActivity"></activity>
-        <activity android:name=".AddPatientActivity" />
-        <activity android:name=".PatientsActivity" />
+        <activity android:name=".views.PatientDetailActivity"></activity>
+        <activity android:name=".views.AddPatientActivity" />
+        <activity android:name=".views.PatientsActivity" />
         <activity
-            android:name=".AddFinanceActivity"
-            android:parentActivityName=".ClinicActivity" />
-        <activity android:name=".AddEditClinicActivity" />
+            android:name=".views.AddFinanceActivity"
+            android:parentActivityName=".views.ClinicActivity" />
+        <activity android:name=".views.AddEditClinicActivity" />
         <activity
-            android:name=".ClinicActivity"
+            android:name=".views.ClinicActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".FinanceActivity" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".views.ProfileActivity" />
+        <activity android:name=".views.FinanceActivity" />
+        <activity android:name=".views.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TasksActivity" />
-        <activity android:name=".AddAppointmentActivity" />
+        <activity android:name=".views.TasksActivity" />
+        <activity android:name=".views.AddAppointmentActivity" />
     </application>
 
 </manifest>
