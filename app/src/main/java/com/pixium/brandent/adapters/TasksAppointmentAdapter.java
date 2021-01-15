@@ -11,15 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pixium.brandent.R;
 import com.pixium.brandent.db.entities.Appointment;
-import com.pixium.brandent.models.AppointmentCardModel;
+import com.pixium.brandent.models.TasksAppointmentCardModel;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
-    private List<AppointmentCardModel> appointments = new ArrayList<>();
+public class TasksAppointmentAdapter extends
+        RecyclerView.Adapter<TasksAppointmentAdapter.AppointmentHolder> {
+    private List<TasksAppointmentCardModel> appointments = new ArrayList<>();
     private OnItemCheckClickListener mCheckListener;
     private OnItemCancelClickListener mCancelListener;
     private OnItemUnknownClickListener mUnknownListener;
@@ -51,14 +52,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     @NonNull
     @Override
     public AppointmentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_item,
-                parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.tasks_appointment_item, parent, false);
         return new AppointmentHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AppointmentHolder holder, int position) {
-        AppointmentCardModel current = appointments.get(position);
+        TasksAppointmentCardModel current = appointments.get(position);
         Appointment curAppointment = current.getAppointment();
         Timestamp timestamp = new Timestamp(curAppointment.getVisitTime());
         String timeStr = Character.toString(timestamp.toString().charAt(11))
@@ -141,25 +142,25 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         return appointments.size();
     }
 
-    public void setAppointments(List<AppointmentCardModel> appointments) {
+    public void setAppointments(List<TasksAppointmentCardModel> appointments) {
         this.appointments = appointments;
         notifyDataSetChanged();
     }
 
     public static class AppointmentHolder extends RecyclerView.ViewHolder {
-        private TextView timeTv;
-        private TextView patientTv;
-        private TextView titleTv;
-        private Button checkBtn;
-        private Button cancelBtn;
+        private final TextView timeTv;
+        private final TextView patientTv;
+        private final TextView titleTv;
+        private final Button checkBtn;
+        private final Button cancelBtn;
 
         public AppointmentHolder(@NonNull View itemView) {
             super(itemView);
-            timeTv = itemView.findViewById(R.id.tv_time_appointment_cv);
-            patientTv = itemView.findViewById(R.id.tv_patient_name_appointment_cv);
-            titleTv = itemView.findViewById(R.id.tv_title_appointment_cv);
-            checkBtn = itemView.findViewById(R.id.btn_check_appointment_cv);
-            cancelBtn = itemView.findViewById(R.id.btn_close_appointment_cv);
+            timeTv = itemView.findViewById(R.id.tv_time_tasks_appointment_cv);
+            patientTv = itemView.findViewById(R.id.tv_patient_name_tasks_appointment_cv);
+            titleTv = itemView.findViewById(R.id.tv_title_tasks_appointment_cv);
+            checkBtn = itemView.findViewById(R.id.btn_check_tasks_appointment_cv);
+            cancelBtn = itemView.findViewById(R.id.btn_cancel_tasks_appointment_cv);
         }
     }
 }

@@ -38,15 +38,17 @@ public class PatientRepository {
         return allPatients;
     }
 
-    public List<Patient> findPatientsByName(String string) throws ExecutionException, InterruptedException {
+    public List<Patient> findPatientsByName(String string)
+            throws ExecutionException, InterruptedException {
         return new FindPatientsByNameAsyncTask(patientDao).execute(string).get();
     }
 
-    public List<Patient> getPatientByNumber(String string) throws ExecutionException, InterruptedException {
+    public List<Patient> getPatientByNumber(String string)
+            throws ExecutionException, InterruptedException {
         return new GetPatientByNumberAsyncTask(patientDao).execute(string).get();
     }
 
-    public Patient getPatientById(int id) throws ExecutionException, InterruptedException {
+    public Patient getById(int id) throws ExecutionException, InterruptedException {
         return new GetPatientByIdAsyncTask(patientDao).execute(id).get();
     }
 
@@ -93,7 +95,8 @@ public class PatientRepository {
         }
     }
 
-    private static class FindPatientsByNameAsyncTask extends AsyncTask<String, Void, List<Patient>> {
+    private static class FindPatientsByNameAsyncTask
+            extends AsyncTask<String, Void, List<Patient>> {
         private PatientDao patientDao;
 
         private FindPatientsByNameAsyncTask(PatientDao patientDao) {
@@ -106,7 +109,8 @@ public class PatientRepository {
         }
     }
 
-    private static class GetPatientByNumberAsyncTask extends AsyncTask<String, Void, List<Patient>> {
+    private static class GetPatientByNumberAsyncTask
+            extends AsyncTask<String, Void, List<Patient>> {
         private PatientDao patientDao;
 
         private GetPatientByNumberAsyncTask(PatientDao patientDao) {

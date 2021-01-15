@@ -83,7 +83,7 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toBottomOf="@id/rv_calendar_tasks"
-        tools:listitem="@layout/appointment_item" />
+        tools:listitem="@layout/tasks_appointment_item" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -28,6 +28,9 @@ public interface AppointmentDao {
     @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end ORDER BY visitTime ASC")
     List<Appointment> getByDate(long start, long end);
 
+    @Query("SELECT * FROM appointment WHERE patientForId=:arg")
+    List<Appointment> getByPatient(int arg);
+
     @Query("SELECT price FROM appointment WHERE visitTime BETWEEN :start AND :end " +
             "AND state = :argState")
     List<Integer> getIncomeByDate(long start, long end, String argState);

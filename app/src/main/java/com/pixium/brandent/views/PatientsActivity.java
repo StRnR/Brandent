@@ -1,5 +1,6 @@
 package com.pixium.brandent.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,13 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pixium.brandent.adapters.PatientAdapter;
 import com.pixium.brandent.R;
+import com.pixium.brandent.adapters.PatientAdapter;
 import com.pixium.brandent.db.entities.Patient;
 import com.pixium.brandent.viewmodels.PatientsViewModel;
 
@@ -43,11 +43,16 @@ public class PatientsActivity extends AppCompatActivity {
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
                 .get(PatientsViewModel.class);
 
-        patientsViewModel.getAllPatients().observe(this, new Observer<List<Patient>>() {
-            @Override
-            public void onChanged(List<Patient> patients) {
-                adapter.setPatients(patients);
-            }
+        patientsViewModel.getAllPatients().observe(this, adapter::setPatients);
+
+        adapter.setOnItemClickListener(patient -> {
+            Intent intent = new Intent(PatientsActivity.this
+                    , PatientDetailsActivity.class);
+            intent.putExtra(PatientDetailsActivity.EXTRA_ID, patient.getPatientId());
+            intent.putExtra(PatientDetailsActivity.EXTRA_NAME, patient.getName());
+            intent.putExtra(PatientDetailsActivity.EXTRA_PHONE, patient.getPhone());
+            intent.putExtra(PatientDetailsActivity.EXTRA_UUID, patient.getUuid());
+            startActivity(intent);
         });
 
         searchEt.addTextChangedListener(new TextWatcher() {
@@ -67,12 +72,7 @@ public class PatientsActivity extends AppCompatActivity {
                     }
                 } else {
                     patientsViewModel.getAllPatients()
-                            .observe(PatientsActivity.this, new Observer<List<Patient>>() {
-                                @Override
-                                public void onChanged(List<Patient> patients) {
-                                    adapter.setPatients(patients);
-                                }
-                            });
+                            .observe(PatientsActivity.this, adapter::setPatients);
                 }
             }
 

@@ -16,11 +16,13 @@ import java.util.List;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientHolder> {
     private List<Patient> patients = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
     public PatientHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_item
+                , parent, false);
         return new PatientHolder(itemView);
     }
 
@@ -42,13 +44,28 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientH
     }
 
     class PatientHolder extends RecyclerView.ViewHolder {
-        private TextView nameTv;
-        private TextView phoneTv;
+        private final TextView nameTv;
+        private final TextView phoneTv;
 
         public PatientHolder(@NonNull View itemView) {
             super(itemView);
             nameTv = itemView.findViewById(R.id.tv_patient_name_cv);
             phoneTv = itemView.findViewById(R.id.tv_patient_phone_cv);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(patients.get(position));
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Patient patient);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

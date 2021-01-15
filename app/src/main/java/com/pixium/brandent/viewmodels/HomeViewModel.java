@@ -42,6 +42,6 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public Patient getPatientById(int id) throws ExecutionException, InterruptedException {
-        return patientRepository.getPatientById(id);
+        return patientRepository.getById(id);
     }
 }
