@@ -40,6 +40,11 @@ public class PatientDetailsViewModel extends AndroidViewModel {
         return patientRepository.getById(id);
     }
 
+    public List<Patient> getPatientByPhone(String phone)
+            throws ExecutionException, InterruptedException {
+        return patientRepository.getPatientByNumber(phone);
+    }
+
     public Appointment getAppointmentById(int id) throws ExecutionException, InterruptedException {
         return appointmentRepository.getById(id);
     }

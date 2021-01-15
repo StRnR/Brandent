@@ -1,7 +1,9 @@
 package com.pixium.brandent.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pixium.brandent.R;
 import com.pixium.brandent.adapters.PatientAppointmentAdapter;
 import com.pixium.brandent.db.entities.Appointment;
+import com.pixium.brandent.db.entities.Patient;
 import com.pixium.brandent.viewmodels.PatientDetailsViewModel;
 
 import java.util.List;
@@ -24,8 +27,9 @@ public class PatientDetailsActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "com.pixium.brandent.views.EXTRA_ID";
     public static final String EXTRA_NAME = "com.pixium.brandent.views.EXTRA_NAME";
     public static final String EXTRA_PHONE = "com.pixium.brandent.views.EXTRA_PHONE";
-    public static final String EXTRA_UUID = "com.pixium.brandent.views.EXTRA_UUID";
 
+    private static boolean editPhoneToggled = false;
+    private static boolean editNameToggled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,9 @@ public class PatientDetailsActivity extends AppCompatActivity {
         appointmentsRv.setHasFixedSize(true);
 
         phoneEt.setEnabled(false);
+        editPhoneToggled = false;
         nameEt.setEnabled(false);
+        editNameToggled = false;
 
 
         Intent intent = getIntent();
@@ -140,6 +146,94 @@ public class PatientDetailsActivity extends AppCompatActivity {
                 adapter.setAppointments(appointments);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
+            }
+        });
+
+
+        // Edit Name/Phone
+        editPhoneTv.setOnClickListener(v -> {
+            if (!editPhoneToggled) {
+                phoneEt.setEnabled(true);
+                phoneEt.setFocusableInTouchMode(true);
+                phoneEt.requestFocus();
+                final InputMethodManager inputMethodManager = (InputMethodManager) this
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(phoneEt, InputMethodManager.SHOW_IMPLICIT);
+                phoneEt.setSelection(phoneEt.length());
+                editPhoneTv.setText("ثبت");
+                editPhoneToggled = !editPhoneToggled;
+            } else {
+                if (!phoneEt.getText().toString().equals("")) {
+                    try {
+                        List<Patient> exitingPatients = patientDetailsViewModel.
+                                getPatientByPhone(phoneEt.getText().toString());
+                        if (exitingPatients.size() > 0) {
+                            if (exitingPatients.size() == 1 &&
+                                    exitingPatients.get(0).getPatientId() == patientId) {
+                                phoneEt.setEnabled(false);
+                                editPhoneTv.setText("ویرایش");
+                                editPhoneToggled = !editPhoneToggled;
+                                Toast.makeText(this, "Patient successfully updated"
+                                        , Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this
+                                        , "Please enter a unique phone number for your patient"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Patient patient = patientDetailsViewModel
+                                    .getPatientById(patientId);
+                            Patient updatePatient = new Patient(patient.getUuid(), null
+                                    , patient.getName(), phoneEt.getText().toString());
+                            updatePatient.setPatientId(patientId);
+                            patientDetailsViewModel.updatePatient(updatePatient);
+                            phoneEt.setEnabled(false);
+                            editPhoneTv.setText("ویرایش");
+                            editPhoneToggled = !editPhoneToggled;
+                            Toast.makeText(this, "Patient successfully updated"
+                                    , Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(this, "Please enter a phone number for your patient"
+                            , Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        editNameTv.setOnClickListener(v -> {
+            if (!editNameToggled) {
+                nameEt.setEnabled(true);
+                nameEt.setFocusableInTouchMode(true);
+                nameEt.requestFocus();
+                final InputMethodManager inputMethodManager = (InputMethodManager) this
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(nameEt, InputMethodManager.SHOW_IMPLICIT);
+                nameEt.setSelection(nameEt.length());
+                editNameTv.setText("ثبت");
+                editNameToggled = !editNameToggled;
+            } else {
+                if (!nameEt.getText().toString().equals("")) {
+                    try {
+                        Patient patient = patientDetailsViewModel.getPatientById(patientId);
+                        Patient updatePatient = new Patient(patient.getUuid(), null
+                                , nameEt.getText().toString(), patient.getPhone());
+                        updatePatient.setPatientId(patientId);
+                        patientDetailsViewModel.updatePatient(updatePatient);
+                        nameEt.setEnabled(false);
+                        editNameTv.setText("ویرایش");
+                        editNameToggled = !editNameToggled;
+                        Toast.makeText(this, "Patient successfully updated"
+                                , Toast.LENGTH_SHORT).show();
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(this, "Please enter a name for your patient"
+                            , Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

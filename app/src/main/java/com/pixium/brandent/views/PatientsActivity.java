@@ -51,7 +51,6 @@ public class PatientsActivity extends AppCompatActivity {
             intent.putExtra(PatientDetailsActivity.EXTRA_ID, patient.getPatientId());
             intent.putExtra(PatientDetailsActivity.EXTRA_NAME, patient.getName());
             intent.putExtra(PatientDetailsActivity.EXTRA_PHONE, patient.getPhone());
-            intent.putExtra(PatientDetailsActivity.EXTRA_UUID, patient.getUuid());
             startActivity(intent);
         });
 
