@@ -3,16 +3,17 @@ package com.pixium.brandent.repos;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import com.pixium.brandent.models.FinanceTaskParams;
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.db.AppDatabase;
-import com.pixium.brandent.db.entities.Finance;
 import com.pixium.brandent.db.daos.FinanceDao;
+import com.pixium.brandent.db.entities.Finance;
+import com.pixium.brandent.models.FinanceTaskParams;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class FinanceRepository {
-    private FinanceDao financeDao;
+    private final FinanceDao financeDao;
 
     public FinanceRepository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);
@@ -88,7 +89,8 @@ public class FinanceRepository {
 
         @Override
         protected List<Integer> doInBackground(FinanceTaskParams... params) {
-            return financeDao.getFinanceSumByDateAndType(params[0].start, params[0].end, params[0].type);
+            return financeDao.getFinanceSumByDateAndType(params[0].start, params[0].end
+                    , params[0].type, ActiveUser.getInstance().getId());
         }
     }
 }

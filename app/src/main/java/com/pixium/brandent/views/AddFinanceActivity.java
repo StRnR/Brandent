@@ -14,9 +14,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.pixium.brandent.viewmodels.AddFinanceViewModel;
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.R;
 import com.pixium.brandent.db.entities.Finance;
+import com.pixium.brandent.viewmodels.AddFinanceViewModel;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -105,11 +106,10 @@ public class AddFinanceActivity extends AppCompatActivity implements AdapterView
                 Toast.makeText(this, "Please select either expense or income"
                         , Toast.LENGTH_SHORT).show();
             } else {
-                Finance finance = new Finance(null, null
-                        , visitCalendar.getTimeInMillis()
+                Finance finance = new Finance(ActiveUser.getInstance().getId(), null
+                        , null, visitCalendar.getTimeInMillis()
                         , Integer.parseInt(amountEt.getText().toString())
-                        , titleEt.getText().toString()
-                        , financeType);
+                        , titleEt.getText().toString(), financeType);
                 addFinanceViewModel.insertFinance(finance);
                 startActivity(new Intent(this, FinanceActivity.class));
             }

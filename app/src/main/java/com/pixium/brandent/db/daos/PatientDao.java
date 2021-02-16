@@ -22,16 +22,16 @@ public interface PatientDao {
     @Delete
     void delete(Patient patient);
 
-    @Query("SELECT * FROM patient")
-    LiveData<List<Patient>> getAllPatients();
+    @Query("SELECT * FROM patient WHERE dentistForId=:activeUserId")
+    LiveData<List<Patient>> getAllPatients(int activeUserId);
 
-    @Query("SELECT * FROM patient WHERE name LIKE '%' || :arg || '%'")
-    List<Patient> findPatientsByName(String arg);
+    @Query("SELECT * FROM patient WHERE name LIKE '%' || :arg || '%' AND dentistForId=:activeUserId")
+    List<Patient> findPatientsByName(String arg, int activeUserId);
 
-    @Query("SELECT * FROM patient WHERE phone LIKE :arg")
-    List<Patient> getPatientByNumber(String arg);
+    @Query("SELECT * FROM patient WHERE phone LIKE :arg AND dentistForId=:activeUserId")
+    List<Patient> getPatientByNumber(String arg, int activeUserId);
 
-    @Query("SELECT * FROM patient WHERE patientId=:arg")
-    Patient getPatientById(int arg);
+    @Query("SELECT * FROM patient WHERE patientId=:arg AND dentistForId=:activeUserId")
+    Patient getPatientById(int arg, int activeUserId);
 
 }

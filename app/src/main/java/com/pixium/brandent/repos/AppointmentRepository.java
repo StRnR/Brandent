@@ -3,6 +3,7 @@ package com.pixium.brandent.repos;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.db.AppDatabase;
 import com.pixium.brandent.db.daos.AppointmentDao;
 import com.pixium.brandent.db.entities.Appointment;
@@ -59,7 +60,7 @@ public class AppointmentRepository {
 
         @Override
         protected Appointment doInBackground(Integer... integers) {
-            return appointmentDao.getById(integers[0]);
+            return appointmentDao.getById(integers[0], ActiveUser.getInstance().getId());
         }
     }
 
@@ -73,7 +74,7 @@ public class AppointmentRepository {
 
         @Override
         protected List<Appointment> doInBackground(Long... longs) {
-            return appointmentDao.getByDate(longs[0], longs[1]);
+            return appointmentDao.getByDate(longs[0], longs[1], ActiveUser.getInstance().getId());
         }
     }
 
@@ -87,7 +88,7 @@ public class AppointmentRepository {
 
         @Override
         protected List<Appointment> doInBackground(Integer... integers) {
-            return appointmentDao.getByPatient(integers[0]);
+            return appointmentDao.getByPatient(integers[0], ActiveUser.getInstance().getId());
         }
     }
 
@@ -101,7 +102,8 @@ public class AppointmentRepository {
 
         @Override
         protected List<Integer> doInBackground(AppointmentIncomeTaskParams... params) {
-            return appointmentDao.getIncomeByDate(params[0].start, params[0].end, params[0].state);
+            return appointmentDao.getIncomeByDate(params[0].start, params[0].end, params[0].state
+                    , ActiveUser.getInstance().getId());
         }
     }
 

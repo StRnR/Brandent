@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class FinanceViewModel extends AndroidViewModel {
-    private FinanceRepository financeRepository;
-    private AppointmentRepository appointmentRepository;
+    private final FinanceRepository financeRepository;
+    private final AppointmentRepository appointmentRepository;
 
 
     public FinanceViewModel(@NonNull Application application) {

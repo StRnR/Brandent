@@ -57,13 +57,11 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        clinicsBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), ClinicActivity.class));
-        });
+        clinicsBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext()
+                , ClinicActivity.class)));
 
-        patientsBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), PatientsActivity.class));
-        });
+        patientsBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext()
+                , PatientsActivity.class)));
 
 
     }

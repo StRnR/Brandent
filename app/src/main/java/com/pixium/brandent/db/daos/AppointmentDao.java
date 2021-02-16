@@ -3,7 +3,6 @@ package com.pixium.brandent.db.daos;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -25,26 +24,18 @@ public interface AppointmentDao {
     @Delete
     void delete(Appointment appointment);
 
-    @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end ORDER BY visitTime ASC")
-    List<Appointment> getByDate(long start, long end);
+    @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end " +
+            "AND dentistForId=:activeUserId ORDER BY visitTime ASC")
+    List<Appointment> getByDate(long start, long end, int activeUserId);
 
-    @Query("SELECT * FROM appointment WHERE patientForId=:arg")
-    List<Appointment> getByPatient(int arg);
+    @Query("SELECT * FROM appointment WHERE patientForId=:arg AND dentistForId=:activeUserId")
+    List<Appointment> getByPatient(int arg, int activeUserId);
 
     @Query("SELECT price FROM appointment WHERE visitTime BETWEEN :start AND :end " +
-            "AND state = :argState")
-    List<Integer> getIncomeByDate(long start, long end, String argState);
+            "AND state = :argState AND dentistForId=:activeUserId")
+    List<Integer> getIncomeByDate(long start, long end, String argState, int activeUserId);
 
-    @Query("SELECT * FROM appointment WHERE appointmentId=:arg")
-    Appointment getById(int arg);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAppointments(Appointment... appointments);
-
-    @Update
-    void updateAppointments(Appointment... appointments);
-
-    @Delete
-    void deleteAppointments(Appointment... appointments);
+    @Query("SELECT * FROM appointment WHERE appointmentId=:arg AND dentistForId=:activeUserId")
+    Appointment getById(int arg, int activeUserId);
 
 }

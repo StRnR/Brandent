@@ -5,21 +5,22 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.db.AppDatabase;
-import com.pixium.brandent.db.entities.Patient;
 import com.pixium.brandent.db.daos.PatientDao;
+import com.pixium.brandent.db.entities.Patient;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PatientRepository {
-    private PatientDao patientDao;
+    private final PatientDao patientDao;
     private LiveData<List<Patient>> allPatients;
 
     public PatientRepository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);
         patientDao = database.patientDao();
-        allPatients = patientDao.getAllPatients();
+        allPatients = patientDao.getAllPatients(ActiveUser.getInstance().getId());
     }
 
     public void insert(Patient patient) {
@@ -105,7 +106,7 @@ public class PatientRepository {
 
         @Override
         protected List<Patient> doInBackground(String... strings) {
-            return patientDao.findPatientsByName(strings[0]);
+            return patientDao.findPatientsByName(strings[0], ActiveUser.getInstance().getId());
         }
     }
 
@@ -119,7 +120,7 @@ public class PatientRepository {
 
         @Override
         protected List<Patient> doInBackground(String... strings) {
-            return patientDao.getPatientByNumber(strings[0]);
+            return patientDao.getPatientByNumber(strings[0], ActiveUser.getInstance().getId());
         }
     }
 
@@ -132,7 +133,7 @@ public class PatientRepository {
 
         @Override
         protected Patient doInBackground(Integer... integers) {
-            return patientDao.getPatientById(integers[0]);
+            return patientDao.getPatientById(integers[0], ActiveUser.getInstance().getId());
         }
     }
 }

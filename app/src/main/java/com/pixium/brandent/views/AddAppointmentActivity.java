@@ -13,11 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.pixium.brandent.viewmodels.AddAppointmentViewModel;
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.R;
 import com.pixium.brandent.db.entities.Appointment;
 import com.pixium.brandent.db.entities.Clinic;
 import com.pixium.brandent.db.entities.Patient;
+import com.pixium.brandent.viewmodels.AddAppointmentViewModel;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -124,36 +125,44 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
 
         submitBtn.setOnClickListener(v -> {
             if (patientId == -1) {
-                Patient patient = new Patient(null, null, patientName, patientPhone);
+                Patient patient = new Patient(ActiveUser.getInstance().getId(), null
+                        , null, patientName, patientPhone);
                 addAppointmentViewModel.insertPatient(patient);
                 try {
                     List<Patient> patients = addAppointmentViewModel.getPatientByNumber(patientPhone);
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
-                    Appointment appointment = new Appointment(null, null,
-                            clinics.get(0).getClinicId(), patients.get(0).getPatientId(),
-                            visitCalendar.getTimeInMillis(), Integer.parseInt(priceEt.getText().toString()),
-                            diseaseEt.getText().toString(), "UNKNOWN");
+                    Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
+                            , null, null, clinics.get(0).getClinicId()
+                            , patients.get(0).getPatientId(), visitCalendar.getTimeInMillis()
+                            , Integer.parseInt(priceEt.getText().toString())
+                            , diseaseEt.getText().toString(), "UNKNOWN");
                     addAppointmentViewModel.insertAppointment(appointment);
                     startActivity(new Intent(this, HomeActivity.class));
                 } catch (ExecutionException | InterruptedException e) {
-                    Toast.makeText(this, "Something went wrong with inserted patient or clinic", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this
+                            , "Something went wrong with inserted patient or clinic"
+                            , Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             } else {
                 try {
                     List<Patient> patients = addAppointmentViewModel.getPatientByNumber(patientPhone);
-                    Patient patient = new Patient(patients.get(0).getUuid(), null, patientName, patientPhone);
+                    Patient patient = new Patient(ActiveUser.getInstance().getId()
+                            , patients.get(0).getUuid(), null, patientName, patientPhone);
                     patient.setPatientId(patients.get(0).getPatientId());
                     addAppointmentViewModel.updatePatient(patient);
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
-                    Appointment appointment = new Appointment(null, null,
-                            clinics.get(0).getClinicId(), patients.get(0).getPatientId(),
-                            visitCalendar.getTimeInMillis(), Integer.parseInt(priceEt.getText().toString()),
-                            diseaseEt.getText().toString(), "UNKNOWN");
+                    Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
+                            , null, null, clinics.get(0).getClinicId()
+                            , patients.get(0).getPatientId(), visitCalendar.getTimeInMillis()
+                            , Integer.parseInt(priceEt.getText().toString())
+                            , diseaseEt.getText().toString(), "UNKNOWN");
                     addAppointmentViewModel.insertAppointment(appointment);
                     startActivity(new Intent(this, HomeActivity.class));
                 } catch (ExecutionException | InterruptedException e) {
-                    Toast.makeText(this, "Something went wrong with inserted patient or clinic", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this
+                            , "Something went wrong with inserted patient or clinic"
+                            , Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

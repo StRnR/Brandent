@@ -3,14 +3,14 @@ package com.pixium.brandent.db.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity(tableName = "clinics")
 public class Clinic {
     @PrimaryKey(autoGenerate = true)
     private int clinicId;
+
+    private int dentistForId;
 
     private Long modifiedAt;
 
@@ -21,7 +21,7 @@ public class Clinic {
     private String title;
 
 
-    public Clinic(UUID uuid, Long modifiedAt, String title, String address, String color) {
+    public Clinic(int dentistForId, UUID uuid, Long modifiedAt, String title, String address, String color) {
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
         } else {
@@ -34,6 +34,7 @@ public class Clinic {
             this.modifiedAt = modifiedAt;
         }
 
+        this.dentistForId = dentistForId;
         this.title = title;
         this.address = address;
         this.color = color;
@@ -45,6 +46,10 @@ public class Clinic {
 
     public int getClinicId() {
         return clinicId;
+    }
+
+    public int getDentistForId() {
+        return dentistForId;
     }
 
     public Long getModifiedAt() {

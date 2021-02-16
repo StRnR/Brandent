@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.R;
 import com.pixium.brandent.adapters.PatientAppointmentAdapter;
 import com.pixium.brandent.db.entities.Appointment;
@@ -100,8 +101,8 @@ public class PatientDetailsActivity extends AppCompatActivity {
 
         adapter.setOnItemCheckClickListener(id -> {
             Appointment curAppointment = patientDetailsViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
-                    , null, curAppointment.getClinicForId()
+            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
                     , curAppointment.getPrice(), curAppointment.getTitle(), "DONE");
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
@@ -117,8 +118,8 @@ public class PatientDetailsActivity extends AppCompatActivity {
 
         adapter.setOnItemCancelClickListener(id -> {
             Appointment curAppointment = patientDetailsViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
-                    , null, curAppointment.getClinicForId()
+            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
                     , curAppointment.getPrice(), curAppointment.getTitle(), "CANCELED");
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
@@ -134,8 +135,8 @@ public class PatientDetailsActivity extends AppCompatActivity {
 
         adapter.setOnItemUnknownClickListener(id -> {
             Appointment curAppointment = patientDetailsViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
-                    , null, curAppointment.getClinicForId()
+            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
                     , curAppointment.getPrice(), curAppointment.getTitle(), "UNKNOWN");
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
@@ -183,7 +184,8 @@ public class PatientDetailsActivity extends AppCompatActivity {
                         } else {
                             Patient patient = patientDetailsViewModel
                                     .getPatientById(patientId);
-                            Patient updatePatient = new Patient(patient.getUuid(), null
+                            Patient updatePatient = new Patient(ActiveUser.getInstance().getId()
+                                    , patient.getUuid(), null
                                     , patient.getName(), phoneEt.getText().toString());
                             updatePatient.setPatientId(patientId);
                             patientDetailsViewModel.updatePatient(updatePatient);
@@ -218,7 +220,8 @@ public class PatientDetailsActivity extends AppCompatActivity {
                 if (!nameEt.getText().toString().equals("")) {
                     try {
                         Patient patient = patientDetailsViewModel.getPatientById(patientId);
-                        Patient updatePatient = new Patient(patient.getUuid(), null
+                        Patient updatePatient = new Patient(ActiveUser.getInstance().getId()
+                                , patient.getUuid(), null
                                 , nameEt.getText().toString(), patient.getPhone());
                         updatePatient.setPatientId(patientId);
                         patientDetailsViewModel.updatePatient(updatePatient);

@@ -1,6 +1,5 @@
 package com.pixium.brandent.db.entities;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,9 +10,10 @@ public class Finance {
     @PrimaryKey(autoGenerate = true)
     private int financeId;
 
+    private int dentistForId;
+
     private UUID uuid;
 
-    @ColumnInfo(name = "price")
     private int price;
 
     private String title;
@@ -22,7 +22,7 @@ public class Finance {
     private Long date;
     private Long modifiedAt;
 
-    public Finance(UUID uuid, Long modifiedAt, Long date, int price, String title, String type) {
+    public Finance(int dentistForId, UUID uuid, Long modifiedAt, Long date, int price, String title, String type) {
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
         } else {
@@ -35,6 +35,7 @@ public class Finance {
             this.modifiedAt = modifiedAt;
         }
 
+        this.dentistForId = dentistForId;
         this.date = date;
         this.price = price;
         this.title = title;
@@ -47,6 +48,10 @@ public class Finance {
 
     public int getFinanceId() {
         return financeId;
+    }
+
+    public int getDentistForId() {
+        return dentistForId;
     }
 
     public UUID getUuid() {

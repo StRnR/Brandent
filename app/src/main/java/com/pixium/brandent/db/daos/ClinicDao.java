@@ -22,21 +22,21 @@ public interface ClinicDao {
     @Delete
     void delete(Clinic clinic);
 
-    @Query("SELECT * FROM clinics")
-    LiveData<List<Clinic>> getAllClinicsLive();
+    @Query("SELECT * FROM clinics WHERE dentistForId=:activeUserId")
+    LiveData<List<Clinic>> getAllClinicsLive(int activeUserId);
 
-    @Query("SELECT * FROM clinics")
-    List<Clinic> getAllClinics();
+    @Query("SELECT * FROM clinics WHERE dentistForId=:activeUserId")
+    List<Clinic> getAllClinics(int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE title LIKE :argTitle")
-    List<Clinic> getClinicByTitle(String argTitle);
+    @Query("SELECT * FROM clinics WHERE title LIKE :argTitle AND dentistForId=:activeUserId")
+    List<Clinic> getClinicByTitle(String argTitle, int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE clinicId=:arg")
-    Clinic getById(int arg);
+    @Query("SELECT * FROM clinics WHERE clinicId=:arg AND dentistForId=:activeUserId")
+    Clinic getById(int arg, int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE clinicId=:argId")
-    LiveData<Clinic> getClinicById(int argId);
+    @Query("SELECT * FROM clinics WHERE clinicId=:argId AND dentistForId=:activeUserId")
+    LiveData<Clinic> getClinicById(int argId, int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE color LIKE :argColor")
-    List<Clinic> loadClinicByColor(String argColor);
+    @Query("SELECT * FROM clinics WHERE color LIKE :argColor AND dentistForId=:activeUserId")
+    List<Clinic> loadClinicByColor(String argColor, int activeUserId);
 }

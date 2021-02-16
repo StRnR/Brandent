@@ -8,18 +8,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pixium.brandent.adapters.ClinicAdapter;
-import com.pixium.brandent.viewmodels.ClinicViewModel;
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.R;
+import com.pixium.brandent.adapters.ClinicAdapter;
 import com.pixium.brandent.db.entities.Clinic;
+import com.pixium.brandent.viewmodels.ClinicViewModel;
 
-import java.util.List;
 import java.util.UUID;
 
 public class ClinicActivity extends AppCompatActivity {
@@ -47,12 +46,7 @@ public class ClinicActivity extends AppCompatActivity {
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
                 get(ClinicViewModel.class);
         clinicViewModel.getAllClinics().observe(this,
-                new Observer<List<Clinic>>() {
-                    @Override
-                    public void onChanged(@Nullable List<Clinic> clinics) {
-                        adapter.submitList(clinics);
-                    }
-                });
+                adapter::submitList);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -71,18 +65,15 @@ public class ClinicActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
-        adapter.setOnItemClickListener(new ClinicAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Clinic clinic) {
-                Intent intent = new Intent(ClinicActivity.this
-                        , AddEditClinicActivity.class);
-                intent.putExtra(AddEditClinicActivity.EXTRA_ID, clinic.getClinicId());
-                intent.putExtra(AddEditClinicActivity.EXTRA_UUID, clinic.getUuid().toString());
-                intent.putExtra(AddEditClinicActivity.EXTRA_TITLE, clinic.getTitle());
-                intent.putExtra(AddEditClinicActivity.EXTRA_COLOR, clinic.getColor());
-                intent.putExtra(AddEditClinicActivity.EXTRA_ADDRESS, clinic.getAddress());
-                startActivityForResult(intent, EDIT_NOTE_REQUEST);
-            }
+        adapter.setOnItemClickListener(clinic -> {
+            Intent intent = new Intent(ClinicActivity.this
+                    , AddEditClinicActivity.class);
+            intent.putExtra(AddEditClinicActivity.EXTRA_ID, clinic.getClinicId());
+            intent.putExtra(AddEditClinicActivity.EXTRA_UUID, clinic.getUuid().toString());
+            intent.putExtra(AddEditClinicActivity.EXTRA_TITLE, clinic.getTitle());
+            intent.putExtra(AddEditClinicActivity.EXTRA_COLOR, clinic.getColor());
+            intent.putExtra(AddEditClinicActivity.EXTRA_ADDRESS, clinic.getAddress());
+            startActivityForResult(intent, EDIT_NOTE_REQUEST);
         });
 
         clinicAddBtn.setOnClickListener(v ->
@@ -97,16 +88,19 @@ public class ClinicActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
+            assert data != null;
             String title = data.getStringExtra(AddEditClinicActivity.EXTRA_TITLE);
             String color = data.getStringExtra(AddEditClinicActivity.EXTRA_COLOR);
             String address = data.getStringExtra(AddEditClinicActivity.EXTRA_ADDRESS);
 
-            Clinic clinic = new Clinic(null, null, title, address, color);
+            Clinic clinic = new Clinic(ActiveUser.getInstance().getId(), null, null
+                    , title, address, color);
             clinicViewModel.insert(clinic);
 
             Toast.makeText(this, "Clinic successfully added!", Toast.LENGTH_SHORT)
                     .show();
         } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
+            assert data != null;
             int id = data.getIntExtra(AddEditClinicActivity.EXTRA_ID, -1);
 
             if (id == -1 || data.getStringExtra(AddEditClinicActivity.EXTRA_UUID) == null) {
@@ -121,7 +115,8 @@ public class ClinicActivity extends AppCompatActivity {
 
             UUID uuid = UUID.fromString(data.getStringExtra(AddEditClinicActivity.EXTRA_UUID));
 
-            Clinic clinic = new Clinic(uuid, null, title, address, color);
+            Clinic clinic = new Clinic(ActiveUser.getInstance().getId(), uuid, null
+                    , title, address, color);
             clinic.setClinicId(id);
             clinicViewModel.update(clinic);
 

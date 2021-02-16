@@ -14,9 +14,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.pixium.brandent.viewmodels.AddPatientViewModel;
 import com.pixium.brandent.R;
 import com.pixium.brandent.db.entities.Patient;
+import com.pixium.brandent.viewmodels.AddPatientViewModel;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -28,8 +28,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
     public static final String EXTRA_PATIENT_PHONE = "com.pixium.brandent.EXTRA_PATIENT_PHONE";
     public static final String EXTRA_PATIENT_ID = "com.pixium.brandent.EXTRA_PATIENT_ID";
     public static final String EXTRA_CLINIC_TITLE = "com.pixium.brandent.EXTRA_CLINIC_POSITION";
-
-    private int clinicPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +101,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        clinicPosition = position;
     }
 
     @Override

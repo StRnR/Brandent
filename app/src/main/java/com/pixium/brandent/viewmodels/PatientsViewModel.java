@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PatientsViewModel extends AndroidViewModel {
-    private PatientRepository repository;
+    private final PatientRepository repository;
     private LiveData<List<Patient>> allPatients;
 
     public PatientsViewModel(@NonNull Application application) {

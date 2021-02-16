@@ -5,17 +5,17 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.pixium.brandent.repos.AppointmentRepository;
-import com.pixium.brandent.repos.PatientRepository;
 import com.pixium.brandent.db.entities.Appointment;
 import com.pixium.brandent.db.entities.Patient;
+import com.pixium.brandent.repos.AppointmentRepository;
+import com.pixium.brandent.repos.PatientRepository;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class TasksViewModel extends AndroidViewModel {
-    private AppointmentRepository appointmentRepository;
-    private PatientRepository patientRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final PatientRepository patientRepository;
 
 
     public TasksViewModel(@NonNull Application application) {

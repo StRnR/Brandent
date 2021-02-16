@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_instruction_intro" />
 
     <EditText
-        android:id="@+id/et_name_intro"
+        android:id="@+id/et_password_intro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -64,10 +64,10 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_et_rounded_rectangle"
         android:fontFamily="@font/vazir_regular"
-        android:gravity="start"
+        android:gravity="right"
         android:hint="رمز عبور"
         android:imeOptions="actionDone"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:maxLines="1"
         android:padding="16dp"
         android:textColor="@color/black"
@@ -88,7 +88,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_name_intro" />
+        app:layout_constraintTop_toBottomOf="@id/et_password_intro" />
 
     <Button
         android:id="@+id/btn_register_intro"
@@ -105,6 +105,6 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/btn_login_intro"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_name_intro" />
+        app:layout_constraintTop_toBottomOf="@id/et_password_intro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

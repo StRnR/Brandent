@@ -9,7 +9,7 @@ import com.pixium.brandent.repos.FinanceRepository;
 import com.pixium.brandent.db.entities.Finance;
 
 public class AddFinanceViewModel extends AndroidViewModel {
-    private FinanceRepository financeRepository;
+    private final FinanceRepository financeRepository;
 
     public AddFinanceViewModel(@NonNull Application application) {
         super(application);

@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddPatientViewModel extends AndroidViewModel {
-    private PatientRepository patientRepository;
-    private ClinicRepository clinicRepository;
+    private final PatientRepository patientRepository;
+    private final ClinicRepository clinicRepository;
 
     public AddPatientViewModel(@NonNull Application application) {
         super(application);

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,12 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.pixium.brandent.viewmodels.HomeViewModel;
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.R;
 import com.pixium.brandent.adapters.TodayHomeAdapter;
-import com.pixium.brandent.models.TodayItem;
 import com.pixium.brandent.db.entities.Appointment;
 import com.pixium.brandent.db.entities.Clinic;
+import com.pixium.brandent.models.TodayItem;
+import com.pixium.brandent.viewmodels.HomeViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,10 +38,11 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        TextView date_tv = findViewById(R.id.tv_date_home);
+        TextView headerTv = findViewById(R.id.tv_header_home);
+        TextView dateTv = findViewById(R.id.tv_date_home);
 
-        ImageButton patientsBtn = findViewById(R.id.btn_patients_home);
-        ImageButton financeBtn = findViewById(R.id.btn_finance_home);
+//        ImageButton patientsBtn = findViewById(R.id.btn_patients_home);
+//        ImageButton financeBtn = findViewById(R.id.btn_finance_home);
 
         RecyclerView todayRv = findViewById(R.id.rv_today_home);
 
@@ -61,19 +62,23 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.home_page:
                         return true;
                     case R.id.finance_page:
-                        startActivity(new Intent(getApplicationContext(), FinanceActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(getApplicationContext(), FinanceActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.add_appointment_page:
-                        startActivity(new Intent(getApplicationContext(), AddPatientActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(getApplicationContext(), AddPatientActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.tasks_page:
-                        startActivity(new Intent(getApplicationContext(), TasksActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(getApplicationContext(), TasksActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.profile_page:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(0, 0);
                         return true;
                 }
@@ -81,10 +86,20 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+        // Header
+        try {
+            String headerStr = "سلام دکتر " + homeViewModel.getDentistById(ActiveUser.getInstance()
+                    .getId()).getLastName();
+            headerTv.setText(headerStr);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Display Date
         PersianDate pDate = new PersianDate();
         String date = pDate.dayName() + " " + pDate.getShDay() + " " + pDate.monthName();
-        date_tv.setText(date);
+        dateTv.setText(date);
 
 
         // Today Appointments
@@ -130,6 +145,7 @@ public class HomeActivity extends AppCompatActivity {
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
+            assert clinic != null;
             todayList.add(new TodayItem(clinic.getColor(), clinic.getTitle()
                     , appointmentNumbers.get(i)));
         }
@@ -140,13 +156,11 @@ public class HomeActivity extends AppCompatActivity {
         todayRv.setAdapter(todayAdapter);
         todayRv.setNestedScrollingEnabled(false);
 
-        patientsBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, PatientsActivity.class));
-        });
-
-        financeBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, FinanceActivity.class));
-        });
+//        patientsBtn.setOnClickListener(v -> startActivity(new Intent(this
+//                , PatientsActivity.class)));
+//
+//        financeBtn.setOnClickListener(v -> startActivity(new Intent(this
+//                , FinanceActivity.class)));
     }
 
     @Override

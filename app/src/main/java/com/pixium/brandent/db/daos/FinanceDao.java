@@ -22,6 +22,7 @@ public interface FinanceDao {
     void delete(Finance finance);
 
     @Query("SELECT price FROM finances WHERE date BETWEEN :start AND :end AND type = :argType " +
-            "ORDER BY date ASC")
-    public List<Integer> getFinanceSumByDateAndType(long start, long end, String argType);
+            "AND dentistForId=:activeUserId ORDER BY date ASC")
+    List<Integer> getFinanceSumByDateAndType(long start, long end, String argType
+            , int activeUserId);
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pixium.brandent.ActiveUser;
 import com.pixium.brandent.R;
 import com.pixium.brandent.adapters.CalendarAdapter;
 import com.pixium.brandent.adapters.TasksAppointmentAdapter;
@@ -188,8 +189,8 @@ public class TasksActivity extends AppCompatActivity {
 
         appointmentAdapter.setOnItemCheckClickListener(id -> {
             Appointment curAppointment = tasksViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
-                    , null, curAppointment.getClinicForId()
+            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
                     , curAppointment.getPrice(), curAppointment.getTitle(), "DONE");
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
@@ -208,8 +209,8 @@ public class TasksActivity extends AppCompatActivity {
 
         appointmentAdapter.setOnItemCancelClickListener(id -> {
             Appointment curAppointment = tasksViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
-                    , null, curAppointment.getClinicForId()
+            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
                     , curAppointment.getPrice(), curAppointment.getTitle(), "CANCELED");
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
@@ -228,8 +229,8 @@ public class TasksActivity extends AppCompatActivity {
 
         appointmentAdapter.setOnItemUnknownClickListener(id -> {
             Appointment curAppointment = tasksViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(curAppointment.getUuid()
-                    , null, curAppointment.getClinicForId()
+            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
                     , curAppointment.getPrice(), curAppointment.getTitle(), "UNKNOWN");
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());

@@ -12,6 +12,7 @@ public class Appointment {
 
     private int clinicForId;
     private int patientForId;
+    private int dentistForId;
 
     private UUID uuid;
 
@@ -23,7 +24,7 @@ public class Appointment {
     private String title;
     private String state;
 
-    public Appointment(UUID uuid, Long modifiedAt, int clinicForId, int patientForId, Long visitTime
+    public Appointment(int dentistForId, UUID uuid, Long modifiedAt, int clinicForId, int patientForId, Long visitTime
             , int price, String title, String state) {
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
@@ -31,6 +32,7 @@ public class Appointment {
             this.uuid = uuid;
         }
 
+        this.dentistForId = dentistForId;
         this.clinicForId = clinicForId;
         this.patientForId = patientForId;
 
@@ -62,6 +64,10 @@ public class Appointment {
 
     public int getPatientForId() {
         return patientForId;
+    }
+
+    public int getDentistForId() {
+        return dentistForId;
     }
 
     public UUID getUuid() {
