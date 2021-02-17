@@ -25,7 +25,7 @@
         android:layout_marginTop="100dp"
         android:fontFamily="@font/vazir_bold"
         android:text="ثبت نام"
-        android:textColor="@color/orange"
+        android:textColor="@color/clinitickPurple"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -17,7 +17,7 @@
         android:id="@+id/add_appointment_page"
         android:enabled="true"
         android:icon="@drawable/ic_add_appointment"
-        android:iconTint="@color/orange"
+        android:iconTint="@color/clinitickPurple"
         tools:ignore="MenuTitle" />
 
     <item

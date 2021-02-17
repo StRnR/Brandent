@@ -41,9 +41,6 @@ public class HomeActivity extends AppCompatActivity {
         TextView headerTv = findViewById(R.id.tv_header_home);
         TextView dateTv = findViewById(R.id.tv_date_home);
 
-//        ImageButton patientsBtn = findViewById(R.id.btn_patients_home);
-//        ImageButton financeBtn = findViewById(R.id.btn_finance_home);
-
         RecyclerView todayRv = findViewById(R.id.rv_today_home);
 
         homeViewModel = new ViewModelProvider(this,
@@ -155,12 +152,6 @@ public class HomeActivity extends AppCompatActivity {
         todayRv.setLayoutManager(todayLM);
         todayRv.setAdapter(todayAdapter);
         todayRv.setNestedScrollingEnabled(false);
-
-//        patientsBtn.setOnClickListener(v -> startActivity(new Intent(this
-//                , PatientsActivity.class)));
-//
-//        financeBtn.setOnClickListener(v -> startActivity(new Intent(this
-//                , FinanceActivity.class)));
     }
 
     @Override

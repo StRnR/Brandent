@@ -59,7 +59,7 @@
         android:background="@color/transparent"
         android:fontFamily="@font/vazir_regular"
         android:text="امروز"
-        android:textColor="@color/orange"
+        android:textColor="@color/clinitickPurple"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_header_tasks"
         app:layout_constraintStart_toEndOf="@id/btn_add_task_tasks"

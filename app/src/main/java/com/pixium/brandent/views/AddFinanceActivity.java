@@ -73,7 +73,7 @@ public class AddFinanceActivity extends AppCompatActivity implements AdapterView
             picker.setMinYear(1300);
             picker.setMaxYear(PersianDatePickerDialog.THIS_YEAR);
             picker.setInitDate(initDate);
-            picker.setActionTextColor(getResources().getColor(R.color.orange));
+            picker.setActionTextColor(getResources().getColor(R.color.clinitickPurple));
             picker.setTypeFace(typeface);
             picker.setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR);
             picker.setShowInBottomSheet(true);
