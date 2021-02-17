@@ -121,9 +121,6 @@ public class ClinicActivity extends AppCompatActivity {
             clinicViewModel.update(clinic);
 
             Toast.makeText(this, "Clinic Updated!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Clinic wasn't added successfully"
-                    , Toast.LENGTH_SHORT).show();
         }
     }
 }

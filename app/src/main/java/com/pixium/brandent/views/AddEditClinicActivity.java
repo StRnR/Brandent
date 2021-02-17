@@ -11,9 +11,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.pixium.brandent.viewmodels.ClinicViewModel;
 import com.pixium.brandent.R;
+import com.pixium.brandent.db.entities.Clinic;
+import com.pixium.brandent.viewmodels.ClinicViewModel;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddEditClinicActivity extends AppCompatActivity {
@@ -31,6 +33,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
             "com.pixium.brandent.EXTRA_ADDRESS";
 
     private String clinicColor = null;
+    private String prevName;
 
     @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables"})
     @Override
@@ -157,7 +160,8 @@ public class AddEditClinicActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_ID)) {
             headerTv.setText("ویرایش مطب");
-            nameEt.setText(intent.getStringExtra(EXTRA_TITLE));
+            prevName = intent.getStringExtra(EXTRA_TITLE);
+            nameEt.setText(prevName);
             addressEt.setText(intent.getStringExtra(EXTRA_ADDRESS));
             String oldColor = intent.getStringExtra(EXTRA_COLOR);
 
@@ -198,8 +202,12 @@ public class AddEditClinicActivity extends AppCompatActivity {
                 return;
             } else {
                 try {
-                    if (clinicViewModel.getClinicByTitle(nameEt.getText().toString()).size() != 0) {
-                        Toast.makeText(getApplicationContext(), "Please enter a unique name for your clinic", Toast.LENGTH_SHORT).show();
+                    List<Clinic> duplicates = clinicViewModel.getClinicByTitle(nameEt.getText()
+                            .toString());
+                    if (duplicates.size() != 0 && !duplicates.get(0).getTitle().equals(prevName)) {
+                        Toast.makeText(getApplicationContext()
+                                , "Please enter a unique name for your clinic"
+                                , Toast.LENGTH_SHORT).show();
                         return;
                     }
                 } catch (ExecutionException | InterruptedException e) {
