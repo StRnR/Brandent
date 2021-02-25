@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class DateTools {
 
-    public static final String apiTimeFormat = "yyyy-MM-dd HH:mm:ss.SSSS";
+    public static final String apiTimeFormat = "yyyy-MM-dd HH:mm:ss.SSS";
     public static final String apiDateFormat = "yyyy-MM-dd";
 
     public static String stringFromTimestamp(long milliSeconds, String dateFormat) {

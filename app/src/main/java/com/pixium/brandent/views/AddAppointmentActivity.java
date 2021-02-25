@@ -114,7 +114,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
                     DialogFragment timePicker = new TimePickerFragment();
                     timePicker.show(getSupportFragmentManager(), "time picker");
                 }
-
+//
                 @Override
                 public void onDismissed() {
                 }
