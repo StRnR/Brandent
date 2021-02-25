@@ -6,15 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.pixium.brandent.repos.PatientRepository;
 import com.pixium.brandent.db.entities.Patient;
+import com.pixium.brandent.db.repos.PatientRepository;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PatientsViewModel extends AndroidViewModel {
     private final PatientRepository repository;
-    private LiveData<List<Patient>> allPatients;
+    private final LiveData<List<Patient>> allPatients;
 
     public PatientsViewModel(@NonNull Application application) {
         super(application);

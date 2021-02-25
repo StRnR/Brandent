@@ -1,4 +1,4 @@
-package com.pixium.brandent.repos;
+package com.pixium.brandent.db.repos;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 public class DentistRepository {
     private final DentistDao dentistDao;
-    private LiveData<List<Dentist>> allDentists;
+    private final LiveData<List<Dentist>> allDentists;
 
     public DentistRepository(Application application) {
         AppDatabase appDatabase = AppDatabase.getInstance(application);
@@ -65,7 +65,7 @@ public class DentistRepository {
     }
 
     private static class GetAllDentistsAsyncTask extends AsyncTask<Void, Void, List<Dentist>> {
-        private DentistDao dentistDao;
+        private final DentistDao dentistDao;
 
         private GetAllDentistsAsyncTask(DentistDao dentistDao) {
             this.dentistDao = dentistDao;
@@ -78,7 +78,7 @@ public class DentistRepository {
     }
 
     private static class GetDentistByIdAsyncTask extends AsyncTask<Integer, Void, Dentist> {
-        private DentistDao dentistDao;
+        private final DentistDao dentistDao;
 
         private GetDentistByIdAsyncTask(DentistDao dentistDao) {
             this.dentistDao = dentistDao;

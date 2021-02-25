@@ -26,6 +26,15 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
 
+    public static synchronized AppDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(),
+                    AppDatabase.class, "app_database")
+                    .fallbackToDestructiveMigration().build();
+        }
+        return instance;
+    }
+
     public abstract DentistDao dentistDao();
 
     public abstract AppointmentDao appointmentDao();
@@ -35,13 +44,4 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ClinicDao clinicDao();
 
     public abstract FinanceDao financeDao();
-
-    public static synchronized AppDatabase getInstance(Context context) {
-        if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, "app_database")
-                    .fallbackToDestructiveMigration().build();
-        }
-        return instance;
-    }
 }

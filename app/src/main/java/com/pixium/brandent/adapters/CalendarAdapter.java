@@ -17,46 +17,17 @@ import com.pixium.brandent.models.TasksCalendarItem;
 import java.util.ArrayList;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
-    private ArrayList<TasksCalendarItem> mTasksCalendarItems;
+    private final ArrayList<TasksCalendarItem> mTasksCalendarItems;
     private int mSelectedPos;
     private OnItemClickListener mListener;
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
-
-    public static class CalendarViewHolder extends RecyclerView.ViewHolder {
-        public TextView initial_tv;
-        public TextView no_tv;
-        public CardView calendar_cv;
-
-        public CalendarViewHolder(@NonNull View itemView, OnItemClickListener listener) {
-            super(itemView);
-            initial_tv = itemView.findViewById(R.id.tv_day_initial);
-            no_tv = itemView.findViewById(R.id.tv_day_no);
-            calendar_cv = itemView.findViewById(R.id.cv_calendar_item);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
-        }
-    }
 
     public CalendarAdapter(ArrayList<TasksCalendarItem> tasksCalendarItems, int selectedPos) {
         mTasksCalendarItems = tasksCalendarItems;
         mSelectedPos = selectedPos;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     @NonNull
@@ -93,5 +64,34 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     public void setSelectedPos(int position) {
         mSelectedPos = position;
         notifyDataSetChanged();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public static class CalendarViewHolder extends RecyclerView.ViewHolder {
+        public TextView initial_tv;
+        public TextView no_tv;
+        public CardView calendar_cv;
+
+        public CalendarViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+            super(itemView);
+            initial_tv = itemView.findViewById(R.id.tv_day_initial);
+            no_tv = itemView.findViewById(R.id.tv_day_no);
+            calendar_cv = itemView.findViewById(R.id.cv_calendar_item);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+        }
     }
 }

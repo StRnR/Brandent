@@ -1,4 +1,4 @@
-package com.pixium.brandent.repos;
+package com.pixium.brandent.db.repos;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -10,6 +10,7 @@ import com.pixium.brandent.db.entities.Appointment;
 import com.pixium.brandent.models.AppointmentIncomeTaskParams;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class AppointmentRepository {
@@ -20,8 +21,8 @@ public class AppointmentRepository {
         appointmentDao = appDatabase.appointmentDao();
     }
 
-    public void insert(Appointment appointment) {
-        new InsertAppointmentAsyncTask(appointmentDao).execute(appointment);
+    public void insert(Appointment... appointments) {
+        new InsertAppointmentAsyncTask(appointmentDao).execute(appointments);
     }
 
     public void update(Appointment appointment) {
@@ -30,6 +31,11 @@ public class AppointmentRepository {
 
     public void delete(Appointment appointment) {
         new DeleteAppointmentAsyncTask(appointmentDao).execute(appointment);
+    }
+
+    public Appointment[] getUnsynced(long lastUpdated) throws ExecutionException, InterruptedException {
+        return new GetNotSyncedAppointmentsAsyncTask(appointmentDao).execute(lastUpdated)
+                .execute(lastUpdated).get();
     }
 
     public List<Appointment> getByDate(Long start, Long end)
@@ -50,6 +56,10 @@ public class AppointmentRepository {
         return new GetAppointmentByIdAsyncTask(appointmentDao).execute(id).get();
     }
 
+    public Appointment getByUuid(UUID uuid) throws ExecutionException, InterruptedException {
+        return new GetAppointmentByUuidAsyncTask(appointmentDao).execute(uuid).get();
+    }
+
 
     private static class GetAppointmentByIdAsyncTask extends AsyncTask<Integer, Void, Appointment> {
         private final AppointmentDao appointmentDao;
@@ -61,6 +71,32 @@ public class AppointmentRepository {
         @Override
         protected Appointment doInBackground(Integer... integers) {
             return appointmentDao.getById(integers[0], ActiveUser.getInstance().getId());
+        }
+    }
+
+    private static class GetAppointmentByUuidAsyncTask extends AsyncTask<UUID, Void, Appointment> {
+        private final AppointmentDao appointmentDao;
+
+        private GetAppointmentByUuidAsyncTask(AppointmentDao appointmentDao) {
+            this.appointmentDao = appointmentDao;
+        }
+
+        @Override
+        protected Appointment doInBackground(UUID... uuids) {
+            return appointmentDao.getByUuid(uuids[0], ActiveUser.getInstance().getId());
+        }
+    }
+
+    private static class GetNotSyncedAppointmentsAsyncTask extends AsyncTask<Long, Void, Appointment[]> {
+        private final AppointmentDao appointmentDao;
+
+        private GetNotSyncedAppointmentsAsyncTask(AppointmentDao appointmentDao) {
+            this.appointmentDao = appointmentDao;
+        }
+
+        @Override
+        protected Appointment[] doInBackground(Long... longs) {
+            return appointmentDao.getUnSynced(longs[0], ActiveUser.getInstance().getId());
         }
     }
 
@@ -117,7 +153,9 @@ public class AppointmentRepository {
 
         @Override
         protected Void doInBackground(Appointment... appointments) {
-            appointmentDao.insert(appointments[0]);
+            for (Appointment appointment : appointments) {
+                appointmentDao.insert(appointment);
+            }
             return null;
         }
     }

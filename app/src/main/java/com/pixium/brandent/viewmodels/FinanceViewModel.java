@@ -5,9 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.pixium.brandent.db.repos.AppointmentRepository;
+import com.pixium.brandent.db.repos.FinanceRepository;
 import com.pixium.brandent.models.AppointmentIncomeTaskParams;
-import com.pixium.brandent.repos.AppointmentRepository;
-import com.pixium.brandent.repos.FinanceRepository;
 import com.pixium.brandent.models.FinanceTaskParams;
 
 import java.util.List;

@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddEditClinicActivity extends AppCompatActivity {
-    private ClinicViewModel clinicViewModel;
-
     public static final String EXTRA_ID =
             "com.pixium.brandent.EXTRA_ID";
     public static final String EXTRA_UUID =
@@ -31,7 +29,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
             "com.pixium.brandent.EXTRA_COLOR";
     public static final String EXTRA_ADDRESS =
             "com.pixium.brandent.EXTRA_ADDRESS";
-
+    private ClinicViewModel clinicViewModel;
     private String clinicColor = null;
     private String prevName;
 

@@ -10,14 +10,14 @@ public class Patient {
     @PrimaryKey(autoGenerate = true)
     private int patientId;
 
-    private int dentistForId;
+    private final int dentistForId;
 
-    private UUID uuid;
+    private final UUID uuid;
 
-    private Long modifiedAt;
+    private final Long modifiedAt;
 
-    private String name;
-    private String phone;
+    private final String name;
+    private final String phone;
 
     public Patient(int dentistForId, UUID uuid, Long modifiedAt, String name, String phone) {
         this.uuid = uuid;
@@ -33,12 +33,12 @@ public class Patient {
         this.phone = phone;
     }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
-    }
-
     public int getPatientId() {
         return patientId;
+    }
+
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
     }
 
     public int getDentistForId() {

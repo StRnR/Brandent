@@ -22,7 +22,7 @@
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/vazir_bold"
         android:text="افزودن مطب"
-        android:textColor="@color/black"
+        android:textColor="@color/navyBlue"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_header_clinic_add"
         app:layout_constraintEnd_toEndOf="parent"

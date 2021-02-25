@@ -10,19 +10,21 @@ public class Finance {
     @PrimaryKey(autoGenerate = true)
     private int financeId;
 
-    private int dentistForId;
+    private final int dentistForId;
+    private final int isDeleted;
 
-    private UUID uuid;
+    private final UUID uuid;
 
-    private int price;
+    private final long price;
 
-    private String title;
-    private String type;
+    private final String title;
+    private final String type;
 
-    private Long date;
-    private Long modifiedAt;
+    private final Long date;
+    private final Long modifiedAt;
 
-    public Finance(int dentistForId, UUID uuid, Long modifiedAt, Long date, int price, String title, String type) {
+    public Finance(int dentistForId, UUID uuid, Long modifiedAt, Long date, long price, String title
+            , String type, int isDeleted) {
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
         } else {
@@ -40,14 +42,15 @@ public class Finance {
         this.price = price;
         this.title = title;
         this.type = type;
-    }
-
-    public void setFinanceId(int financeId) {
-        this.financeId = financeId;
+        this.isDeleted = isDeleted;
     }
 
     public int getFinanceId() {
         return financeId;
+    }
+
+    public void setFinanceId(int financeId) {
+        this.financeId = financeId;
     }
 
     public int getDentistForId() {
@@ -58,7 +61,7 @@ public class Finance {
         return uuid;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -76,5 +79,9 @@ public class Finance {
 
     public Long getModifiedAt() {
         return modifiedAt;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
     }
 }

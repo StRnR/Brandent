@@ -24,18 +24,6 @@ public class PatientAppointmentAdapter extends
     private OnItemCancelClickListener mCancelListener;
     private OnItemUnknownClickListener mUnknownListener;
 
-    public interface OnItemCheckClickListener {
-        void onItemCheckClick(int id) throws ExecutionException, InterruptedException;
-    }
-
-    public interface OnItemCancelClickListener {
-        void onItemCancelClick(int id) throws ExecutionException, InterruptedException;
-    }
-
-    public interface OnItemUnknownClickListener {
-        void onItemUnknownClick(int id) throws ExecutionException, InterruptedException;
-    }
-
     public void setOnItemCheckClickListener(OnItemCheckClickListener listener) {
         mCheckListener = listener;
     }
@@ -78,8 +66,8 @@ public class PatientAppointmentAdapter extends
         }
 
         holder.checkBtn.setOnClickListener(v -> {
-            if (current.getState().equals("UNKNOWN") ||
-                    current.getState().equals("CANCELED")) {
+            if (current.getState().equals("unknown") ||
+                    current.getState().equals("canceled")) {
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_enabled);
                 holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 if (mCheckListener != null) {
@@ -103,8 +91,8 @@ public class PatientAppointmentAdapter extends
         });
 
         holder.cancelBtn.setOnClickListener(v -> {
-            if (current.getState().equals("UNKNOWN") ||
-                    current.getState().equals("DONE")) {
+            if (current.getState().equals("unknown") ||
+                    current.getState().equals("done")) {
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
                 holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_enabled);
                 if (mCancelListener != null) {
@@ -136,6 +124,18 @@ public class PatientAppointmentAdapter extends
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
         notifyDataSetChanged();
+    }
+
+    public interface OnItemCheckClickListener {
+        void onItemCheckClick(int id) throws ExecutionException, InterruptedException;
+    }
+
+    public interface OnItemCancelClickListener {
+        void onItemCancelClick(int id) throws ExecutionException, InterruptedException;
+    }
+
+    public interface OnItemUnknownClickListener {
+        void onItemUnknownClick(int id) throws ExecutionException, InterruptedException;
     }
 
     public static class AppointmentHolder extends RecyclerView.ViewHolder {

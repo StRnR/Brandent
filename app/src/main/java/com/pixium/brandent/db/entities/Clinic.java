@@ -10,15 +10,15 @@ public class Clinic {
     @PrimaryKey(autoGenerate = true)
     private int clinicId;
 
-    private int dentistForId;
+    private final int dentistForId;
 
-    private Long modifiedAt;
+    private final Long modifiedAt;
 
-    private UUID uuid;
+    private final UUID uuid;
 
-    private String color;
-    private String address;
-    private String title;
+    private final String color;
+    private final String address;
+    private final String title;
 
 
     public Clinic(int dentistForId, UUID uuid, Long modifiedAt, String title, String address, String color) {
@@ -40,12 +40,12 @@ public class Clinic {
         this.color = color;
     }
 
-    public void setClinicId(int clinicId) {
-        this.clinicId = clinicId;
-    }
-
     public int getClinicId() {
         return clinicId;
+    }
+
+    public void setClinicId(int clinicId) {
+        this.clinicId = clinicId;
     }
 
     public int getDentistForId() {

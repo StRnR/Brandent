@@ -22,12 +22,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddPatientActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private AddPatientViewModel addPatientViewModel;
-
     public static final String EXTRA_PATIENT_NAME = "com.pixium.brandent.EXTRA_PATIENT_NAME";
     public static final String EXTRA_PATIENT_PHONE = "com.pixium.brandent.EXTRA_PATIENT_PHONE";
     public static final String EXTRA_PATIENT_ID = "com.pixium.brandent.EXTRA_PATIENT_ID";
     public static final String EXTRA_CLINIC_TITLE = "com.pixium.brandent.EXTRA_CLINIC_POSITION";
+    private AddPatientViewModel addPatientViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

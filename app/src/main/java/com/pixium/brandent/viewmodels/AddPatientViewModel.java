@@ -5,10 +5,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.pixium.brandent.repos.ClinicRepository;
-import com.pixium.brandent.repos.PatientRepository;
 import com.pixium.brandent.db.entities.Clinic;
 import com.pixium.brandent.db.entities.Patient;
+import com.pixium.brandent.db.repos.ClinicRepository;
+import com.pixium.brandent.db.repos.PatientRepository;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

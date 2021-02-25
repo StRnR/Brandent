@@ -59,7 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
                                             , authResponse.getUser().getPhone()
                                             , authResponse.getUser().getSpeciality()
                                             , authResponse.getUser().getImage()
-                                            , 1, authResponse.getToken());
+                                            , 1, authResponse.getToken()
+                                            , System.currentTimeMillis());
                                     registerViewModel.insertDentist(dentist);
                                     ActiveUser.setActiveUser(dentist.getDentistId());
                                     startActivity(new Intent(this, HomeActivity.class));

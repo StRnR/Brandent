@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.pixium.brandent.db.entities.Appointment;
 import com.pixium.brandent.db.entities.Patient;
-import com.pixium.brandent.repos.AppointmentRepository;
-import com.pixium.brandent.repos.PatientRepository;
+import com.pixium.brandent.db.repos.AppointmentRepository;
+import com.pixium.brandent.db.repos.PatientRepository;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

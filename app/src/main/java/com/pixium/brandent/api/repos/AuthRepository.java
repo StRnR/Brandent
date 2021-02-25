@@ -22,15 +22,15 @@ public class AuthRepository {
     private final AuthApi authApi;
 
 
+    public AuthRepository() {
+        authApi = RetrofitService.createService(AuthApi.class);
+    }
+
     public static AuthRepository getInstance() {
         if (authRepository == null) {
             authRepository = new AuthRepository();
         }
         return authRepository;
-    }
-
-    public AuthRepository() {
-        authApi = RetrofitService.createService(AuthApi.class);
     }
 
     public MutableLiveData<MessageResponse> postPhone(String phone) {

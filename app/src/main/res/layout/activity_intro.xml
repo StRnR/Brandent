@@ -8,30 +8,41 @@
     android:layoutDirection="ltr"
     tools:context=".views.IntroActivity">
 
+    <ImageView
+        android:id="@+id/iv_illustration_intro"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/ic_intro"
+        app:layout_constraintDimensionRatio="1:1.125"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_header_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/vazir_bold"
         android:text="خوش آمدید"
         android:textColor="@color/clinitickPurple"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/iv_illustration_intro" />
 
     <TextView
         android:id="@+id/tv_instruction_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/vazir_regular"
         android:text="هدف ما: آسوده کردن زندگی کاری دندان پزشکان."
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_header_intro" />
 
     <EditText
@@ -39,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_et_rounded_rectangle"
         android:fontFamily="@font/vazir_regular"
@@ -79,7 +90,7 @@
         android:id="@+id/btn_login_intro"
         android:layout_width="136dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_rounded_orange_btn"
         android:fontFamily="@font/vazir_bold"
@@ -95,7 +106,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/bg_rounded_white_orange_border_rectangle"
         android:fontFamily="@font/vazir_bold"

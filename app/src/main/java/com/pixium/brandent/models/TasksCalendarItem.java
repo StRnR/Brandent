@@ -1,8 +1,8 @@
 package com.pixium.brandent.models;
 
 public class TasksCalendarItem {
-    private String mInitial;
-    private String mNo;
+    private final String mInitial;
+    private final String mNo;
 
     public TasksCalendarItem(String initial, String no) {
         mInitial = initial;

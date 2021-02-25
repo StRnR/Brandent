@@ -9,6 +9,7 @@ import androidx.room.Update;
 import com.pixium.brandent.db.entities.Appointment;
 
 import java.util.List;
+import java.util.UUID;
 
 @Dao
 public interface AppointmentDao {
@@ -24,6 +25,9 @@ public interface AppointmentDao {
     @Delete
     void delete(Appointment appointment);
 
+    @Query("SELECT * FROM appointment WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
+    Appointment[] getUnSynced(long updatedAt, int activeUserId);
+
     @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end " +
             "AND dentistForId=:activeUserId ORDER BY visitTime ASC")
     List<Appointment> getByDate(long start, long end, int activeUserId);
@@ -38,4 +42,6 @@ public interface AppointmentDao {
     @Query("SELECT * FROM appointment WHERE appointmentId=:arg AND dentistForId=:activeUserId")
     Appointment getById(int arg, int activeUserId);
 
+    @Query("SELECT * FROM appointment WHERE uuid=:arg AND dentistForId=:activeUserId")
+    Appointment getByUuid(UUID arg, int activeUserId);
 }

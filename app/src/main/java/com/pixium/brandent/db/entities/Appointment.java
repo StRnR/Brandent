@@ -10,22 +10,24 @@ public class Appointment {
     @PrimaryKey(autoGenerate = true)
     private int appointmentId;
 
-    private int clinicForId;
-    private int patientForId;
-    private int dentistForId;
+    private final int clinicForId;
+    private final int patientForId;
+    private final int dentistForId;
 
-    private UUID uuid;
+    private final UUID uuid;
 
-    private int price;
+    private final Long price;
+    private final Long modifiedAt;
+    private final Long visitTime;
 
-    private Long modifiedAt;
-    private Long visitTime;
+    private final String title;
+    private final String state;
 
-    private String title;
-    private String state;
+    private final int isDeleted;
 
-    public Appointment(int dentistForId, UUID uuid, Long modifiedAt, int clinicForId, int patientForId, Long visitTime
-            , int price, String title, String state) {
+    public Appointment(int dentistForId, UUID uuid, Long modifiedAt, int clinicForId, int patientForId
+            , Long visitTime, Long price, String title, String state, int isDeleted) {
+        this.isDeleted = isDeleted;
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
         } else {
@@ -50,12 +52,12 @@ public class Appointment {
         this.state = state;
     }
 
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
-    }
-
     public int getAppointmentId() {
         return appointmentId;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
     public int getClinicForId() {
@@ -74,7 +76,7 @@ public class Appointment {
         return uuid;
     }
 
-    public int getPrice() {
+    public Long getPrice() {
         return price;
     }
 
@@ -92,5 +94,9 @@ public class Appointment {
 
     public String getState() {
         return state;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
     }
 }

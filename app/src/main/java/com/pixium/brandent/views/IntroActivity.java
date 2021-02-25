@@ -10,11 +10,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.pixium.brandent.ActiveUser;
+import com.pixium.brandent.DateTools;
+import com.pixium.brandent.ModelConverter;
 import com.pixium.brandent.R;
+import com.pixium.brandent.api.models.Appointment;
+import com.pixium.brandent.api.models.Clinic;
+import com.pixium.brandent.api.models.Finance;
+import com.pixium.brandent.api.models.Patient;
+import com.pixium.brandent.api.models.Task;
 import com.pixium.brandent.api.models.auth.LoginRequest;
+import com.pixium.brandent.api.models.sync.SyncRequest;
 import com.pixium.brandent.db.entities.Dentist;
 import com.pixium.brandent.viewmodels.IntroViewModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -37,27 +46,108 @@ public class IntroActivity extends AppCompatActivity {
                 , ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
                 .get(IntroViewModel.class);
 
-        introViewModel.getAllDentistsLive().observe(this, dentists -> {
-            List<Dentist> currentDentists = new ArrayList<>();
-            for (Dentist dentist : dentists) {
-                if (dentist.getCurrent() == 1) {
-                    currentDentists.add(dentist);
-                }
+        List<Dentist> dentists = new ArrayList<>();
+        try {
+            dentists = introViewModel.getAllDentists();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        List<Dentist> currentDentists = new ArrayList<>();
+        for (Dentist dentist : dentists) {
+            if (dentist.getCurrent() == 1) {
+                currentDentists.add(dentist);
             }
+        }
 
-            if (currentDentists.size() == 1) {
-                ActiveUser.setActiveUser(currentDentists.get(0).getDentistId());
-                startActivity(new Intent(this, HomeActivity.class));
-            } else if (currentDentists.size() >= 1) {
-                for (Dentist dentist : currentDentists) {
-                    Dentist updateDentist = new Dentist(dentist.getDentistId()
-                            , dentist.getFirstName(), dentist.getLastName(), dentist.getPhone()
-                            , dentist.getSpeciality(), dentist.getImageName()
-                            , 0, dentist.getToken());
-                    introViewModel.updateDentist(updateDentist);
+        if (currentDentists.size() == 1) {
+            ActiveUser.setActiveUser(currentDentists.get(0).getDentistId());
+
+            // Sync
+            com.pixium.brandent.db.entities.Appointment[] toSyncAppointments;
+            try {
+                try {
+                    toSyncAppointments = introViewModel.getUnsyncedAppointments(currentDentists.get(0).getLastUpdated());
+                } catch (NullPointerException e) {
+                    toSyncAppointments = new com.pixium.brandent.db.entities.Appointment[0];
+                    e.printStackTrace();
                 }
+                Long mLastUpdated;
+                if (currentDentists.get(0).getLastUpdated() == null) {
+                    mLastUpdated = Long.MIN_VALUE;
+                } else {
+                    mLastUpdated = currentDentists.get(0).getLastUpdated();
+                }
+                SyncRequest syncRequest = new
+                        SyncRequest(DateTools.stringFromTimestamp(mLastUpdated, DateTools.apiTimeFormat)
+                        , ModelConverter.clinicsToSync(introViewModel.getUnsyncedClinics(mLastUpdated))
+                        , ModelConverter.patientsToSync(introViewModel.getUnsyncedPatients(mLastUpdated))
+                        , ModelConverter.financesToSync(introViewModel.getUnsyncedFinances(mLastUpdated))
+                        , ModelConverter.appointmentsToSync(introViewModel.getClinicForUuidStrings(toSyncAppointments)
+                        , introViewModel.getPatientForUuidStrings(toSyncAppointments), toSyncAppointments)
+                        , new Task[0]);
+                introViewModel.sync(syncRequest).observe(this, syncResponse -> {
+                    try {
+                        String syncMessage = syncResponse.getMessage();
+                        Toast.makeText(this, syncMessage, Toast.LENGTH_SHORT)
+                                .show();
+                        if (syncMessage.equals("successful")) {
+                            try {
+                                introViewModel.insertClinics(ModelConverter
+                                        .clinicsFromSync(syncResponse.getClinics()));
+                            } catch (NullPointerException e) {
+                                Toast.makeText(this, "clinics null"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+
+                            try {
+                                introViewModel.insertPatients(ModelConverter
+                                        .patientsFromSync(syncResponse.getPatients()));
+                            } catch (NullPointerException e) {
+                                Toast.makeText(this, "patients null"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+
+                            try {
+                                Appointment[] appointments = syncResponse.getAppointments();
+                                introViewModel.insertAppointments(ModelConverter
+                                        .appointmentsFromSync(introViewModel
+                                                        .getClinicForIds(appointments)
+                                                , introViewModel
+                                                        .getPatientForIds(appointments)
+                                                , appointments));
+                            } catch (NullPointerException e) {
+                                Toast.makeText(this, "appointments null"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+
+                            try {
+                                introViewModel.insertFinances(ModelConverter
+                                        .financesFromSync(syncResponse.getFinances()));
+                            } catch (NullPointerException e) {
+                                Toast.makeText(this, "finances null"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } catch (NullPointerException e) {
+                        Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)
+                                .show();
+                    } catch (InterruptedException | ParseException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+            startActivity(new Intent(this, HomeActivity.class));
+        } else if (currentDentists.size() >= 1) {
+            for (Dentist dentist : currentDentists) {
+                Dentist updateDentist = new Dentist(dentist.getDentistId()
+                        , dentist.getFirstName(), dentist.getLastName(), dentist.getPhone()
+                        , dentist.getSpeciality(), dentist.getImageName()
+                        , 0, dentist.getToken(), dentist.getLastUpdated());
+                introViewModel.updateDentist(updateDentist);
+            }
+        }
 
         loginBtn.setOnClickListener(v -> {
             if (phoneEt.getText().toString().length() != 11) {
@@ -78,21 +168,152 @@ public class IntroActivity extends AppCompatActivity {
                             if (message.equals("success")) {
                                 Dentist dentist = introViewModel
                                         .getDentistById(authResponse.getUser().getId());
-                                Dentist updateDentist = new Dentist(authResponse.getUser().getId()
-                                        , authResponse.getUser().getFirst_name()
-                                        , authResponse.getUser().getLast_name()
-                                        , authResponse.getUser().getPhone()
-                                        , authResponse.getUser().getSpeciality()
-                                        , authResponse.getUser().getImage()
-                                        , 1, authResponse.getToken());
                                 if (dentist == null) {
-                                    introViewModel.insertDentist(updateDentist);
+                                    Dentist insertDentist = new Dentist(authResponse.getUser().getId()
+                                            , authResponse.getUser().getFirst_name()
+                                            , authResponse.getUser().getLast_name()
+                                            , authResponse.getUser().getPhone()
+                                            , authResponse.getUser().getSpeciality()
+                                            , authResponse.getUser().getImage()
+                                            , 1, authResponse.getToken(), null);
+                                    introViewModel.insertDentist(insertDentist);
+                                    ActiveUser.setActiveUser(insertDentist.getDentistId());
+
+                                    // Sync
+                                    SyncRequest syncRequest = new
+                                            SyncRequest("1970-10-10 00:00:00"
+                                            , new Clinic[0], new Patient[0], new Finance[0]
+                                            , new Appointment[0], new Task[0]);
+                                    introViewModel.sync(syncRequest).observe(this, syncResponse -> {
+                                        try {
+                                            String syncMessage = syncResponse.getMessage();
+                                            Toast.makeText(this, syncMessage, Toast.LENGTH_SHORT)
+                                                    .show();
+                                            if (syncMessage.equals("successful")) {
+                                                try {
+                                                    introViewModel.insertClinics(ModelConverter
+                                                            .clinicsFromSync(syncResponse.getClinics()));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "clinics null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                try {
+                                                    introViewModel.insertPatients(ModelConverter
+                                                            .patientsFromSync(syncResponse.getPatients()));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "patients null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                try {
+                                                    Appointment[] appointments = syncResponse.getAppointments();
+                                                    introViewModel.insertAppointments(ModelConverter
+                                                            .appointmentsFromSync(introViewModel
+                                                                            .getClinicForIds(appointments)
+                                                                    , introViewModel
+                                                                            .getPatientForIds(appointments)
+                                                                    , appointments));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "appointments null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                try {
+                                                    introViewModel.insertFinances(ModelConverter
+                                                            .financesFromSync(syncResponse.getFinances()));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "finances null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        } catch (NullPointerException e) {
+                                            Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        } catch (InterruptedException | ParseException | ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+                                    });
+                                    startActivity(new Intent(this, HomeActivity.class));
+                                    finish();
                                 } else {
+                                    Dentist updateDentist = new Dentist(authResponse.getUser().getId()
+                                            , authResponse.getUser().getFirst_name()
+                                            , authResponse.getUser().getLast_name()
+                                            , authResponse.getUser().getPhone()
+                                            , authResponse.getUser().getSpeciality()
+                                            , authResponse.getUser().getImage()
+                                            , 1, authResponse.getToken()
+                                            , dentist.getLastUpdated());
                                     introViewModel.updateDentist(updateDentist);
+                                    ActiveUser.setActiveUser(updateDentist.getDentistId());
+
+                                    // Sync
+                                    com.pixium.brandent.db.entities.Appointment[] toSyncAppointments
+                                            = introViewModel.getUnsyncedAppointments(dentist.getLastUpdated());
+                                    SyncRequest syncRequest = new
+                                            SyncRequest(DateTools.stringFromTimestamp(dentist.getLastUpdated(), DateTools.apiTimeFormat)
+                                            , ModelConverter.clinicsToSync(introViewModel.getUnsyncedClinics(dentist.getLastUpdated()))
+                                            , ModelConverter.patientsToSync(introViewModel.getUnsyncedPatients(dentist.getLastUpdated()))
+                                            , ModelConverter.financesToSync(introViewModel.getUnsyncedFinances(dentist.getLastUpdated()))
+                                            , ModelConverter.appointmentsToSync(introViewModel.getClinicForUuidStrings(toSyncAppointments), introViewModel.getPatientForUuidStrings(toSyncAppointments), toSyncAppointments)
+                                            , new Task[0]);
+                                    introViewModel.sync(syncRequest).observe(this, syncResponse -> {
+                                        try {
+                                            String syncMessage = syncResponse.getMessage();
+                                            Toast.makeText(this, syncMessage, Toast.LENGTH_SHORT)
+                                                    .show();
+                                            if (syncMessage.equals("successful")) {
+                                                try {
+                                                    introViewModel.insertClinics(ModelConverter
+                                                            .clinicsFromSync(syncResponse.getClinics()));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "clinics null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                try {
+                                                    introViewModel.insertPatients(ModelConverter
+                                                            .patientsFromSync(syncResponse.getPatients()));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "patients null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                try {
+                                                    Appointment[] appointments = syncResponse.getAppointments();
+                                                    introViewModel.insertAppointments(ModelConverter
+                                                            .appointmentsFromSync(introViewModel
+                                                                            .getClinicForIds(appointments)
+                                                                    , introViewModel
+                                                                            .getPatientForIds(appointments)
+                                                                    , appointments));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "appointments null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                try {
+                                                    introViewModel.insertFinances(ModelConverter
+                                                            .financesFromSync(syncResponse.getFinances()));
+                                                } catch (NullPointerException e) {
+                                                    Toast.makeText(this, "finances null"
+                                                            , Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        } catch (NullPointerException e) {
+                                            Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        } catch (InterruptedException | ParseException | ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+                                    });
+                                    startActivity(new Intent(this, HomeActivity.class));
+                                    finish();
                                 }
-                                ActiveUser.setActiveUser(updateDentist.getDentistId());
-                                startActivity(new Intent(this, HomeActivity.class));
-                                finish();
+                            } else {
+                                Toast.makeText(this, message, Toast.LENGTH_SHORT)
+                                        .show();
                             }
                         } catch (NullPointerException e) {
                             Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)

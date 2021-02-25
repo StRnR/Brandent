@@ -7,7 +7,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.pixium.brandent.db.entities.Clinic;
 import com.pixium.brandent.db.entities.Dentist;
 
 import java.util.List;

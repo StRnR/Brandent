@@ -43,6 +43,14 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientH
         notifyDataSetChanged();
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Patient patient);
+    }
+
     class PatientHolder extends RecyclerView.ViewHolder {
         private final TextView nameTv;
         private final TextView phoneTv;
@@ -59,13 +67,5 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientH
                 }
             });
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Patient patient);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
     }
 }

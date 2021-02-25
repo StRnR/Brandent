@@ -8,18 +8,19 @@ public class Dentist {
     @PrimaryKey
     private int dentistId;
 
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private String speciality;
-    private String imageName;
-    private String token;
+    private final String firstName;
+    private final String lastName;
+    private final String phone;
+    private final String speciality;
+    private final String imageName;
+    private final String token;
 
-    private int current;
+    private final Long lastUpdated;
+
+    private final int current;
 
     public Dentist(int dentistId, String firstName, String lastName, String phone
-            , String speciality, String imageName, int current, String token) {
-
+            , String speciality, String imageName, int current, String token, Long lastUpdated) {
         this.dentistId = dentistId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,14 +29,15 @@ public class Dentist {
         this.imageName = imageName;
         this.current = current;
         this.token = token;
-    }
-
-    public void setDentistId(int dentistId) {
-        this.dentistId = dentistId;
+        this.lastUpdated = lastUpdated;
     }
 
     public int getDentistId() {
         return dentistId;
+    }
+
+    public void setDentistId(int dentistId) {
+        this.dentistId = dentistId;
     }
 
     public String getFirstName() {
@@ -56,6 +58,10 @@ public class Dentist {
 
     public String getImageName() {
         return imageName;
+    }
+
+    public Long getLastUpdated() {
+        return lastUpdated;
     }
 
     public int getCurrent() {

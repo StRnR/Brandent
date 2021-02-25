@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.pixium.brandent.db.entities.Clinic;
 
 import java.util.List;
+import java.util.UUID;
 
 @Dao
 public interface ClinicDao {
@@ -21,6 +22,9 @@ public interface ClinicDao {
 
     @Delete
     void delete(Clinic clinic);
+
+    @Query("SELECT * FROM clinics WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
+    Clinic[] getUnSynced(long updatedAt, int activeUserId);
 
     @Query("SELECT * FROM clinics WHERE dentistForId=:activeUserId")
     LiveData<List<Clinic>> getAllClinicsLive(int activeUserId);
@@ -36,6 +40,9 @@ public interface ClinicDao {
 
     @Query("SELECT * FROM clinics WHERE clinicId=:argId AND dentistForId=:activeUserId")
     LiveData<Clinic> getClinicById(int argId, int activeUserId);
+
+    @Query("SELECT * FROM clinics WHERE uuid=:arg AND dentistForId=:activeUserId")
+    Clinic getByUuid(UUID arg, int activeUserId);
 
     @Query("SELECT * FROM clinics WHERE color LIKE :argColor AND dentistForId=:activeUserId")
     List<Clinic> loadClinicByColor(String argColor, int activeUserId);

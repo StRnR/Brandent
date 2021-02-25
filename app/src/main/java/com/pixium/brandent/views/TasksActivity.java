@@ -192,7 +192,7 @@ public class TasksActivity extends AppCompatActivity {
             Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
                     , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
-                    , curAppointment.getPrice(), curAppointment.getTitle(), "DONE");
+                    , curAppointment.getPrice(), curAppointment.getTitle(), "done", 0);
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
             tasksViewModel.updateAppointment(updateAppointment);
             List<TasksAppointmentCardModel> updatedAppointmentCardModels = new ArrayList<>();
@@ -212,7 +212,7 @@ public class TasksActivity extends AppCompatActivity {
             Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
                     , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
-                    , curAppointment.getPrice(), curAppointment.getTitle(), "CANCELED");
+                    , curAppointment.getPrice(), curAppointment.getTitle(), "canceled", 0);
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
             tasksViewModel.updateAppointment(updateAppointment);
             List<TasksAppointmentCardModel> updatedAppointmentCardModels = new ArrayList<>();
@@ -232,7 +232,7 @@ public class TasksActivity extends AppCompatActivity {
             Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
                     , curAppointment.getUuid(), null, curAppointment.getClinicForId()
                     , curAppointment.getPatientForId(), curAppointment.getVisitTime()
-                    , curAppointment.getPrice(), curAppointment.getTitle(), "UNKNOWN");
+                    , curAppointment.getPrice(), curAppointment.getTitle(), "unknown", 0);
             updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
             tasksViewModel.updateAppointment(updateAppointment);
             List<TasksAppointmentCardModel> updatedAppointmentCardModels = new ArrayList<>();

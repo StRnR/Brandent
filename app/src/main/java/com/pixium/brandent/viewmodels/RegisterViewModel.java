@@ -10,7 +10,7 @@ import com.pixium.brandent.api.models.auth.AuthResponse;
 import com.pixium.brandent.api.models.auth.RegisterRequest;
 import com.pixium.brandent.api.repos.AuthRepository;
 import com.pixium.brandent.db.entities.Dentist;
-import com.pixium.brandent.repos.DentistRepository;
+import com.pixium.brandent.db.repos.DentistRepository;
 
 public class RegisterViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;

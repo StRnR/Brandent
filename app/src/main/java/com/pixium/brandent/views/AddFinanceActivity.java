@@ -28,8 +28,8 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import saman.zamani.persiandate.PersianDate;
 
 public class AddFinanceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private AddFinanceViewModel addFinanceViewModel;
     String financeType;
+    private AddFinanceViewModel addFinanceViewModel;
     private Calendar visitCalendar;
 
     @Override
@@ -109,7 +109,7 @@ public class AddFinanceActivity extends AppCompatActivity implements AdapterView
                 Finance finance = new Finance(ActiveUser.getInstance().getId(), null
                         , null, visitCalendar.getTimeInMillis()
                         , Integer.parseInt(amountEt.getText().toString())
-                        , titleEt.getText().toString(), financeType);
+                        , titleEt.getText().toString(), financeType, 0);
                 addFinanceViewModel.insertFinance(finance);
                 startActivity(new Intent(this, FinanceActivity.class));
             }

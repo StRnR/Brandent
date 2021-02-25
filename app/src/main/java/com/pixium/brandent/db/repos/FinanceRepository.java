@@ -1,4 +1,4 @@
-package com.pixium.brandent.repos;
+package com.pixium.brandent.db.repos;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -10,6 +10,7 @@ import com.pixium.brandent.db.entities.Finance;
 import com.pixium.brandent.models.FinanceTaskParams;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class FinanceRepository {
@@ -20,8 +21,8 @@ public class FinanceRepository {
         financeDao = database.financeDao();
     }
 
-    public void insert(Finance finance) {
-        new InsertFinanceAsyncTask(financeDao).execute(finance);
+    public void insert(Finance... finances) {
+        new InsertFinanceAsyncTask(financeDao).execute(finances);
     }
 
     public void update(Finance finance) {
@@ -32,6 +33,15 @@ public class FinanceRepository {
         new DeleteFinanceAsyncTask(financeDao).execute(finance);
     }
 
+    public Finance[] getUnsynced(long lastUpdated) throws ExecutionException, InterruptedException {
+        return new GetNotSyncedFinancesAsyncTask(financeDao).execute(lastUpdated)
+                .execute(lastUpdated).get();
+    }
+
+    public Finance getByUuid(UUID uuid) throws ExecutionException, InterruptedException {
+        return new GetFinanceByUuidAsyncTask(financeDao).execute(uuid).get();
+    }
+
     public List<Integer> getFinanceSumByDateAndType(FinanceTaskParams params)
             throws ExecutionException, InterruptedException {
         return new GetFinanceSumByDateAndTypeAsyncTask(financeDao).execute(params).get();
@@ -39,7 +49,7 @@ public class FinanceRepository {
 
 
     private static class InsertFinanceAsyncTask extends AsyncTask<Finance, Void, Void> {
-        private FinanceDao financeDao;
+        private final FinanceDao financeDao;
 
         private InsertFinanceAsyncTask(FinanceDao financeDao) {
             this.financeDao = financeDao;
@@ -47,13 +57,15 @@ public class FinanceRepository {
 
         @Override
         protected Void doInBackground(Finance... finances) {
-            financeDao.insert(finances[0]);
+            for (Finance finance : finances) {
+                financeDao.insert(finance);
+            }
             return null;
         }
     }
 
     private static class UpdateFinanceAsyncTask extends AsyncTask<Finance, Void, Void> {
-        private FinanceDao financeDao;
+        private final FinanceDao financeDao;
 
         private UpdateFinanceAsyncTask(FinanceDao financeDao) {
             this.financeDao = financeDao;
@@ -67,7 +79,7 @@ public class FinanceRepository {
     }
 
     private static class DeleteFinanceAsyncTask extends AsyncTask<Finance, Void, Void> {
-        private FinanceDao financeDao;
+        private final FinanceDao financeDao;
 
         private DeleteFinanceAsyncTask(FinanceDao financeDao) {
             this.financeDao = financeDao;
@@ -80,8 +92,34 @@ public class FinanceRepository {
         }
     }
 
+    private static class GetFinanceByUuidAsyncTask extends AsyncTask<UUID, Void, Finance> {
+        private final FinanceDao financeDao;
+
+        private GetFinanceByUuidAsyncTask(FinanceDao financeDao) {
+            this.financeDao = financeDao;
+        }
+
+        @Override
+        protected Finance doInBackground(UUID... uuids) {
+            return financeDao.getByUuid(uuids[0], ActiveUser.getInstance().getId());
+        }
+    }
+
+    private static class GetNotSyncedFinancesAsyncTask extends AsyncTask<Long, Void, Finance[]> {
+        private final FinanceDao financeDao;
+
+        private GetNotSyncedFinancesAsyncTask(FinanceDao financeDao) {
+            this.financeDao = financeDao;
+        }
+
+        @Override
+        protected Finance[] doInBackground(Long... longs) {
+            return financeDao.getUnSynced(longs[0], ActiveUser.getInstance().getId());
+        }
+    }
+
     private static class GetFinanceSumByDateAndTypeAsyncTask extends AsyncTask<FinanceTaskParams, Void, List<Integer>> {
-        private FinanceDao financeDao;
+        private final FinanceDao financeDao;
 
         private GetFinanceSumByDateAndTypeAsyncTask(FinanceDao financeDao) {
             this.financeDao = financeDao;

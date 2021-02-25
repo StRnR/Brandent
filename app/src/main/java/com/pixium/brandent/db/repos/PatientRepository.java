@@ -1,4 +1,4 @@
-package com.pixium.brandent.repos;
+package com.pixium.brandent.db.repos;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -11,20 +11,19 @@ import com.pixium.brandent.db.daos.PatientDao;
 import com.pixium.brandent.db.entities.Patient;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class PatientRepository {
     private final PatientDao patientDao;
-    private LiveData<List<Patient>> allPatients;
 
     public PatientRepository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);
         patientDao = database.patientDao();
-        allPatients = patientDao.getAllPatients(ActiveUser.getInstance().getId());
     }
 
-    public void insert(Patient patient) {
-        new InsertPatientAsyncTask(patientDao).execute(patient);
+    public void insert(Patient... patients) {
+        new InsertPatientAsyncTask(patientDao).execute(patients);
     }
 
     public void update(Patient patient) {
@@ -36,7 +35,12 @@ public class PatientRepository {
     }
 
     public LiveData<List<Patient>> getAllPatients() {
-        return allPatients;
+        return patientDao.getAllPatients(ActiveUser.getInstance().getId());
+    }
+
+    public Patient[] getUnsynced(long lastUpdated) throws ExecutionException, InterruptedException {
+        return new GetNotSyncedPatientsAsyncTask(patientDao).execute(lastUpdated)
+                .execute(lastUpdated).get();
     }
 
     public List<Patient> findPatientsByName(String string)
@@ -53,9 +57,13 @@ public class PatientRepository {
         return new GetPatientByIdAsyncTask(patientDao).execute(id).get();
     }
 
+    public Patient getByUuid(UUID uuid) throws ExecutionException, InterruptedException {
+        return new GetPatientByUuidAsyncTask(patientDao).execute(uuid).get();
+    }
+
 
     private static class InsertPatientAsyncTask extends AsyncTask<Patient, Void, Void> {
-        private PatientDao patientDao;
+        private final PatientDao patientDao;
 
         private InsertPatientAsyncTask(PatientDao patientDao) {
             this.patientDao = patientDao;
@@ -63,13 +71,15 @@ public class PatientRepository {
 
         @Override
         protected Void doInBackground(Patient... patients) {
-            patientDao.insert(patients[0]);
+            for (Patient patient : patients) {
+                patientDao.insert(patient);
+            }
             return null;
         }
     }
 
     private static class UpdatePatientAsyncTask extends AsyncTask<Patient, Void, Void> {
-        private PatientDao patientDao;
+        private final PatientDao patientDao;
 
         private UpdatePatientAsyncTask(PatientDao patientDao) {
             this.patientDao = patientDao;
@@ -83,7 +93,7 @@ public class PatientRepository {
     }
 
     private static class DeletePatientAsyncTask extends AsyncTask<Patient, Void, Void> {
-        private PatientDao patientDao;
+        private final PatientDao patientDao;
 
         private DeletePatientAsyncTask(PatientDao patientDao) {
             this.patientDao = patientDao;
@@ -96,9 +106,22 @@ public class PatientRepository {
         }
     }
 
+    private static class GetNotSyncedPatientsAsyncTask extends AsyncTask<Long, Void, Patient[]> {
+        private final PatientDao patientDao;
+
+        private GetNotSyncedPatientsAsyncTask(PatientDao patientDao) {
+            this.patientDao = patientDao;
+        }
+
+        @Override
+        protected Patient[] doInBackground(Long... longs) {
+            return patientDao.getUnSynced(longs[0], ActiveUser.getInstance().getId());
+        }
+    }
+
     private static class FindPatientsByNameAsyncTask
             extends AsyncTask<String, Void, List<Patient>> {
-        private PatientDao patientDao;
+        private final PatientDao patientDao;
 
         private FindPatientsByNameAsyncTask(PatientDao patientDao) {
             this.patientDao = patientDao;
@@ -112,7 +135,7 @@ public class PatientRepository {
 
     private static class GetPatientByNumberAsyncTask
             extends AsyncTask<String, Void, List<Patient>> {
-        private PatientDao patientDao;
+        private final PatientDao patientDao;
 
         private GetPatientByNumberAsyncTask(PatientDao patientDao) {
             this.patientDao = patientDao;
@@ -125,7 +148,7 @@ public class PatientRepository {
     }
 
     private static class GetPatientByIdAsyncTask extends AsyncTask<Integer, Void, Patient> {
-        private PatientDao patientDao;
+        private final PatientDao patientDao;
 
         private GetPatientByIdAsyncTask(PatientDao patientDao) {
             this.patientDao = patientDao;
@@ -134,6 +157,19 @@ public class PatientRepository {
         @Override
         protected Patient doInBackground(Integer... integers) {
             return patientDao.getPatientById(integers[0], ActiveUser.getInstance().getId());
+        }
+    }
+
+    private static class GetPatientByUuidAsyncTask extends AsyncTask<UUID, Void, Patient> {
+        private final PatientDao patientDao;
+
+        private GetPatientByUuidAsyncTask(PatientDao patientDao) {
+            this.patientDao = patientDao;
+        }
+
+        @Override
+        protected Patient doInBackground(UUID... uuids) {
+            return patientDao.getByUuid(uuids[0], ActiveUser.getInstance().getId());
         }
     }
 }

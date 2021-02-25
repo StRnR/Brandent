@@ -16,12 +16,6 @@ import com.pixium.brandent.R;
 import com.pixium.brandent.db.entities.Clinic;
 
 public class ClinicAdapter extends ListAdapter<Clinic, ClinicAdapter.ClinicHolder> {
-    private OnItemClickListener listener;
-
-    public ClinicAdapter() {
-        super(DIFF_CALLBACK);
-    }
-
     private static final DiffUtil.ItemCallback<Clinic> DIFF_CALLBACK = new DiffUtil.ItemCallback<Clinic>() {
         @Override
         public boolean areItemsTheSame(@NonNull Clinic oldItem, @NonNull Clinic newItem) {
@@ -34,6 +28,11 @@ public class ClinicAdapter extends ListAdapter<Clinic, ClinicAdapter.ClinicHolde
                     oldItem.getColor().equals(newItem.getColor());
         }
     };
+    private OnItemClickListener listener;
+
+    public ClinicAdapter() {
+        super(DIFF_CALLBACK);
+    }
 
     @NonNull
     @Override
@@ -54,9 +53,17 @@ public class ClinicAdapter extends ListAdapter<Clinic, ClinicAdapter.ClinicHolde
         return getItem(position);
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Clinic clinic);
+    }
+
     class ClinicHolder extends RecyclerView.ViewHolder {
-        private TextView titleTv;
-        private ImageView colorIv;
+        private final TextView titleTv;
+        private final ImageView colorIv;
 
         public ClinicHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,13 +80,5 @@ public class ClinicAdapter extends ListAdapter<Clinic, ClinicAdapter.ClinicHolde
                 }
             });
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Clinic clinic);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
     }
 }

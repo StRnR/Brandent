@@ -134,8 +134,8 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
                     Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
                             , null, null, clinics.get(0).getClinicId()
                             , patients.get(0).getPatientId(), visitCalendar.getTimeInMillis()
-                            , Integer.parseInt(priceEt.getText().toString())
-                            , diseaseEt.getText().toString(), "UNKNOWN");
+                            , Long.parseLong(priceEt.getText().toString())
+                            , diseaseEt.getText().toString(), "unknown", 0);
                     addAppointmentViewModel.insertAppointment(appointment);
                     startActivity(new Intent(this, HomeActivity.class));
                 } catch (ExecutionException | InterruptedException e) {
@@ -155,8 +155,8 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
                     Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
                             , null, null, clinics.get(0).getClinicId()
                             , patients.get(0).getPatientId(), visitCalendar.getTimeInMillis()
-                            , Integer.parseInt(priceEt.getText().toString())
-                            , diseaseEt.getText().toString(), "UNKNOWN");
+                            , Long.parseLong(priceEt.getText().toString())
+                            , diseaseEt.getText().toString(), "unknown", 0);
                     addAppointmentViewModel.insertAppointment(appointment);
                     startActivity(new Intent(this, HomeActivity.class));
                 } catch (ExecutionException | InterruptedException e) {
