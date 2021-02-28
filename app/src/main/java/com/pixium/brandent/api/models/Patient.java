@@ -4,11 +4,13 @@ public class Patient {
     private String id;
     private String full_name;
     private String phone;
+    private boolean is_deleted;
 
-    public Patient(String id, String full_name, String phone) {
+    public Patient(String id, String full_name, String phone, boolean is_deleted) {
         this.id = id;
         this.full_name = full_name;
         this.phone = phone;
+        this.is_deleted = is_deleted;
     }
 
     public String getId() {
@@ -33,5 +35,13 @@ public class Patient {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public boolean isIs_deleted() {
+        return is_deleted;
+    }
+
+    public void setIs_deleted(boolean is_deleted) {
+        this.is_deleted = is_deleted;
     }
 }

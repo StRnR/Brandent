@@ -5,12 +5,14 @@ public class Clinic {
     private String title;
     private String address;
     private String color;
+    private boolean is_deleted;
 
-    public Clinic(String id, String title, String address, String color) {
+    public Clinic(String id, String title, String address, String color, boolean is_deleted) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.color = color;
+        this.is_deleted = is_deleted;
     }
 
     public String getId() {
@@ -43,5 +45,13 @@ public class Clinic {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isIs_deleted() {
+        return is_deleted;
+    }
+
+    public void setIs_deleted(boolean is_deleted) {
+        this.is_deleted = is_deleted;
     }
 }

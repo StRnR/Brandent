@@ -39,8 +39,7 @@ public class PatientRepository {
     }
 
     public Patient[] getUnsynced(long lastUpdated) throws ExecutionException, InterruptedException {
-        return new GetNotSyncedPatientsAsyncTask(patientDao).execute(lastUpdated)
-                .execute(lastUpdated).get();
+        return new GetNotSyncedPatientsAsyncTask(patientDao).execute(lastUpdated).get();
     }
 
     public List<Patient> findPatientsByName(String string)

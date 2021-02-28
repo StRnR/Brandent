@@ -34,8 +34,7 @@ public class FinanceRepository {
     }
 
     public Finance[] getUnsynced(long lastUpdated) throws ExecutionException, InterruptedException {
-        return new GetNotSyncedFinancesAsyncTask(financeDao).execute(lastUpdated)
-                .execute(lastUpdated).get();
+        return new GetNotSyncedFinancesAsyncTask(financeDao).execute(lastUpdated).get();
     }
 
     public Finance getByUuid(UUID uuid) throws ExecutionException, InterruptedException {

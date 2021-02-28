@@ -14,7 +14,7 @@ public class ModelConverter {
         Clinic[] res = new Clinic[dbClinics.length];
         for (int i = 0; i < dbClinics.length; i++) {
             res[i] = new Clinic(dbClinics[i].getUuid().toString(), dbClinics[i].getTitle()
-                    , dbClinics[i].getAddress(), dbClinics[i].getColor());
+                    , dbClinics[i].getAddress(), dbClinics[i].getColor(), false);
         }
         return res;
     }
@@ -36,7 +36,7 @@ public class ModelConverter {
         Patient[] res = new Patient[dbPatients.length];
         for (int i = 0; i < dbPatients.length; i++) {
             res[i] = new Patient(dbPatients[i].getUuid().toString(), dbPatients[i].getName()
-                    , dbPatients[i].getPhone());
+                    , dbPatients[i].getPhone(), false);
         }
         return res;
     }
@@ -76,7 +76,7 @@ public class ModelConverter {
             res[i] = new com.pixium.brandent.db.entities.Appointment(ActiveUser.getInstance().getId()
                     , UUID.fromString(appointments[i].getId()), Long.MIN_VALUE, clinicIds[i]
                     , patientIds[i], DateTools.timestampFromString(appointments[i].getVisit_time()
-                    , DateTools.apiTimeFormat), appointments[i].getPrice()
+                    , DateTools.apiOldTimeFormat), appointments[i].getPrice()
                     , appointments[i].getDisease(), appointments[i].getState()
                     , appointments[i].isIs_deleted() ? 1 : 0);
         }

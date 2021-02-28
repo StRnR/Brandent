@@ -53,8 +53,8 @@ public class IntroViewModel extends AndroidViewModel {
         return authRepository.loginDentist(loginRequest);
     }
 
-    public LiveData<SyncResponse> sync(SyncRequest syncRequest) {
-        return syncRepository.sync(syncRequest);
+    public LiveData<SyncResponse> sync(SyncRequest syncRequest, String token) {
+        return syncRepository.sync(syncRequest, token);
     }
 
     public Clinic[] getUnsyncedClinics(long lastUpdated) throws ExecutionException

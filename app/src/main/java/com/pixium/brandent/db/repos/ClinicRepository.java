@@ -43,8 +43,7 @@ public class ClinicRepository {
     }
 
     public Clinic[] getUnsynced(long lastUpdated) throws ExecutionException, InterruptedException {
-        return new GetNotSyncedClinicsAsyncTask(clinicDao).execute(lastUpdated)
-                .execute(lastUpdated).get();
+        return new GetNotSyncedClinicsAsyncTask(clinicDao).execute(lastUpdated).get();
     }
 
     public List<Clinic> getClinicBytTitle(String title) throws ExecutionException, InterruptedException {

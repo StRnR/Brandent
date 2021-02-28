@@ -28,11 +28,11 @@ public class SyncRepository {
         return syncRepository;
     }
 
-    public MutableLiveData<SyncResponse> sync(SyncRequest syncRequest) {
+    public MutableLiveData<SyncResponse> sync(SyncRequest syncRequest, String token) {
 
         MutableLiveData<SyncResponse> syncResponse = new MutableLiveData<>();
 
-        syncApi.sync(syncRequest).enqueue(new Callback<SyncResponse>() {
+        syncApi.sync(token, syncRequest).enqueue(new Callback<SyncResponse>() {
             @Override
             public void onResponse(@NotNull Call<SyncResponse> call
                     , @NotNull Response<SyncResponse> response) {
@@ -47,7 +47,7 @@ public class SyncRepository {
             }
 
             @Override
-            public void onFailure(Call<SyncResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<SyncResponse> call, @NotNull Throwable t) {
                 syncResponse.setValue(null);
             }
         });

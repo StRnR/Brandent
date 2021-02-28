@@ -34,8 +34,7 @@ public class AppointmentRepository {
     }
 
     public Appointment[] getUnsynced(long lastUpdated) throws ExecutionException, InterruptedException {
-        return new GetNotSyncedAppointmentsAsyncTask(appointmentDao).execute(lastUpdated)
-                .execute(lastUpdated).get();
+        return new GetNotSyncedAppointmentsAsyncTask(appointmentDao).execute(lastUpdated).get();
     }
 
     public List<Appointment> getByDate(Long start, Long end)

@@ -20,7 +20,11 @@ public class Patient {
     private final String phone;
 
     public Patient(int dentistForId, UUID uuid, Long modifiedAt, String name, String phone) {
-        this.uuid = uuid;
+        if (uuid == null) {
+            this.uuid = UUID.randomUUID();
+        } else {
+            this.uuid = uuid;
+        }
 
         if (modifiedAt == null) {
             this.modifiedAt = System.currentTimeMillis();
