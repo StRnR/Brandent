@@ -6,4 +6,50 @@
         <item>خرج</item>
         <item>درآمد</item>
     </string-array>
+
+    <string-array name="month_names">
+        <item>فروردین</item>
+        <item>اردیبهشت</item>
+        <item>خرداد</item>
+        <item>تیر</item>
+        <item>مرداد</item>
+        <item>شهریور</item>
+        <item>مهر</item>
+        <item>آبان</item>
+        <item>آذر</item>
+        <item>دی</item>
+        <item>بهمن</item>
+        <item>اسفند</item>
+    </string-array>
+
+    <string-array name="years">
+        <item>1399</item>
+        <item>1400</item>
+        <item>1401</item>
+        <item>1402</item>
+        <item>1403</item>
+        <item>1404</item>
+        <item>1405</item>
+        <item>1406</item>
+        <item>1407</item>
+        <item>1408</item>
+        <item>1409</item>
+        <item>1410</item>
+        <item>1411</item>
+        <item>1412</item>
+        <item>1413</item>
+        <item>1414</item>
+        <item>1415</item>
+        <item>1416</item>
+        <item>1417</item>
+        <item>1418</item>
+        <item>1419</item>
+        <item>1420</item>
+        <item>1421</item>
+        <item>1422</item>
+        <item>1423</item>
+        <item>1424</item>
+        <item>1425</item>
+        <item>1426</item>
+    </string-array>
 </resources>

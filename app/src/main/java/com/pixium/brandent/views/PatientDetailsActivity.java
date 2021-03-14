@@ -78,8 +78,10 @@ public class PatientDetailsActivity extends AppCompatActivity {
             List<String> clinicTitles = patientDetailsViewModel.getPatientClinics(patientId);
             StringBuilder clinicsStr = new StringBuilder();
             for (int i = 0; i < clinicTitles.size(); i++) {
-                if (i != 0) {
-                    clinicsStr.append(" ،");
+                if (i == clinicTitles.size() - 1) {
+                    clinicsStr.append(" و ");
+                } else if (i != 0) {
+                    clinicsStr.append("، ");
                 }
                 clinicsStr.append(clinicTitles.get(i));
             }

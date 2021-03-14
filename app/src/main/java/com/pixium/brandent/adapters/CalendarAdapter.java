@@ -48,7 +48,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         if (position == mSelectedPos) {
             holder.initial_tv.setTextColor(Color.WHITE);
             holder.no_tv.setTextColor(Color.WHITE);
-            holder.calendar_cv.setCardBackgroundColor(Color.parseColor("#FF7603"));
+            holder.calendar_cv.setCardBackgroundColor(Color.parseColor("#472bb3"));
         } else {
             holder.initial_tv.setTextColor(Color.parseColor("#a4a5a8"));
             holder.no_tv.setTextColor(Color.BLACK);

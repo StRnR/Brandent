@@ -51,15 +51,15 @@ public class PatientAppointmentAdapter extends
         holder.titleTv.setText(current.getTitle());
         holder.dateTv.setText(DateUtils.getPersianStringDate(current.getVisitTime()));
         switch (current.getState()) {
-            case "UNKNOWN":
+            case "unknown":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
                 holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 break;
-            case "DONE":
+            case "done":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_enabled);
                 holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 break;
-            case "CANCELED":
+            case "canceled":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
                 holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_enabled);
                 break;

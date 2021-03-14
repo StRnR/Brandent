@@ -116,7 +116,7 @@
         app:layout_constraintTop_toTopOf="@id/iv_bg_visits_sum_finance" />
 
     <ImageView
-        android:id="@+id/iv_bg_manual_income_finance"
+        android:id="@+id/iv_bg_external_income_finance"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
@@ -135,9 +135,9 @@
         android:text="درآمد های خارجی"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_income_finance"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_external_income_finance"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_income_finance" />
+        app:layout_constraintTop_toTopOf="@id/iv_bg_external_income_finance" />
 
     <TextView
         android:id="@+id/tv_manual_income_finance"
@@ -148,12 +148,12 @@
         android:text="تومان"
         android:textColor="@color/checkGreen"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_income_finance"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_external_income_finance"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_income_finance" />
+        app:layout_constraintTop_toTopOf="@id/iv_bg_external_income_finance" />
 
     <ImageView
-        android:id="@+id/iv_bg_manual_expense_finance"
+        android:id="@+id/iv_bg_expense_finance"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
@@ -161,7 +161,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_tv_home"
-        app:layout_constraintTop_toBottomOf="@id/iv_bg_manual_income_finance" />
+        app:layout_constraintTop_toBottomOf="@id/iv_bg_external_income_finance" />
 
     <TextView
         android:id="@+id/tv_header_manual_expense_finance"
@@ -172,9 +172,9 @@
         android:text="خرج ها"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_expense_finance"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_expense_finance"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_expense_finance" />
+        app:layout_constraintTop_toTopOf="@id/iv_bg_expense_finance" />
 
     <TextView
         android:id="@+id/tv_manual_expense_finance"
@@ -185,9 +185,9 @@
         android:text="تومان"
         android:textColor="@color/expenseRed"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_bg_manual_expense_finance"
+        app:layout_constraintBottom_toBottomOf="@id/iv_bg_expense_finance"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_bg_manual_expense_finance" />
+        app:layout_constraintTop_toTopOf="@id/iv_bg_expense_finance" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

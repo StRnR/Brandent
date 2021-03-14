@@ -56,10 +56,14 @@ public class PatientDetailsViewModel extends AndroidViewModel {
 
     public List<String> getPatientClinics(int id) throws ExecutionException, InterruptedException {
         List<Appointment> appointments = getAppointmentsByPatient(id);
+        List<Integer> clinicIds = new ArrayList<>();
         List<String> clinicNames = new ArrayList<>();
         for (Appointment appointment : appointments) {
             Clinic clinic = clinicRepository.getById(appointment.getClinicForId());
-            clinicNames.add(clinic.getTitle());
+            if (!clinicIds.contains(clinic.getClinicId())) {
+                clinicIds.add(clinic.getClinicId());
+                clinicNames.add(clinic.getTitle());
+            }
         }
         return clinicNames;
     }

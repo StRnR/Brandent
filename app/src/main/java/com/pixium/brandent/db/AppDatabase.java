@@ -20,7 +20,8 @@ import com.pixium.brandent.db.entities.Dentist;
 import com.pixium.brandent.db.entities.Finance;
 import com.pixium.brandent.db.entities.Patient;
 
-@Database(entities = {Dentist.class, Appointment.class, Clinic.class, Patient.class, Finance.class}, version = 1)
+@Database(entities = {Dentist.class, Appointment.class, Clinic.class, Patient.class, Finance.class}
+        , version = 1)
 @TypeConverters({TimestampConverters.class, UUIDConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

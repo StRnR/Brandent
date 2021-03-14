@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pixium.brandent.R;
+import com.pixium.brandent.UiTools;
 import com.pixium.brandent.models.AppointmentIncomeTaskParams;
 import com.pixium.brandent.models.FinanceTaskParams;
 import com.pixium.brandent.viewmodels.FinanceViewModel;
@@ -26,6 +29,10 @@ import saman.zamani.persiandate.PersianDate;
 
 public class FinanceActivity extends AppCompatActivity {
     private FinanceViewModel financeViewModel;
+    public static final int TOTAL_SUM_REQUEST = 1;
+    public static final int APPOINTMENTS_REQUEST = 2;
+    public static final int EXTERNAL_INCOME_REQUEST = 3;
+    public static final int EXPENSE_REQUEST = 4;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
@@ -42,6 +49,11 @@ public class FinanceActivity extends AppCompatActivity {
         TextView visitsSumTv = findViewById(R.id.tv_visits_sum_finance);
         TextView manualIncomeTv = findViewById(R.id.tv_manual_income_finance);
         TextView manualExpenseTv = findViewById(R.id.tv_manual_expense_finance);
+
+        ImageView sumIv = findViewById(R.id.iv_bg_month_sum_finance);
+        ImageView appointmentsIv = findViewById(R.id.iv_bg_visits_sum_finance);
+        ImageView externalIncomeIv = findViewById(R.id.iv_bg_external_income_finance);
+        ImageView expenseIv = findViewById(R.id.iv_bg_expense_finance);
 
         financeViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
@@ -105,7 +117,7 @@ public class FinanceActivity extends AppCompatActivity {
 
         // Visits Sum
         AppointmentIncomeTaskParams appointmentParams = new AppointmentIncomeTaskParams(
-                startCal.getTimeInMillis(), endCal.getTimeInMillis(), "DONE");
+                startCal.getTimeInMillis(), endCal.getTimeInMillis(), "done");
         List<Integer> appointmentIncomes;
         int visitSum = 0;
         try {
@@ -116,8 +128,7 @@ public class FinanceActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        String visitsStr = visitSum + " " + visitsSumTv.getText().toString();
-        visitsSumTv.setText(visitsStr);
+        visitsSumTv.setText(UiTools.priceToString(visitSum, true));
 
         // External Income Sum
         FinanceTaskParams incomeParams = new FinanceTaskParams(startCal.getTimeInMillis()
@@ -132,8 +143,7 @@ public class FinanceActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        String externalIncomeStr = externalIncomeSum + " " + manualIncomeTv.getText().toString();
-        manualIncomeTv.setText(externalIncomeStr);
+        manualIncomeTv.setText(UiTools.priceToString(externalIncomeSum, true));
 
         // External Expense Sum
         FinanceTaskParams expenseParams = new FinanceTaskParams(startCal.getTimeInMillis()
@@ -148,19 +158,42 @@ public class FinanceActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        String externalExpenseStr = externalExpenseSum + " " + manualExpenseTv.getText().toString();
-        manualExpenseTv.setText(externalExpenseStr);
+        manualExpenseTv.setText(UiTools.priceToString(externalExpenseSum, true));
 
         // Total Sum
-        int totalSum = visitSum + externalIncomeSum - externalExpenseSum;
-        String totalSumStr = totalSum + " " + sumTv.getText().toString();
-        sumTv.setText(totalSumStr);
+        long totalSum = visitSum + externalIncomeSum - externalExpenseSum;
+        sumTv.setText(UiTools.priceToString(totalSum, true));
         if (totalSum < 0) {
-            sumTv.setTextColor(getResources().getColor(R.color.expenseRed));
+            sumTv.setTextColor(ContextCompat.getColor(this, R.color.expenseRed));
         }
 
 
-        addBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddFinanceActivity.class)));
+        addBtn.setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), AddFinanceActivity.class)));
+
+        sumIv.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MonthlyFinanceActivity.class);
+            intent.putExtra(MonthlyFinanceActivity.EXTRA_REQUEST, TOTAL_SUM_REQUEST);
+            startActivity(intent);
+        });
+
+        appointmentsIv.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MonthlyFinanceActivity.class);
+            intent.putExtra(MonthlyFinanceActivity.EXTRA_REQUEST, APPOINTMENTS_REQUEST);
+            startActivity(intent);
+        });
+
+        externalIncomeIv.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MonthlyFinanceActivity.class);
+            intent.putExtra(MonthlyFinanceActivity.EXTRA_REQUEST, EXTERNAL_INCOME_REQUEST);
+            startActivity(intent);
+        });
+
+        expenseIv.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MonthlyFinanceActivity.class);
+            intent.putExtra(MonthlyFinanceActivity.EXTRA_REQUEST, EXPENSE_REQUEST);
+            startActivity(intent);
+        });
 
         hideBtn.setOnClickListener(v -> {
             if (sumTv.getTransformationMethod() != null) {

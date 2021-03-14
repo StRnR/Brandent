@@ -6,8 +6,6 @@ import android.view.inputmethod.InputMethodManager;
 
 public class UiTools {
 
-    public static int harchi;
-
     public static void closeKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity
                 .getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -18,5 +16,19 @@ public class UiTools {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static String priceToString(long amount, boolean showToman) {
+        String tmp = String.valueOf(amount);
+        StringBuilder stringBuilder = new StringBuilder(tmp);
+        int index = 3;
+        while (index < tmp.length()) {
+            stringBuilder.insert(tmp.length() - index, ",");
+            index += 3;
+        }
+        if (showToman) {
+            stringBuilder.append(" تومان");
+        }
+        return stringBuilder.toString();
     }
 }

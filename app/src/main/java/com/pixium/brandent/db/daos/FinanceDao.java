@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.pixium.brandent.db.entities.Appointment;
 import com.pixium.brandent.db.entities.Finance;
 
 import java.util.List;
@@ -24,6 +25,10 @@ public interface FinanceDao {
 
     @Query("SELECT * FROM finances WHERE uuid=:arg AND dentistForId=:activeUserId")
     Finance getByUuid(UUID arg, int activeUserId);
+
+    @Query("SELECT * FROM finances WHERE date BETWEEN :start AND :end " +
+            "AND dentistForId=:activeUserId ORDER BY date ASC")
+    List<Finance> getByDate(long start, long end, int activeUserId);
 
     @Query("SELECT * FROM finances WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
     Finance[] getUnSynced(long updatedAt, int activeUserId);

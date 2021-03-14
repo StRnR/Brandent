@@ -101,25 +101,6 @@
         app:layout_constraintStart_toStartOf="@+id/spinner_clinic_patient_add"
         app:layout_constraintTop_toTopOf="@id/spinner_clinic_patient_add" />
 
-    <!--    <Spinner-->
-    <!--        android:id="@+id/spinner_allergy_patient_add"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="24dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:layout_marginEnd="24dp"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/spinner_clinic_patient_add" />-->
-
-    <!--    <ImageView-->
-    <!--        android:layout_width="14dp"-->
-    <!--        android:layout_height="8dp"-->
-    <!--        android:layout_marginStart="20dp"-->
-    <!--        android:background="@drawable/ic_arrow_down"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@id/spinner_allergy_patient_add"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/spinner_allergy_patient_add"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/spinner_allergy_patient_add" />-->
-
-
     <Button
         android:id="@+id/btn_submit_patient_add"
         android:layout_width="match_parent"

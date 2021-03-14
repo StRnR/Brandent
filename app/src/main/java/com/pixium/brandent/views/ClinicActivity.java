@@ -22,8 +22,8 @@ import com.pixium.brandent.viewmodels.ClinicViewModel;
 import java.util.UUID;
 
 public class ClinicActivity extends AppCompatActivity {
-    public static final int ADD_NOTE_REQUEST = 1;
-    public static final int EDIT_NOTE_REQUEST = 2;
+    public static final int ADD_CLINIC_REQUEST = 1;
+    public static final int EDIT_CLINIC_REQUEST = 2;
 
     private ClinicViewModel clinicViewModel;
 
@@ -73,12 +73,12 @@ public class ClinicActivity extends AppCompatActivity {
             intent.putExtra(AddEditClinicActivity.EXTRA_TITLE, clinic.getTitle());
             intent.putExtra(AddEditClinicActivity.EXTRA_COLOR, clinic.getColor());
             intent.putExtra(AddEditClinicActivity.EXTRA_ADDRESS, clinic.getAddress());
-            startActivityForResult(intent, EDIT_NOTE_REQUEST);
+            startActivityForResult(intent, EDIT_CLINIC_REQUEST);
         });
 
         clinicAddBtn.setOnClickListener(v ->
                 startActivityForResult(new Intent(ClinicActivity.this
-                        , AddEditClinicActivity.class), ADD_NOTE_REQUEST));
+                        , AddEditClinicActivity.class), ADD_CLINIC_REQUEST));
 
         backBtn.setOnClickListener(v -> super.onBackPressed());
     }
@@ -87,7 +87,7 @@ public class ClinicActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == ADD_CLINIC_REQUEST && resultCode == RESULT_OK) {
             assert data != null;
             String title = data.getStringExtra(AddEditClinicActivity.EXTRA_TITLE);
             String color = data.getStringExtra(AddEditClinicActivity.EXTRA_COLOR);
@@ -99,7 +99,7 @@ public class ClinicActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Clinic successfully added!", Toast.LENGTH_SHORT)
                     .show();
-        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
+        } else if (requestCode == EDIT_CLINIC_REQUEST && resultCode == RESULT_OK) {
             assert data != null;
             int id = data.getIntExtra(AddEditClinicActivity.EXTRA_ID, -1);
 

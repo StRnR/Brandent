@@ -41,6 +41,11 @@ public class FinanceRepository {
         return new GetFinanceByUuidAsyncTask(financeDao).execute(uuid).get();
     }
 
+    public List<Finance> getByDate(long start, long end) throws ExecutionException
+            , InterruptedException {
+        return new GetFinanceByDateAsyncTask(financeDao).execute(start, end).get();
+    }
+
     public List<Integer> getFinanceSumByDateAndType(FinanceTaskParams params)
             throws ExecutionException, InterruptedException {
         return new GetFinanceSumByDateAndTypeAsyncTask(financeDao).execute(params).get();
@@ -101,6 +106,19 @@ public class FinanceRepository {
         @Override
         protected Finance doInBackground(UUID... uuids) {
             return financeDao.getByUuid(uuids[0], ActiveUser.getInstance().getId());
+        }
+    }
+
+    private static class GetFinanceByDateAsyncTask extends AsyncTask<Long, Void, List<Finance>> {
+        private final FinanceDao financeDao;
+
+        private GetFinanceByDateAsyncTask(FinanceDao financeDao) {
+            this.financeDao = financeDao;
+        }
+
+        @Override
+        protected List<Finance> doInBackground(Long... longs) {
+            return financeDao.getByDate(longs[0], longs[1], ActiveUser.getInstance().getId());
         }
     }
 

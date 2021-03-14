@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutGrey"
+    android:layoutDirection="ltr"
+    tools:context=".views.MonthlyFinanceActivity">
+
+    <ImageView
+        android:id="@+id/iv_header_monthly_finance"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header_monthly_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/vazir_bold"
+        android:text="در آمد خالص"
+        android:textColor="@color/navyBlue"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_header_monthly_finance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_header_monthly_finance" />
+
+    <Button
+        android:id="@+id/btn_back_monthly_finance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/ic_arrow_left"
+        android:fontFamily="@font/vazir_medium"
+        android:text="بازگشت"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_header_monthly_finance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_monthly_finance_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_header_monthly_finance" />
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toBottomOf="@id/spinner_monthly_finance_year"
+        app:layout_constraintStart_toStartOf="@+id/spinner_monthly_finance_year"
+        app:layout_constraintTop_toTopOf="@id/spinner_monthly_finance_year" />
+
+    <Spinner
+        android:id="@+id/spinner_monthly_finance_month"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@id/spinner_monthly_finance_year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/spinner_monthly_finance_year"
+        app:layout_constraintTop_toTopOf="@id/spinner_monthly_finance_year" />
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toBottomOf="@id/spinner_monthly_finance_month"
+        app:layout_constraintStart_toStartOf="@+id/spinner_monthly_finance_month"
+        app:layout_constraintTop_toTopOf="@id/spinner_monthly_finance_month" />
+
+    <RelativeLayout
+        android:id="@+id/rl_sum_monthly_finance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_et_rounded_rectangle"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_monthly_finance_year">
+
+        <TextView
+            android:id="@+id/tv_sum_monthly_finance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@id/tv_sum_guide_monthly_finance"
+            android:fontFamily="@font/vazir_bold"
+            android:gravity="left"
+            android:textColor="@color/checkGreen"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_sum_guide_monthly_finance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/vazir_regular"
+            android:text="جمع"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_monthly_finance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/rl_sum_monthly_finance"
+        tools:listitem="@layout/monthly_finance_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

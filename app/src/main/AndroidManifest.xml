@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".views.MonthlyFinanceActivity"></activity>
         <activity android:name=".views.RegisterActivity" />
         <activity android:name=".views.ConfirmCodeActivity" />
         <activity android:name=".views.IntroActivity">
@@ -35,9 +36,7 @@
             android:launchMode="singleTop" />
         <activity android:name=".views.ProfileActivity" />
         <activity android:name=".views.FinanceActivity" />
-        <activity android:name=".views.HomeActivity">
-
-        </activity>
+        <activity android:name=".views.HomeActivity"></activity>
         <activity android:name=".views.TasksActivity" />
         <activity android:name=".views.AddAppointmentActivity" />
     </application>

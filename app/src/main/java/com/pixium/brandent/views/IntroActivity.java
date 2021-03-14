@@ -132,6 +132,15 @@ public class IntroActivity extends AppCompatActivity {
                             Toast.makeText(this, "finances null"
                                     , Toast.LENGTH_SHORT).show();
                         }
+                        Dentist syncedDentist = new Dentist(currentDentists.get(0).getDentistId()
+                                , currentDentists.get(0).getFirstName()
+                                , currentDentists.get(0).getLastName()
+                                , currentDentists.get(0).getPhone()
+                                , currentDentists.get(0).getSpeciality()
+                                , currentDentists.get(0).getImageName()
+                                , 1, currentDentists.get(0).getToken()
+                                , System.currentTimeMillis());
+                        introViewModel.updateDentist(syncedDentist);
                     }
                 } catch (NullPointerException e) {
                     Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)
@@ -177,15 +186,17 @@ public class IntroActivity extends AppCompatActivity {
                                             , authResponse.getUser().getPhone()
                                             , authResponse.getUser().getSpeciality()
                                             , authResponse.getUser().getImage()
-                                            , 1, authResponse.getToken(), Long.MIN_VALUE);
+                                            , 1, authResponse.getToken()
+                                            , DateTools.timestampFromString(DateTools.oldLastUpdated
+                                            , DateTools.apiTimeFormat));
                                     introViewModel.insertDentist(insertDentist);
                                     ActiveUser.setActiveUser(insertDentist.getDentistId());
 
                                     // Sync
                                     SyncRequest syncRequest = new
-                                            SyncRequest("1970-10-10 00:00:00.000"
-                                            , new Clinic[0], new Patient[0], new Finance[0]
-                                            , new Appointment[0], new Task[0]);
+                                            SyncRequest(DateTools.oldLastUpdated, new Clinic[0]
+                                            , new Patient[0], new Finance[0], new Appointment[0]
+                                            , new Task[0]);
                                     introViewModel.sync(syncRequest, authResponse.getToken())
                                             .observe(this, syncResponse -> {
                                                 try {
@@ -208,8 +219,6 @@ public class IntroActivity extends AppCompatActivity {
                                                             Toast.makeText(this, "patients null"
                                                                     , Toast.LENGTH_SHORT).show();
                                                         }
-                                                        Thread.sleep(1000);
-
                                                         try {
                                                             Appointment[] appointments = syncResponse.getAppointments();
                                                             introViewModel.insertAppointments(ModelConverter
@@ -230,6 +239,15 @@ public class IntroActivity extends AppCompatActivity {
                                                             Toast.makeText(this, "finances null"
                                                                     , Toast.LENGTH_SHORT).show();
                                                         }
+                                                        Dentist syncedDentist = new Dentist(authResponse.getUser().getId()
+                                                                , authResponse.getUser().getFirst_name()
+                                                                , authResponse.getUser().getLast_name()
+                                                                , authResponse.getUser().getPhone()
+                                                                , authResponse.getUser().getSpeciality()
+                                                                , authResponse.getUser().getImage()
+                                                                , 1, authResponse.getToken()
+                                                                , System.currentTimeMillis());
+                                                        introViewModel.updateDentist(syncedDentist);
                                                     }
                                                 } catch (NullPointerException e) {
                                                     Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)
@@ -306,6 +324,15 @@ public class IntroActivity extends AppCompatActivity {
                                                             Toast.makeText(this, "finances null"
                                                                     , Toast.LENGTH_SHORT).show();
                                                         }
+                                                        Dentist syncedDentist = new Dentist(authResponse.getUser().getId()
+                                                                , authResponse.getUser().getFirst_name()
+                                                                , authResponse.getUser().getLast_name()
+                                                                , authResponse.getUser().getPhone()
+                                                                , authResponse.getUser().getSpeciality()
+                                                                , authResponse.getUser().getImage()
+                                                                , 1, authResponse.getToken()
+                                                                , System.currentTimeMillis());
+                                                        introViewModel.updateDentist(syncedDentist);
                                                     }
                                                 } catch (NullPointerException e) {
                                                     Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)
@@ -324,7 +351,7 @@ public class IntroActivity extends AppCompatActivity {
                         } catch (NullPointerException e) {
                             Toast.makeText(this, "Null reference", Toast.LENGTH_SHORT)
                                     .show();
-                        } catch (InterruptedException | ExecutionException e) {
+                        } catch (InterruptedException | ExecutionException | ParseException e) {
                             e.printStackTrace();
                         }
                     });
