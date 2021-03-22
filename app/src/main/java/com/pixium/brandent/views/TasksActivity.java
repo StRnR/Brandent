@@ -3,6 +3,8 @@ package com.pixium.brandent.views;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,10 +40,12 @@ public class TasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks);
 
         TextView todayBtn = findViewById(R.id.btn_today_tasks);
+        TextView emptyTasksTv = findViewById(R.id.tv_empty_tasks);
+        TextView month_tv = findViewById(R.id.tv_month_tasks);
+
+        ImageView illustrationIv = findViewById(R.id.iv_illustration_tasks);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        TextView month_tv = findViewById(R.id.tv_month_tasks);
 
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.tasks_page);
@@ -110,12 +114,24 @@ public class TasksActivity extends AppCompatActivity {
         try {
             List<Appointment> appointments = tasksViewModel
                     .getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
-            for (Appointment appointment : appointments) {
-                TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
-                        , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
-                appointmentCardModels.add(appointmentCardModel);
+            if (appointments.size() > 0) {
+                illustrationIv.setVisibility(View.GONE);
+                emptyTasksTv.setVisibility(View.GONE);
+                appointmentsRv.setVisibility(View.VISIBLE);
+                for (Appointment appointment : appointments) {
+                    TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
+                            , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
+                    appointmentCardModels.add(appointmentCardModel);
+                }
+            } else {
+                illustrationIv.setVisibility(View.VISIBLE);
+                emptyTasksTv.setVisibility(View.VISIBLE);
+                appointmentsRv.setVisibility(View.GONE);
             }
         } catch (ExecutionException | InterruptedException e) {
+            illustrationIv.setVisibility(View.VISIBLE);
+            emptyTasksTv.setVisibility(View.VISIBLE);
+            appointmentsRv.setVisibility(View.GONE);
             e.printStackTrace();
         }
 
@@ -175,12 +191,24 @@ public class TasksActivity extends AppCompatActivity {
             try {
                 List<Appointment> appointments = tasksViewModel
                         .getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
-                for (Appointment appointment : appointments) {
-                    TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
-                            , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
-                    appointmentCardModels.add(appointmentCardModel);
+                if (appointments.size() > 0) {
+                    illustrationIv.setVisibility(View.GONE);
+                    emptyTasksTv.setVisibility(View.GONE);
+                    appointmentsRv.setVisibility(View.VISIBLE);
+                    for (Appointment appointment : appointments) {
+                        TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
+                                , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
+                        appointmentCardModels.add(appointmentCardModel);
+                    }
+                } else {
+                    illustrationIv.setVisibility(View.VISIBLE);
+                    emptyTasksTv.setVisibility(View.VISIBLE);
+                    appointmentsRv.setVisibility(View.GONE);
                 }
             } catch (ExecutionException | InterruptedException e) {
+                illustrationIv.setVisibility(View.VISIBLE);
+                emptyTasksTv.setVisibility(View.VISIBLE);
+                appointmentsRv.setVisibility(View.GONE);
                 e.printStackTrace();
             }
 
@@ -263,19 +291,29 @@ public class TasksActivity extends AppCompatActivity {
             try {
                 List<Appointment> appointments = tasksViewModel
                         .getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
-                for (Appointment appointment : appointments) {
-                    TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
-                            , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
-                    appointmentCardModels.add(appointmentCardModel);
+                if (appointments.size() > 0) {
+                    illustrationIv.setVisibility(View.GONE);
+                    emptyTasksTv.setVisibility(View.GONE);
+                    appointmentsRv.setVisibility(View.VISIBLE);
+                    for (Appointment appointment : appointments) {
+                        TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
+                                , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
+                        appointmentCardModels.add(appointmentCardModel);
+                    }
+                } else {
+                    illustrationIv.setVisibility(View.VISIBLE);
+                    emptyTasksTv.setVisibility(View.VISIBLE);
+                    appointmentsRv.setVisibility(View.GONE);
                 }
             } catch (ExecutionException | InterruptedException e) {
+                illustrationIv.setVisibility(View.VISIBLE);
+                emptyTasksTv.setVisibility(View.VISIBLE);
+                appointmentsRv.setVisibility(View.GONE);
                 e.printStackTrace();
             }
 
             appointmentAdapter.setAppointments(appointmentCardModels);
         });
-
-
     }
 
     @Override

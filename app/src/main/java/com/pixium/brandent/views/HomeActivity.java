@@ -177,6 +177,8 @@ public class HomeActivity extends AppCompatActivity {
                 todayRv.setVisibility(View.GONE);
             }
         } catch (ExecutionException | InterruptedException e) {
+            emptyTodayTv.setVisibility(View.VISIBLE);
+            todayRv.setVisibility(View.GONE);
             e.printStackTrace();
         }
 
