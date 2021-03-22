@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Brandent</string>
+    <string name="app_name">Clinitick</string>
 
     <string-array name="finance_type">
         <item></item>

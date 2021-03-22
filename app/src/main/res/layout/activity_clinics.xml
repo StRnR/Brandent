@@ -66,6 +66,7 @@
         android:id="@+id/rv_clinics"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@id/btn_add_clinic_clinics"
         app:layout_constraintTop_toBottomOf="@id/iv_header_clinics"
         tools:listitem="@layout/clinic_item" />

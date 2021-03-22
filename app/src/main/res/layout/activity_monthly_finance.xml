@@ -123,8 +123,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_monthly_finance"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rl_sum_monthly_finance"
         tools:listitem="@layout/monthly_finance_item" />
 

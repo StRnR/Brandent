@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pixium.brandent">
+    package="com.pixium.clinitick">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".Brandent"
+        android:name=".Clinitick"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.MonthlyFinanceActivity"></activity>
-        <activity android:name=".views.RegisterActivity" />
-        <activity android:name=".views.ConfirmCodeActivity" />
-        <activity android:name=".views.IntroActivity">
+        <activity android:name="com.pixium.clinitick.views.MonthlyFinanceActivity" />
+        <activity android:name="com.pixium.clinitick.views.RegisterActivity" />
+        <activity android:name="com.pixium.clinitick.views.ConfirmCodeActivity" />
+        <activity android:name="com.pixium.clinitick.views.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.PhoneRegisterActivity" />
-        <activity android:name=".views.PatientDetailsActivity" />
-        <activity android:name=".views.AddPatientActivity" />
-        <activity android:name=".views.PatientsActivity" />
+        <activity android:name="com.pixium.clinitick.views.PhoneRegisterActivity" />
+        <activity android:name="com.pixium.clinitick.views.PatientDetailsActivity" />
+        <activity android:name="com.pixium.clinitick.views.AddPatientActivity" />
+        <activity android:name="com.pixium.clinitick.views.PatientsActivity" />
         <activity
-            android:name=".views.AddFinanceActivity"
-            android:parentActivityName=".views.ClinicActivity" />
-        <activity android:name=".views.AddEditClinicActivity" />
+            android:name="com.pixium.clinitick.views.AddFinanceActivity"
+            android:parentActivityName="com.pixium.clinitick.views.ClinicActivity" />
+        <activity android:name="com.pixium.clinitick.views.AddEditClinicActivity" />
         <activity
-            android:name=".views.ClinicActivity"
+            android:name="com.pixium.clinitick.views.ClinicActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".views.ProfileActivity" />
-        <activity android:name=".views.FinanceActivity" />
-        <activity android:name=".views.HomeActivity"></activity>
-        <activity android:name=".views.TasksActivity" />
-        <activity android:name=".views.AddAppointmentActivity" />
+        <activity android:name="com.pixium.clinitick.views.ProfileActivity" />
+        <activity android:name="com.pixium.clinitick.views.FinanceActivity" />
+        <activity android:name="com.pixium.clinitick.views.HomeActivity"></activity>
+        <activity android:name="com.pixium.clinitick.views.TasksActivity" />
+        <activity android:name="com.pixium.clinitick.views.AddAppointmentActivity" />
     </application>
 
 </manifest>
