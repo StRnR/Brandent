@@ -68,11 +68,11 @@ public class ClinicActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(clinic -> {
             Intent intent = new Intent(ClinicActivity.this
                     , AddEditClinicActivity.class);
-            intent.putExtra(AddEditClinicActivity.EXTRA_ID, clinic.getClinicId());
-            intent.putExtra(AddEditClinicActivity.EXTRA_UUID, clinic.getUuid().toString());
-            intent.putExtra(AddEditClinicActivity.EXTRA_TITLE, clinic.getTitle());
-            intent.putExtra(AddEditClinicActivity.EXTRA_COLOR, clinic.getColor());
-            intent.putExtra(AddEditClinicActivity.EXTRA_ADDRESS, clinic.getAddress());
+            intent.putExtra(AddEditClinicActivity.EXTRA_CLINIC_ID, clinic.getClinicId());
+            intent.putExtra(AddEditClinicActivity.EXTRA_CLINIC_UUID, clinic.getUuid().toString());
+            intent.putExtra(AddEditClinicActivity.EXTRA_CLINIC_TITLE, clinic.getTitle());
+            intent.putExtra(AddEditClinicActivity.EXTRA_CLINIC_COLOR, clinic.getColor());
+            intent.putExtra(AddEditClinicActivity.EXTRA_CLINIC_ADDRESS, clinic.getAddress());
             startActivityForResult(intent, EDIT_CLINIC_REQUEST);
         });
 
@@ -89,9 +89,9 @@ public class ClinicActivity extends AppCompatActivity {
 
         if (requestCode == ADD_CLINIC_REQUEST && resultCode == RESULT_OK) {
             assert data != null;
-            String title = data.getStringExtra(AddEditClinicActivity.EXTRA_TITLE);
-            String color = data.getStringExtra(AddEditClinicActivity.EXTRA_COLOR);
-            String address = data.getStringExtra(AddEditClinicActivity.EXTRA_ADDRESS);
+            String title = data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_TITLE);
+            String color = data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_COLOR);
+            String address = data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_ADDRESS);
 
             Clinic clinic = new Clinic(ActiveUser.getInstance().getId(), null, null
                     , title, address, color);
@@ -101,19 +101,19 @@ public class ClinicActivity extends AppCompatActivity {
                     .show();
         } else if (requestCode == EDIT_CLINIC_REQUEST && resultCode == RESULT_OK) {
             assert data != null;
-            int id = data.getIntExtra(AddEditClinicActivity.EXTRA_ID, -1);
+            int id = data.getIntExtra(AddEditClinicActivity.EXTRA_CLINIC_ID, -1);
 
-            if (id == -1 || data.getStringExtra(AddEditClinicActivity.EXTRA_UUID) == null) {
+            if (id == -1 || data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_UUID) == null) {
                 Toast.makeText(this, "Clinic can't be updated"
                         , Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            String title = data.getStringExtra(AddEditClinicActivity.EXTRA_TITLE);
-            String color = data.getStringExtra(AddEditClinicActivity.EXTRA_COLOR);
-            String address = data.getStringExtra(AddEditClinicActivity.EXTRA_ADDRESS);
+            String title = data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_TITLE);
+            String color = data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_COLOR);
+            String address = data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_ADDRESS);
 
-            UUID uuid = UUID.fromString(data.getStringExtra(AddEditClinicActivity.EXTRA_UUID));
+            UUID uuid = UUID.fromString(data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_UUID));
 
             Clinic clinic = new Clinic(ActiveUser.getInstance().getId(), uuid, null
                     , title, address, color);

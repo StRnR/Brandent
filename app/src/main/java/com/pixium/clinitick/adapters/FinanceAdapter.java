@@ -19,6 +19,7 @@ import java.util.List;
 
 public class FinanceAdapter extends RecyclerView.Adapter<FinanceAdapter.FinanceHolder> {
     private List<FinanceCardModel> finances = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -37,6 +38,8 @@ public class FinanceAdapter extends RecyclerView.Adapter<FinanceAdapter.FinanceH
         holder.amountTv.setText(UiTools.priceToString(financeCardModel.getAmount(), true));
         if (financeCardModel.isExpense()) {
             holder.amountTv.setTextColor(Color.parseColor("#e02020"));
+        } else {
+            holder.amountTv.setTextColor(Color.parseColor("#6BCF00"));
         }
         holder.dateTv.setText(financeCardModel.getDate());
     }
@@ -51,7 +54,7 @@ public class FinanceAdapter extends RecyclerView.Adapter<FinanceAdapter.FinanceH
         notifyDataSetChanged();
     }
 
-    static class FinanceHolder extends RecyclerView.ViewHolder {
+    class FinanceHolder extends RecyclerView.ViewHolder {
         private final TextView titleTv;
         private final TextView descriptionTv;
         private final TextView amountTv;
@@ -63,6 +66,21 @@ public class FinanceAdapter extends RecyclerView.Adapter<FinanceAdapter.FinanceH
             descriptionTv = itemView.findViewById(R.id.tv_description_finance_cv);
             amountTv = itemView.findViewById(R.id.tv_amount_finance_cv);
             dateTv = itemView.findViewById(R.id.tv_date_finance_cv);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(finances.get(position));
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(FinanceCardModel financeCardModel);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

@@ -31,4 +31,14 @@ public class UiTools {
         }
         return stringBuilder.toString();
     }
+
+    public static Long stringToPrice(String string) {
+        long amount = 0;
+        for (char ch : string.toCharArray()) {
+            if ((int) ch <= 57 && (int) ch >= 48) {
+                amount = amount * 10 + ((int) ch) - 48;
+            }
+        }
+        return amount;
+    }
 }

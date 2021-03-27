@@ -27,7 +27,7 @@
         <activity android:name="com.pixium.clinitick.views.AddPatientActivity" />
         <activity android:name="com.pixium.clinitick.views.PatientsActivity" />
         <activity
-            android:name="com.pixium.clinitick.views.AddFinanceActivity"
+            android:name="com.pixium.clinitick.views.AddEditFinanceActivity"
             android:parentActivityName="com.pixium.clinitick.views.ClinicActivity" />
         <activity android:name="com.pixium.clinitick.views.AddEditClinicActivity" />
         <activity

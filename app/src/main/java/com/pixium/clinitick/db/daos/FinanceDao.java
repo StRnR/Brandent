@@ -22,6 +22,9 @@ public interface FinanceDao {
     @Delete
     void delete(Finance finance);
 
+    @Query("SELECT * FROM finances WHERE financeId=:arg AND dentistForId=:activeUserId")
+    Finance getById(int arg, int activeUserId);
+
     @Query("SELECT * FROM finances WHERE uuid=:arg AND dentistForId=:activeUserId")
     Finance getByUuid(UUID arg, int activeUserId);
 
@@ -34,6 +37,6 @@ public interface FinanceDao {
 
     @Query("SELECT price FROM finances WHERE date BETWEEN :start AND :end AND type = :argType " +
             "AND dentistForId=:activeUserId ORDER BY date ASC")
-    List<Integer> getFinanceSumByDateAndType(long start, long end, String argType
+    List<Long> getFinanceSumByDateAndType(long start, long end, String argType
             , int activeUserId);
 }

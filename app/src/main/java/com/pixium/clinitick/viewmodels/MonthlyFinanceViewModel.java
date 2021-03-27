@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MonthlyFinanceViewModel extends AndroidViewModel {
-    private AppointmentRepository appointmentRepository;
-    private FinanceRepository financeRepository;
-    private PatientRepository patientRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final FinanceRepository financeRepository;
+    private final PatientRepository patientRepository;
 
     public MonthlyFinanceViewModel(@NonNull Application application) {
         super(application);
@@ -91,7 +91,8 @@ public class MonthlyFinanceViewModel extends AndroidViewModel {
                 if (appointments.get(appointmentsIndex).getVisitTime() <= finances.get(financesIndex).getDate()) {
                     Appointment appointment = appointments.get(appointmentsIndex);
                     FinanceCardModel financeCardModel =
-                            new FinanceCardModel(getPatientById(appointment.getPatientForId()).getName()
+                            new FinanceCardModel(appointment.getAppointmentId()
+                                    , getPatientById(appointment.getPatientForId()).getName()
                                     , appointment.getTitle(), appointment.getPrice()
                                     , DateTools.timestampToSimpleJalali(appointment.getVisitTime())
                                     , false);
@@ -99,7 +100,8 @@ public class MonthlyFinanceViewModel extends AndroidViewModel {
                     appointmentsIndex++;
                 } else {
                     Finance finance = finances.get(financesIndex);
-                    FinanceCardModel financeCardModel = new FinanceCardModel(finance.getTitle()
+                    FinanceCardModel financeCardModel = new FinanceCardModel(finance.getFinanceId()
+                            , finance.getTitle()
                             , "", finance.getPrice()
                             , DateTools.timestampToSimpleJalali(finance.getDate())
                             , finance.getType().equals("EXPENSE"));
@@ -109,7 +111,8 @@ public class MonthlyFinanceViewModel extends AndroidViewModel {
             } else if (financesDone) {
                 Appointment appointment = appointments.get(appointmentsIndex);
                 FinanceCardModel financeCardModel =
-                        new FinanceCardModel(getPatientById(appointment.getPatientForId()).getName()
+                        new FinanceCardModel(appointment.getAppointmentId()
+                                , getPatientById(appointment.getPatientForId()).getName()
                                 , appointment.getTitle(), appointment.getPrice()
                                 , DateTools.timestampToSimpleJalali(appointment.getVisitTime())
                                 , false);
@@ -117,8 +120,8 @@ public class MonthlyFinanceViewModel extends AndroidViewModel {
                 appointmentsIndex++;
             } else {
                 Finance finance = finances.get(financesIndex);
-                FinanceCardModel financeCardModel = new FinanceCardModel(finance.getTitle()
-                        , "", finance.getPrice()
+                FinanceCardModel financeCardModel = new FinanceCardModel(finance.getFinanceId()
+                        , finance.getTitle(), "", finance.getPrice()
                         , DateTools.timestampToSimpleJalali(finance.getDate())
                         , finance.getType().equals("EXPENSE"));
                 res.add(financeCardModel);

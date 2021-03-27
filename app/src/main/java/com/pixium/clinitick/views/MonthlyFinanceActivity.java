@@ -111,6 +111,15 @@ public class MonthlyFinanceActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        adapter.setOnItemClickListener(financeCardModel -> {
+            if (financeCardModel.getDescription().trim().equals("")) {
+                Intent intent1 = new Intent(MonthlyFinanceActivity.this
+                        , AddEditFinanceActivity.class);
+                intent1.putExtra(AddEditFinanceActivity.EXTRA_FINANCE_ID, financeCardModel.getId());
+                startActivity(intent1);
+            }
+        });
+
         // Month Spinner
         Spinner monthSpinner = findViewById(R.id.spinner_monthly_finance_month);
         ArrayAdapter<CharSequence> monthSpinnerAdapter = ArrayAdapter.createFromResource(this

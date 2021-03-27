@@ -37,6 +37,10 @@ public class FinanceRepository {
         return new GetNotSyncedFinancesAsyncTask(financeDao).execute(lastUpdated).get();
     }
 
+    public Finance getById(int id) throws ExecutionException, InterruptedException {
+        return new GetFinanceByIdAsyncTask(financeDao).execute(id).get();
+    }
+
     public Finance getByUuid(UUID uuid) throws ExecutionException, InterruptedException {
         return new GetFinanceByUuidAsyncTask(financeDao).execute(uuid).get();
     }
@@ -46,7 +50,7 @@ public class FinanceRepository {
         return new GetFinanceByDateAsyncTask(financeDao).execute(start, end).get();
     }
 
-    public List<Integer> getFinanceSumByDateAndType(FinanceTaskParams params)
+    public List<Long> getFinanceSumByDateAndType(FinanceTaskParams params)
             throws ExecutionException, InterruptedException {
         return new GetFinanceSumByDateAndTypeAsyncTask(financeDao).execute(params).get();
     }
@@ -96,6 +100,19 @@ public class FinanceRepository {
         }
     }
 
+    private static class GetFinanceByIdAsyncTask extends AsyncTask<Integer, Void, Finance> {
+        private final FinanceDao financeDao;
+
+        private GetFinanceByIdAsyncTask(FinanceDao financeDao) {
+            this.financeDao = financeDao;
+        }
+
+        @Override
+        protected Finance doInBackground(Integer... integers) {
+            return financeDao.getById(integers[0], ActiveUser.getInstance().getId());
+        }
+    }
+
     private static class GetFinanceByUuidAsyncTask extends AsyncTask<UUID, Void, Finance> {
         private final FinanceDao financeDao;
 
@@ -135,7 +152,7 @@ public class FinanceRepository {
         }
     }
 
-    private static class GetFinanceSumByDateAndTypeAsyncTask extends AsyncTask<FinanceTaskParams, Void, List<Integer>> {
+    private static class GetFinanceSumByDateAndTypeAsyncTask extends AsyncTask<FinanceTaskParams, Void, List<Long>> {
         private final FinanceDao financeDao;
 
         private GetFinanceSumByDateAndTypeAsyncTask(FinanceDao financeDao) {
@@ -143,7 +160,7 @@ public class FinanceRepository {
         }
 
         @Override
-        protected List<Integer> doInBackground(FinanceTaskParams... params) {
+        protected List<Long> doInBackground(FinanceTaskParams... params) {
             return financeDao.getFinanceSumByDateAndType(params[0].start, params[0].end
                     , params[0].type, ActiveUser.getInstance().getId());
         }

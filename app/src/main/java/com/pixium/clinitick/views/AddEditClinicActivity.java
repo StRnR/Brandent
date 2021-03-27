@@ -19,16 +19,16 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddEditClinicActivity extends AppCompatActivity {
-    public static final String EXTRA_ID =
-            "com.pixium.brandent.EXTRA_ID";
-    public static final String EXTRA_UUID =
-            "com.pixium.brandent.EXTRA_UUID";
-    public static final String EXTRA_TITLE =
-            "com.pixium.brandent.EXTRA_TITLE";
-    public static final String EXTRA_COLOR =
-            "com.pixium.brandent.EXTRA_COLOR";
-    public static final String EXTRA_ADDRESS =
-            "com.pixium.brandent.EXTRA_ADDRESS";
+    public static final String EXTRA_CLINIC_ID =
+            "com.pixium.brandent.EXTRA_CLINIC_ID";
+    public static final String EXTRA_CLINIC_UUID =
+            "com.pixium.brandent.EXTRA_CLINIC_UUID";
+    public static final String EXTRA_CLINIC_TITLE =
+            "com.pixium.brandent.EXTRA_CLINIC_TITLE";
+    public static final String EXTRA_CLINIC_COLOR =
+            "com.pixium.brandent.EXTRA_CLINIC_COLOR";
+    public static final String EXTRA_CLINIC_ADDRESS =
+            "com.pixium.brandent.EXTRA_CLINIC_ADDRESS";
     private ClinicViewModel clinicViewModel;
     private String clinicColor = null;
     private String prevName;
@@ -156,12 +156,12 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        if (intent.hasExtra(EXTRA_ID)) {
+        if (intent.hasExtra(EXTRA_CLINIC_ID)) {
             headerTv.setText("ویرایش مطب");
-            prevName = intent.getStringExtra(EXTRA_TITLE);
+            prevName = intent.getStringExtra(EXTRA_CLINIC_TITLE);
             nameEt.setText(prevName);
-            addressEt.setText(intent.getStringExtra(EXTRA_ADDRESS));
-            String oldColor = intent.getStringExtra(EXTRA_COLOR);
+            addressEt.setText(intent.getStringExtra(EXTRA_CLINIC_ADDRESS));
+            String oldColor = intent.getStringExtra(EXTRA_CLINIC_COLOR);
 
             switch (oldColor) {
                 case "#ffff2927":
@@ -193,10 +193,12 @@ public class AddEditClinicActivity extends AppCompatActivity {
 
         submitBtn.setOnClickListener(v -> {
             if (clinicColor == null) {
-                Toast.makeText(getApplicationContext(), "Please select a color for your clinic", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Please select a color for your clinic"
+                        , Toast.LENGTH_SHORT).show();
                 return;
             } else if (nameEt.getText().toString().trim().isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please enter a name for your clinic", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Please enter a name for your clinic"
+                        , Toast.LENGTH_SHORT).show();
                 return;
             } else {
                 try {
@@ -213,14 +215,14 @@ public class AddEditClinicActivity extends AppCompatActivity {
                 }
             }
             Intent data = new Intent();
-            data.putExtra(EXTRA_TITLE, nameEt.getText().toString());
-            data.putExtra(EXTRA_COLOR, clinicColor);
-            data.putExtra(EXTRA_ADDRESS, addressEt.getText().toString());
+            data.putExtra(EXTRA_CLINIC_TITLE, nameEt.getText().toString());
+            data.putExtra(EXTRA_CLINIC_COLOR, clinicColor);
+            data.putExtra(EXTRA_CLINIC_ADDRESS, addressEt.getText().toString());
 
-            int id = getIntent().getIntExtra(EXTRA_ID, -1);
+            int id = getIntent().getIntExtra(EXTRA_CLINIC_ID, -1);
             if (id != -1) {
-                data.putExtra(EXTRA_ID, id);
-                data.putExtra(EXTRA_UUID, getIntent().getStringExtra(EXTRA_UUID));
+                data.putExtra(EXTRA_CLINIC_ID, id);
+                data.putExtra(EXTRA_CLINIC_UUID, getIntent().getStringExtra(EXTRA_CLINIC_UUID));
             }
 
             setResult(RESULT_OK, data);

@@ -25,7 +25,7 @@ public class FinanceViewModel extends AndroidViewModel {
     }
 
 
-    public List<Integer> getFianceSumByDateAndType(FinanceTaskParams financeTaskParams)
+    public List<Long> getFianceSumByDateAndType(FinanceTaskParams financeTaskParams)
             throws ExecutionException, InterruptedException {
         return financeRepository.getFinanceSumByDateAndType(financeTaskParams);
     }

@@ -4,12 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,7 +32,7 @@ public class FinanceActivity extends AppCompatActivity {
     public static final int EXTERNAL_INCOME_REQUEST = 3;
     public static final int EXPENSE_REQUEST = 4;
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables", "NonConstantResourceId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,32 +61,32 @@ public class FinanceActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.finance_page);
 
         // NavBar ItemSelectedListener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.home_page:
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.finance_page:
-                        return true;
-                    case R.id.add_appointment_page:
-                        startActivity(new Intent(getApplicationContext(), AddPatientActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.tasks_page:
-                        startActivity(new Intent(getApplicationContext(), TasksActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.profile_page:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        overridePendingTransition(0, 0);
-                        return true;
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home_page:
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    overridePendingTransition(0, 0);
+                    return true;
+                case R.id.finance_page:
+                    return true;
+                case R.id.add_appointment_page:
+                    startActivity(new Intent(getApplicationContext(), AddPatientActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    overridePendingTransition(0, 0);
+                    return true;
+                case R.id.tasks_page:
+                    startActivity(new Intent(getApplicationContext(), TasksActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    overridePendingTransition(0, 0);
+                    return true;
+                case R.id.profile_page:
+                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    overridePendingTransition(0, 0);
+                    return true;
             }
+            return false;
         });
 
 
@@ -133,11 +131,11 @@ public class FinanceActivity extends AppCompatActivity {
         // External Income Sum
         FinanceTaskParams incomeParams = new FinanceTaskParams(startCal.getTimeInMillis()
                 , endCal.getTimeInMillis(), "INCOME");
-        List<Integer> externalIncomes;
+        List<Long> externalIncomes;
         int externalIncomeSum = 0;
         try {
             externalIncomes = financeViewModel.getFianceSumByDateAndType(incomeParams);
-            for (Integer amount : externalIncomes) {
+            for (Long amount : externalIncomes) {
                 externalIncomeSum += amount;
             }
         } catch (ExecutionException | InterruptedException e) {
@@ -148,11 +146,11 @@ public class FinanceActivity extends AppCompatActivity {
         // External Expense Sum
         FinanceTaskParams expenseParams = new FinanceTaskParams(startCal.getTimeInMillis()
                 , endCal.getTimeInMillis(), "EXPENSE");
-        List<Integer> externalExpenses;
+        List<Long> externalExpenses;
         int externalExpenseSum = 0;
         try {
             externalExpenses = financeViewModel.getFianceSumByDateAndType(expenseParams);
-            for (Integer amount : externalExpenses) {
+            for (Long amount : externalExpenses) {
                 externalExpenseSum += amount;
             }
         } catch (ExecutionException | InterruptedException e) {
@@ -169,7 +167,7 @@ public class FinanceActivity extends AppCompatActivity {
 
 
         addBtn.setOnClickListener(v ->
-                startActivity(new Intent(getApplicationContext(), AddFinanceActivity.class)));
+                startActivity(new Intent(getApplicationContext(), AddEditFinanceActivity.class)));
 
         sumIv.setOnClickListener(v -> {
             Intent intent = new Intent(this, MonthlyFinanceActivity.class);
