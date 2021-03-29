@@ -101,6 +101,14 @@ public class PatientDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        adapter.setOnItemClickListener(appointment -> {
+            Intent intent1 = new Intent(PatientDetailsActivity.this
+                    , EditAppointmentActivity.class);
+            intent1.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID
+                    , appointment.getAppointmentId());
+            startActivity(intent1);
+        });
+
         adapter.setOnItemCheckClickListener(id -> {
             Appointment curAppointment = patientDetailsViewModel.getAppointmentById(id);
             Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()

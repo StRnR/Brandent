@@ -117,6 +117,12 @@ public class MonthlyFinanceActivity extends AppCompatActivity {
                         , AddEditFinanceActivity.class);
                 intent1.putExtra(AddEditFinanceActivity.EXTRA_FINANCE_ID, financeCardModel.getId());
                 startActivity(intent1);
+            } else {
+                Intent intent1 = new Intent(MonthlyFinanceActivity.this
+                        , EditAppointmentActivity.class);
+                intent1.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID
+                        , financeCardModel.getId());
+                startActivity(intent1);
             }
         });
 

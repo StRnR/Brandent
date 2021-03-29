@@ -215,6 +215,13 @@ public class TasksActivity extends AppCompatActivity {
             appointmentAdapter.setAppointments(appointmentCardModels);
         });
 
+        appointmentAdapter.setOnItemClickListener(appointment -> {
+            Intent intent = new Intent(TasksActivity.this, EditAppointmentActivity.class);
+            intent.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID
+                    , appointment.getAppointmentId());
+            startActivity(intent);
+        });
+
         appointmentAdapter.setOnItemCheckClickListener(id -> {
             Appointment curAppointment = tasksViewModel.getAppointmentById(id);
             Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()

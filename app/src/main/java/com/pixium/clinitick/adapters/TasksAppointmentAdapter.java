@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class TasksAppointmentAdapter extends
         RecyclerView.Adapter<TasksAppointmentAdapter.AppointmentHolder> {
     private List<TasksAppointmentCardModel> appointments = new ArrayList<>();
+    private OnItemClickListener mClickListener;
     private OnItemCheckClickListener mCheckListener;
     private OnItemCancelClickListener mCancelListener;
     private OnItemUnknownClickListener mUnknownListener;
@@ -147,7 +148,7 @@ public class TasksAppointmentAdapter extends
         void onItemUnknownClick(int id) throws ExecutionException, InterruptedException;
     }
 
-    public static class AppointmentHolder extends RecyclerView.ViewHolder {
+    class AppointmentHolder extends RecyclerView.ViewHolder {
         private final TextView timeTv;
         private final TextView patientTv;
         private final TextView titleTv;
@@ -161,6 +162,20 @@ public class TasksAppointmentAdapter extends
             titleTv = itemView.findViewById(R.id.tv_title_tasks_appointment_cv);
             checkBtn = itemView.findViewById(R.id.btn_check_tasks_appointment_cv);
             cancelBtn = itemView.findViewById(R.id.btn_cancel_tasks_appointment_cv);
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (mClickListener != null && position != RecyclerView.NO_POSITION) {
+                    mClickListener.onItemClick(appointments.get(position).getAppointment());
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Appointment appointment);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mClickListener = listener;
     }
 }
