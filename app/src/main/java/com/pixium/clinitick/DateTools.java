@@ -14,6 +14,7 @@ public class DateTools {
     public static final String apiTimeFormat = "yyyy-MM-dd HH:mm:ss.SSS";
     public static final String apiOldTimeFormat = "yyyy-MM-dd HH:mm:ss";
     public static final String apiDateFormat = "yyyy-MM-dd";
+    public static final Long noVisitTime = 0L;
 
     public static String stringFromTimestamp(long milliSeconds, String dateFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, Locale.ENGLISH);

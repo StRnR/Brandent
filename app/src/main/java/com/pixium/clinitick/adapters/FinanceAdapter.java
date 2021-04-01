@@ -24,8 +24,8 @@ public class FinanceAdapter extends RecyclerView.Adapter<FinanceAdapter.FinanceH
     @NonNull
     @Override
     public FinanceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.monthly_finance_item
-                , parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.monthly_finance_item, parent, false);
         return new FinanceHolder(itemView);
     }
 

@@ -4,10 +4,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -15,15 +12,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pixium.clinitick.ActiveUser;
 import com.pixium.clinitick.R;
-import com.pixium.clinitick.UiTools;
+import com.pixium.clinitick.adapters.AddAppointmentAdapter;
 import com.pixium.clinitick.db.entities.Appointment;
 import com.pixium.clinitick.db.entities.Clinic;
 import com.pixium.clinitick.db.entities.Patient;
+import com.pixium.clinitick.models.AddAppointmentModel;
 import com.pixium.clinitick.viewmodels.AddAppointmentViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -34,28 +35,27 @@ import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import saman.zamani.persiandate.PersianDate;
 
-public class AddAppointmentActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class AddAppointmentActivity extends AppCompatActivity implements
+        TimePickerDialog.OnTimeSetListener {
     private String patientName;
     private String patientPhone;
     private String clinicTitle;
     private int patientId;
+    private int curPosition;
     private Calendar visitCalendar;
+    private AddAppointmentAdapter adapter;
 
     private AddAppointmentViewModel addAppointmentViewModel;
-
-    private Button dateTimeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_add);
 
-        EditText priceEt = findViewById(R.id.et_price_appointment_add);
-        EditText diseaseEt = findViewById(R.id.et_disease_appointment_add);
+        RecyclerView recyclerView = findViewById(R.id.rv_appointment_add);
 
-        dateTimeBtn = findViewById(R.id.btn_time_appointment_add);
-        Button submitBtn = findViewById(R.id.btn_submit_appointment_add);
         Button backBtn = findViewById(R.id.btn_back_appointment_add);
+        Button submitBtn = findViewById(R.id.btn_submit_appointment_add);
 
         addAppointmentViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
@@ -79,43 +79,35 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
             clinicTitle = (String) savedInstanceState.getSerializable(AddPatientActivity.EXTRA_CLINIC_TITLE);
         }
 
-        priceEt.addTextChangedListener(new TextWatcher() {
-            String current = "";
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        // RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().equals(current)) {
-                    priceEt.removeTextChangedListener(this);
-
-                    String formatted = UiTools.priceToString(UiTools.stringToPrice(s.toString()), true);
-
-                    current = formatted;
-                    priceEt.setText(formatted);
-                    priceEt.setSelection(formatted.length() - 6);
-
-                    priceEt.addTextChangedListener(this);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        adapter = new AddAppointmentAdapter();
+        recyclerView.setAdapter(adapter);
+        List<AddAppointmentModel> initModels = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            AddAppointmentModel addAppointmentModel = new AddAppointmentModel("", null
+                    , null);
+            initModels.add(addAppointmentModel);
+        }
+        adapter.setAddAppointments(initModels);
 
         // Date & Time Picker
-        PersianDate pDate = new PersianDate();
-        PersianCalendar initDate = new PersianCalendar();
-        initDate.setPersianDate(pDate.getShYear(), pDate.getShMonth(), pDate.getShDay());
+        adapter.setOnDateClickListener(position -> {
+            curPosition = position;
+            AddAppointmentModel addAppointmentModel = adapter.getAddAppointments().get(position);
+            PersianDate pDate = new PersianDate();
+            if (addAppointmentModel.getTimeStamp() != null) {
+                pDate = new PersianDate(addAppointmentModel.getTimeStamp());
+            }
+            PersianCalendar initDate = new PersianCalendar();
+            initDate.setPersianDate(pDate.getShYear(), pDate.getShMonth(), pDate.getShDay());
+            visitCalendar = GregorianCalendar.getInstance();
 
-        Typeface typeface = Typeface.DEFAULT;
+            Typeface typeface = Typeface.DEFAULT;
 
-        dateTimeBtn.setOnClickListener(v -> {
-            PersianDatePickerDialog picker = new PersianDatePickerDialog(this);
+            PersianDatePickerDialog picker = new PersianDatePickerDialog(AddAppointmentActivity.this);
             picker.setPositiveButtonString("باشه");
             picker.setNegativeButton("بیخیال");
             picker.setTodayButton("امروز");
@@ -123,7 +115,8 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
             picker.setMinYear(1300);
             picker.setMaxYear(PersianDatePickerDialog.THIS_YEAR);
             picker.setInitDate(initDate);
-            picker.setActionTextColor(ContextCompat.getColor(this, R.color.clinitickPurple));
+            picker.setActionTextColor(ContextCompat.getColor(AddAppointmentActivity.this
+                    , R.color.clinitickPurple));
             picker.setTypeFace(typeface);
             picker.setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR);
             picker.setShowInBottomSheet(true);
@@ -138,8 +131,6 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getPersianLongDateAndTime()); //سه‌شنبه  13  اسفند  1398 ساعت 20:10:36
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getPersianMonthName()); //اسفند
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.isPersianLeapYear());//false
-                    String dateTimeStr = persianCalendar.getPersianLongDate();
-                    dateTimeBtn.setText(dateTimeStr);
                     visitCalendar = GregorianCalendar.getInstance();
                     visitCalendar.setTimeInMillis(persianCalendar.getTimeInMillis());
                     DialogFragment timePicker = new TimePickerFragment();
@@ -154,6 +145,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
             picker.show();
         });
 
+
         submitBtn.setOnClickListener(v -> {
             if (patientId == -1) {
                 Patient patient = new Patient(ActiveUser.getInstance().getId(), null
@@ -162,12 +154,15 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
                 try {
                     List<Patient> patients = addAppointmentViewModel.getPatientByNumber(patientPhone);
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
-                    Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
-                            , null, null, clinics.get(0).getClinicId()
-                            , patients.get(0).getPatientId(), visitCalendar.getTimeInMillis()
-                            , UiTools.stringToPrice(priceEt.getText().toString())
-                            , diseaseEt.getText().toString(), "unknown", 0);
-                    addAppointmentViewModel.insertAppointment(appointment);
+                    List<AddAppointmentModel> addAppointmentModels = adapter.getAddAppointments();
+                    for (AddAppointmentModel addAppointmentModel : addAppointmentModels) {
+                        Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
+                                , null, null, clinics.get(0).getClinicId()
+                                , patients.get(0).getPatientId(), addAppointmentModel.getTimeStamp()
+                                , addAppointmentModel.getPrice()
+                                , addAppointmentModel.getTitle(), "unknown", 0);
+                        addAppointmentViewModel.insertAppointment(appointment);
+                    }
                     startActivity(new Intent(this, HomeActivity.class));
                 } catch (ExecutionException | InterruptedException e) {
                     Toast.makeText(this
@@ -183,12 +178,17 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
                     patient.setPatientId(patients.get(0).getPatientId());
                     addAppointmentViewModel.updatePatient(patient);
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
-                    Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
-                            , null, null, clinics.get(0).getClinicId()
-                            , patients.get(0).getPatientId(), visitCalendar.getTimeInMillis()
-                            , UiTools.stringToPrice(priceEt.getText().toString())
-                            , diseaseEt.getText().toString(), "unknown", 0);
-                    addAppointmentViewModel.insertAppointment(appointment);
+                    List<AddAppointmentModel> addAppointmentModels = adapter.getAddAppointments();
+                    for (AddAppointmentModel addAppointmentModel : addAppointmentModels) {
+                        if (!addAppointmentModel.getTitle().trim().equals("")) {
+                            Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
+                                    , null, null, clinics.get(0).getClinicId()
+                                    , patients.get(0).getPatientId(), addAppointmentModel.getTimeStamp()
+                                    , addAppointmentModel.getPrice(), addAppointmentModel.getTitle()
+                                    , "unknown", 0);
+                            addAppointmentViewModel.insertAppointment(appointment);
+                        }
+                    }
                     startActivity(new Intent(this, HomeActivity.class));
                 } catch (ExecutionException | InterruptedException e) {
                     Toast.makeText(this
@@ -206,7 +206,10 @@ public class AddAppointmentActivity extends AppCompatActivity implements TimePic
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         visitCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         visitCalendar.set(Calendar.MINUTE, minute);
-        String tmpStr = dateTimeBtn.getText().toString() + " - " + hourOfDay + ":" + minute;
-        dateTimeBtn.setText(tmpStr);
+        AddAppointmentModel addAppointmentModel = adapter.getAddAppointments().get(curPosition);
+        addAppointmentModel.setTimeStamp(visitCalendar.getTimeInMillis());
+        List<AddAppointmentModel> addAppointmentModels = new ArrayList<>(adapter.getAddAppointments());
+        addAppointmentModels.set(curPosition, addAppointmentModel);
+        adapter.setAddAppointments(addAppointmentModels);
     }
 }

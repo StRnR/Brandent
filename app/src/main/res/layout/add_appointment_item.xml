@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="24dp"
+    android:outlineProvider="none"
+    app:cardBackgroundColor="@color/transparent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_title_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_et_rounded_rectangle"
+            android:fontFamily="@font/vazir_regular"
+            android:gravity="right"
+            android:hint="دلیل ویزیت"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hintGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_price_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_title_appointment_add"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_et_rounded_rectangle"
+            android:fontFamily="@font/vazir_regular"
+            android:gravity="right"
+            android:hint="هزینه درمان"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hintGrey"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_time_appointment_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_price_appointment_add"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_et_rounded_rectangle"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:drawablePadding="12dp"
+            android:fontFamily="@font/vazir_regular"
+            android:gravity="start"
+            android:padding="16dp"
+            android:stateListAnimator="@null"
+            android:text="تاریخ و ساعت"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

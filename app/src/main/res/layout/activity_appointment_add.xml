@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
     android:layoutDirection="ltr">
-
 
     <ImageView
         android:id="@+id/iv_header_appointment_add"
@@ -42,75 +42,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <EditText
-        android:id="@+id/et_disease_appointment_add"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_appointment_add"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_et_rounded_rectangle"
-        android:fontFamily="@font/vazir_regular"
-        android:gravity="right"
-        android:hint="دلیل ویزیت"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:padding="16dp"
-        android:singleLine="true"
-        android:textColor="@color/black"
-        android:textColorHint="@color/hintGrey"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/iv_header_appointment_add" />
-
-    <EditText
-        android:id="@+id/et_price_appointment_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_et_rounded_rectangle"
-        android:fontFamily="@font/vazir_regular"
-        android:gravity="right"
-        android:hint="هزینه درمان"
-        android:inputType="number"
-        android:maxLines="1"
-        android:padding="16dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/hintGrey"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/et_disease_appointment_add" />
-
-    <Button
-        android:id="@+id/btn_time_appointment_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_et_rounded_rectangle"
-        android:drawableEnd="@drawable/ic_calendar"
-        android:drawablePadding="12dp"
-        android:fontFamily="@font/vazir_regular"
-        android:gravity="start"
-        android:padding="16dp"
-        android:stateListAnimator="@null"
-        android:text="تاریخ و ساعت"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/et_price_appointment_add" />
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="16dp"
+        android:paddingBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_header_appointment_add"
+        tools:listitem="@layout/add_appointment_item" />
 
     <Button
         android:id="@+id/btn_submit_appointment_add"
-        android:layout_width="132dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/bg_rounded_orange_btn"
         android:fontFamily="@font/vazir_bold"
-        android:text="ثبت"
+        android:text="اتمام و ثبت"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_time_appointment_add" />
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
