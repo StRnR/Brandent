@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pixium.clinitick.DateTools;
 import com.pixium.clinitick.R;
 import com.pixium.clinitick.db.entities.Appointment;
 import com.pixium.clinitick.utils.DateUtils;
@@ -50,7 +51,11 @@ public class PatientAppointmentAdapter extends
         Appointment current = appointments.get(position);
 
         holder.titleTv.setText(current.getTitle());
-        holder.dateTv.setText(DateUtils.getPersianStringDate(current.getVisitTime()));
+        if (current.getVisitTime().equals(DateTools.noVisitTime)) {
+            holder.dateTv.setText(DateUtils.getPersianStringDate(current.getVisitTime()));
+        } else {
+            holder.dateTv.setText("");
+        }
         switch (current.getState()) {
             case "unknown":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);

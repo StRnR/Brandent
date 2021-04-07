@@ -174,6 +174,9 @@ public class AddEditFinanceActivity extends AppCompatActivity implements Adapter
                 } else if (financeType.equals("")) {
                     Toast.makeText(this, "Please select either expense or income"
                             , Toast.LENGTH_SHORT).show();
+                } else if (dateCalendar == null) {
+                    Toast.makeText(this, "Please select a date for your finance"
+                            , Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         Finance prevFinance = addFinanceViewModel.getFinanceById(prevFinanceId);
@@ -194,6 +197,9 @@ public class AddEditFinanceActivity extends AppCompatActivity implements Adapter
                             , Toast.LENGTH_SHORT).show();
                 } else if (financeType.equals("")) {
                     Toast.makeText(this, "Please select either expense or income"
+                            , Toast.LENGTH_SHORT).show();
+                } else if (dateCalendar == null) {
+                    Toast.makeText(this, "Please select a date for your finance"
                             , Toast.LENGTH_SHORT).show();
                 } else {
                     Finance addFinance = new Finance(ActiveUser.getInstance().getId(), null

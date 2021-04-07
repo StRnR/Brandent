@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.EditAppointmentActivity"></activity>
+        <activity android:name=".views.AddTaskActivity"></activity>
+        <activity android:name=".views.EditAppointmentActivity" />
         <activity android:name=".views.MonthlyFinanceActivity" />
         <activity android:name=".views.RegisterActivity" />
         <activity android:name=".views.ConfirmCodeActivity" />

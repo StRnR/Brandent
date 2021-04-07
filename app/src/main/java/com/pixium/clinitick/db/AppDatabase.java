@@ -14,14 +14,16 @@ import com.pixium.clinitick.db.daos.ClinicDao;
 import com.pixium.clinitick.db.daos.DentistDao;
 import com.pixium.clinitick.db.daos.FinanceDao;
 import com.pixium.clinitick.db.daos.PatientDao;
+import com.pixium.clinitick.db.daos.TaskDao;
 import com.pixium.clinitick.db.entities.Appointment;
 import com.pixium.clinitick.db.entities.Clinic;
 import com.pixium.clinitick.db.entities.Dentist;
 import com.pixium.clinitick.db.entities.Finance;
 import com.pixium.clinitick.db.entities.Patient;
+import com.pixium.clinitick.db.entities.Task;
 
-@Database(entities = {Dentist.class, Appointment.class, Clinic.class, Patient.class, Finance.class}
-        , version = 1)
+@Database(entities = {Dentist.class, Appointment.class, Clinic.class, Patient.class, Finance.class
+        , Task.class}, version = 1)
 @TypeConverters({TimestampConverters.class, UUIDConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -45,4 +47,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ClinicDao clinicDao();
 
     public abstract FinanceDao financeDao();
+
+    public abstract TaskDao taskDao();
 }

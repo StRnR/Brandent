@@ -79,11 +79,9 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (position != RecyclerView.NO_POSITION) {
-                    AddAppointmentModel currentAdd = addAppointmentModels.get(position);
-                    currentAdd.setTitle(holder.titleEt.getText().toString());
-                    addAppointmentModels.set(position, currentAdd);
-                }
+                AddAppointmentModel currentAdd = addAppointmentModels.get(position);
+                currentAdd.setTitle(holder.titleEt.getText().toString());
+                addAppointmentModels.set(position, currentAdd);
             }
         });
 
@@ -111,15 +109,13 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (position != RecyclerView.NO_POSITION) {
-                    AddAppointmentModel currentAdd = addAppointmentModels.get(position);
-                    currentAdd.setPrice(UiTools.stringToPrice(holder.priceEt.getText().toString()));
-                    addAppointmentModels.set(position, currentAdd);
-                }
+                AddAppointmentModel currentAdd = addAppointmentModels.get(position);
+                currentAdd.setPrice(UiTools.stringToPrice(holder.priceEt.getText().toString()));
+                addAppointmentModels.set(position, currentAdd);
             }
         });
 
-        if (position != RecyclerView.NO_POSITION && listener != null) {
+        if (listener != null) {
             holder.timeBtn.setOnClickListener(v -> {
                 if (listener != null && position != RecyclerView.NO_POSITION) {
                     listener.onDateClick(position);
@@ -152,8 +148,6 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
             titleEt = itemView.findViewById(R.id.et_title_appointment_add);
             priceEt = itemView.findViewById(R.id.et_price_appointment_add);
             timeBtn = itemView.findViewById(R.id.btn_time_appointment_add);
-            int position = getAdapterPosition();
-
         }
     }
 

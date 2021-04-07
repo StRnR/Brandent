@@ -131,7 +131,6 @@ public class AddAppointmentActivity extends AppCompatActivity implements
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getPersianLongDateAndTime()); //سه‌شنبه  13  اسفند  1398 ساعت 20:10:36
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.getPersianMonthName()); //اسفند
 //                            Log.d(TAG, "onDateSelected: " + persianCalendar.isPersianLeapYear());//false
-                    visitCalendar = GregorianCalendar.getInstance();
                     visitCalendar.setTimeInMillis(persianCalendar.getTimeInMillis());
                     DialogFragment timePicker = new TimePickerFragment();
                     timePicker.show(getSupportFragmentManager(), "time picker");
@@ -156,12 +155,14 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
                     List<AddAppointmentModel> addAppointmentModels = adapter.getAddAppointments();
                     for (AddAppointmentModel addAppointmentModel : addAppointmentModels) {
-                        Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
-                                , null, null, clinics.get(0).getClinicId()
-                                , patients.get(0).getPatientId(), addAppointmentModel.getTimeStamp()
-                                , addAppointmentModel.getPrice()
-                                , addAppointmentModel.getTitle(), "unknown", 0);
-                        addAppointmentViewModel.insertAppointment(appointment);
+                        if (!addAppointmentModel.getTitle().trim().equals("")) {
+                            Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
+                                    , null, null, clinics.get(0).getClinicId()
+                                    , patients.get(0).getPatientId(), addAppointmentModel.getTimeStamp()
+                                    , addAppointmentModel.getPrice()
+                                    , addAppointmentModel.getTitle(), "unknown", 0);
+                            addAppointmentViewModel.insertAppointment(appointment);
+                        }
                     }
                     startActivity(new Intent(this, HomeActivity.class));
                 } catch (ExecutionException | InterruptedException e) {
