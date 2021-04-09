@@ -10,17 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pixium.clinitick.R;
-import com.pixium.clinitick.db.entities.Appointment;
-import com.pixium.clinitick.models.TasksAppointmentCardModel;
+import com.pixium.clinitick.models.TasksCardModel;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class TasksAppointmentAdapter extends
-        RecyclerView.Adapter<TasksAppointmentAdapter.AppointmentHolder> {
-    private List<TasksAppointmentCardModel> appointments = new ArrayList<>();
+public class TasksAdapter extends
+        RecyclerView.Adapter<TasksAdapter.TasksHolder> {
+    private List<TasksCardModel> tasksCardModels = new ArrayList<>();
     private OnItemClickListener mClickListener;
     private OnItemCheckClickListener mCheckListener;
     private OnItemCancelClickListener mCancelListener;
@@ -40,17 +39,16 @@ public class TasksAppointmentAdapter extends
 
     @NonNull
     @Override
-    public AppointmentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TasksHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tasks_appointment_item, parent, false);
-        return new AppointmentHolder(itemView);
+        return new TasksHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AppointmentHolder holder, int position) {
-        TasksAppointmentCardModel current = appointments.get(position);
-        Appointment curAppointment = current.getAppointment();
-        Timestamp timestamp = new Timestamp(curAppointment.getVisitTime());
+    public void onBindViewHolder(@NonNull TasksHolder holder, int position) {
+        TasksCardModel current = tasksCardModels.get(position);
+        Timestamp timestamp = new Timestamp(current.getTime());
         String timeStr = Character.toString(timestamp.toString().charAt(11))
                 + timestamp.toString().charAt(12)
                 + timestamp.toString().charAt(13)
@@ -58,9 +56,9 @@ public class TasksAppointmentAdapter extends
                 + timestamp.toString().charAt(15);
 
         holder.timeTv.setText(timeStr);
-        holder.patientTv.setText(current.getPatientName());
-        holder.titleTv.setText(curAppointment.getTitle());
-        switch (curAppointment.getState()) {
+        holder.titleTv.setText(current.getTitle());
+        holder.descriptionTv.setText(current.getDescription());
+        switch (current.getState()) {
             case "unknown":
                 holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
                 holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
@@ -76,23 +74,19 @@ public class TasksAppointmentAdapter extends
         }
 
         holder.checkBtn.setOnClickListener(v -> {
-            if (curAppointment.getState().equals("unknown") ||
-                    curAppointment.getState().equals("canceled")) {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_enabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
+            if (current.getState().equals("unknown") ||
+                    current.getState().equals("canceled")) {
                 if (mCheckListener != null) {
                     try {
-                        mCheckListener.onItemCheckClick(curAppointment.getAppointmentId());
+                        mCheckListener.onItemCheckClick(current);
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             } else {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 if (mUnknownListener != null) {
                     try {
-                        mUnknownListener.onItemUnknownClick(curAppointment.getAppointmentId());
+                        mUnknownListener.onItemUnknownClick(current);
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -101,23 +95,19 @@ public class TasksAppointmentAdapter extends
         });
 
         holder.cancelBtn.setOnClickListener(v -> {
-            if (curAppointment.getState().equals("unknown") ||
-                    curAppointment.getState().equals("done")) {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_enabled);
+            if (current.getState().equals("unknown") ||
+                    current.getState().equals("done")) {
                 if (mCancelListener != null) {
                     try {
-                        mCancelListener.onItemCancelClick(curAppointment.getAppointmentId());
+                        mCancelListener.onItemCancelClick(current);
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             } else {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 if (mUnknownListener != null) {
                     try {
-                        mUnknownListener.onItemUnknownClick(curAppointment.getAppointmentId());
+                        mUnknownListener.onItemUnknownClick(current);
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -128,51 +118,51 @@ public class TasksAppointmentAdapter extends
 
     @Override
     public int getItemCount() {
-        return appointments.size();
+        return tasksCardModels.size();
     }
 
-    public void setAppointments(List<TasksAppointmentCardModel> appointments) {
-        this.appointments = appointments;
+    public void setTasksCardModels(List<TasksCardModel> tasksCardModels) {
+        this.tasksCardModels = tasksCardModels;
         notifyDataSetChanged();
     }
 
     public interface OnItemCheckClickListener {
-        void onItemCheckClick(int id) throws ExecutionException, InterruptedException;
+        void onItemCheckClick(TasksCardModel tasksCardModel) throws ExecutionException, InterruptedException;
     }
 
     public interface OnItemCancelClickListener {
-        void onItemCancelClick(int id) throws ExecutionException, InterruptedException;
+        void onItemCancelClick(TasksCardModel tasksCardModel) throws ExecutionException, InterruptedException;
     }
 
     public interface OnItemUnknownClickListener {
-        void onItemUnknownClick(int id) throws ExecutionException, InterruptedException;
+        void onItemUnknownClick(TasksCardModel tasksCardModel) throws ExecutionException, InterruptedException;
     }
 
-    class AppointmentHolder extends RecyclerView.ViewHolder {
+    class TasksHolder extends RecyclerView.ViewHolder {
         private final TextView timeTv;
-        private final TextView patientTv;
         private final TextView titleTv;
+        private final TextView descriptionTv;
         private final Button checkBtn;
         private final Button cancelBtn;
 
-        public AppointmentHolder(@NonNull View itemView) {
+        public TasksHolder(@NonNull View itemView) {
             super(itemView);
             timeTv = itemView.findViewById(R.id.tv_time_tasks_appointment_cv);
-            patientTv = itemView.findViewById(R.id.tv_patient_name_tasks_appointment_cv);
-            titleTv = itemView.findViewById(R.id.tv_title_tasks_appointment_cv);
+            titleTv = itemView.findViewById(R.id.tv_patient_name_tasks_appointment_cv);
+            descriptionTv = itemView.findViewById(R.id.tv_title_tasks_appointment_cv);
             checkBtn = itemView.findViewById(R.id.btn_check_tasks_appointment_cv);
             cancelBtn = itemView.findViewById(R.id.btn_cancel_tasks_appointment_cv);
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (mClickListener != null && position != RecyclerView.NO_POSITION) {
-                    mClickListener.onItemClick(appointments.get(position).getAppointment());
+                    mClickListener.onItemClick(tasksCardModels.get(position));
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Appointment appointment);
+        void onItemClick(TasksCardModel tasksCardModel);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

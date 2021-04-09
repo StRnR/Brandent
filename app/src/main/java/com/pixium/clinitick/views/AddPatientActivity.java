@@ -78,7 +78,8 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                 intent.putExtra(EXTRA_PATIENT_PHONE, phoneEt.getText().toString());
                 intent.putExtra(EXTRA_CLINIC_TITLE, clinicSpinner.getSelectedItem().toString());
                 try {
-                    List<Patient> patients = addPatientViewModel.getPatientByNumber(phoneEt.getText().toString());
+                    List<Patient> patients = addPatientViewModel.getPatientByNumber(phoneEt.getText()
+                            .toString());
 
                     if (patients.size() != 0) {
                         intent.putExtra(EXTRA_PATIENT_ID, patients.get(0).getPatientId());
@@ -91,7 +92,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(this, "Name or/and Number field empty!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Name and/or Number field empty!", Toast.LENGTH_SHORT).show();
             }
         });
 

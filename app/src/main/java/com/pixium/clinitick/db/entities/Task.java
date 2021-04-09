@@ -27,8 +27,19 @@ public class Task {
             , String title, String state, int isDeleted) {
         this.clinicForId = clinicForId;
         this.dentistForId = dentistForId;
-        this.uuid = uuid;
-        this.modifiedAt = modifiedAt;
+
+        if (uuid == null) {
+            this.uuid = UUID.randomUUID();
+        } else {
+            this.uuid = uuid;
+        }
+
+        if (modifiedAt == null) {
+            this.modifiedAt = System.currentTimeMillis();
+        } else {
+            this.modifiedAt = modifiedAt;
+        }
+
         this.time = time;
         this.title = title;
         this.state = state;

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,15 +17,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pixium.clinitick.ActiveUser;
 import com.pixium.clinitick.R;
 import com.pixium.clinitick.adapters.CalendarAdapter;
-import com.pixium.clinitick.adapters.TasksAppointmentAdapter;
+import com.pixium.clinitick.adapters.TasksAdapter;
 import com.pixium.clinitick.db.entities.Appointment;
-import com.pixium.clinitick.models.TasksAppointmentCardModel;
+import com.pixium.clinitick.db.entities.Task;
 import com.pixium.clinitick.models.TasksCalendarItem;
+import com.pixium.clinitick.models.TasksCardModel;
 import com.pixium.clinitick.viewmodels.TasksViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -42,6 +43,8 @@ public class TasksActivity extends AppCompatActivity {
         TextView todayBtn = findViewById(R.id.btn_today_tasks);
         TextView emptyTasksTv = findViewById(R.id.tv_empty_tasks);
         TextView month_tv = findViewById(R.id.tv_month_tasks);
+
+        Button addBtn = findViewById(R.id.btn_add_task_tasks);
 
         ImageView illustrationIv = findViewById(R.id.iv_illustration_tasks);
 
@@ -88,8 +91,8 @@ public class TasksActivity extends AppCompatActivity {
         appointmentsRv.setLayoutManager(new LinearLayoutManager(this));
         appointmentsRv.setHasFixedSize(true);
 
-        TasksAppointmentAdapter appointmentAdapter = new TasksAppointmentAdapter();
-        appointmentsRv.setAdapter(appointmentAdapter);
+        TasksAdapter tasksAdapter = new TasksAdapter();
+        appointmentsRv.setAdapter(tasksAdapter);
 
         // Calendar RecyclerView
 
@@ -110,19 +113,17 @@ public class TasksActivity extends AppCompatActivity {
         endCal.set(Calendar.SECOND, 59);
         endCal.set(Calendar.MILLISECOND, 999);
 
-        List<TasksAppointmentCardModel> appointmentCardModels = new ArrayList<>();
+        List<TasksCardModel> tasksCardModels = new ArrayList<>();
         try {
             List<Appointment> appointments = tasksViewModel
                     .getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
-            if (appointments.size() > 0) {
+            List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                    , endCal.getTimeInMillis());
+            if (appointments.size() + tasks.size() > 0) {
                 illustrationIv.setVisibility(View.GONE);
                 emptyTasksTv.setVisibility(View.GONE);
                 appointmentsRv.setVisibility(View.VISIBLE);
-                for (Appointment appointment : appointments) {
-                    TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
-                            , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
-                    appointmentCardModels.add(appointmentCardModel);
-                }
+                tasksCardModels = tasksViewModel.getTasksCardModels(appointments, tasks);
             } else {
                 illustrationIv.setVisibility(View.VISIBLE);
                 emptyTasksTv.setVisibility(View.VISIBLE);
@@ -135,7 +136,7 @@ public class TasksActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        appointmentAdapter.setAppointments(appointmentCardModels);
+        tasksAdapter.setTasksCardModels(tasksCardModels);
 
 
         // Calendar Items
@@ -187,19 +188,17 @@ public class TasksActivity extends AppCompatActivity {
             endCal.set(Calendar.MONTH, pDate.getGrgMonth() - 1);
             endCal.set(Calendar.DAY_OF_MONTH, pDate.getGrgDay());
 
-            appointmentCardModels.clear();
+            List<TasksCardModel> finalTasksCardModels = new ArrayList<>();
             try {
                 List<Appointment> appointments = tasksViewModel
                         .getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
-                if (appointments.size() > 0) {
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                if (appointments.size() + tasks.size() > 0) {
                     illustrationIv.setVisibility(View.GONE);
                     emptyTasksTv.setVisibility(View.GONE);
                     appointmentsRv.setVisibility(View.VISIBLE);
-                    for (Appointment appointment : appointments) {
-                        TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
-                                , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
-                        appointmentCardModels.add(appointmentCardModel);
-                    }
+                    finalTasksCardModels = tasksViewModel.getTasksCardModels(appointments, tasks);
                 } else {
                     illustrationIv.setVisibility(View.VISIBLE);
                     emptyTasksTv.setVisibility(View.VISIBLE);
@@ -212,78 +211,109 @@ public class TasksActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            appointmentAdapter.setAppointments(appointmentCardModels);
+            tasksAdapter.setTasksCardModels(finalTasksCardModels);
         });
 
-        appointmentAdapter.setOnItemClickListener(appointment -> {
-            Intent intent = new Intent(TasksActivity.this, EditAppointmentActivity.class);
-            intent.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID
-                    , appointment.getAppointmentId());
+        tasksAdapter.setOnItemClickListener(tasksCardModel -> {
+            Intent intent;
+            if (tasksCardModel.getDescription().equals("")) {
+                intent = new Intent(TasksActivity.this, AddEditTaskActivity.class);
+                intent.putExtra(AddEditTaskActivity.EXTRA_TASK_ID, tasksCardModel.getId());
+            } else {
+                intent = new Intent(TasksActivity.this, EditAppointmentActivity.class);
+                intent.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID, tasksCardModel.getId());
+            }
             startActivity(intent);
         });
 
-        appointmentAdapter.setOnItemCheckClickListener(id -> {
-            Appointment curAppointment = tasksViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
-                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
-                    , curAppointment.getPatientForId(), curAppointment.getVisitTime()
-                    , curAppointment.getPrice(), curAppointment.getTitle(), "done", 0);
-            updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
-            tasksViewModel.updateAppointment(updateAppointment);
-            List<TasksAppointmentCardModel> updatedAppointmentCardModels = new ArrayList<>();
-            for (TasksAppointmentCardModel appointmentCardModel : appointmentCardModels) {
-                Appointment updatedAppointment = tasksViewModel.getAppointmentById
-                        (appointmentCardModel.getAppointment().getAppointmentId());
-                TasksAppointmentCardModel updatedCardModel = new TasksAppointmentCardModel
-                        (updatedAppointment, appointmentCardModel.getPatientName());
-                updatedAppointmentCardModels.add(updatedCardModel);
+        tasksAdapter.setOnItemCheckClickListener(tasksCardModel -> {
+            if (tasksCardModel.getDescription().equals("")) {
+                Task curTask = tasksViewModel.getTaskById(tasksCardModel.getId());
+                Task updateTask = new Task(curTask.getClinicForId(), curTask.getDentistForId()
+                        , curTask.getUuid(), null, curTask.getTime(), curTask.getTitle()
+                        , "done", 0);
+                updateTask.setTaskId(curTask.getTaskId());
+                tasksViewModel.updateTask(updateTask);
+                List<Appointment> appointments = tasksViewModel.
+                        getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                tasksAdapter.setTasksCardModels(tasksViewModel.getTasksCardModels(appointments, tasks));
+            } else {
+                Appointment curAppointment = tasksViewModel.getAppointmentById(tasksCardModel.getId());
+                Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                        , curAppointment.getUuid(), null, curAppointment.getClinicForId()
+                        , curAppointment.getPatientForId(), curAppointment.getVisitTime()
+                        , curAppointment.getPrice(), curAppointment.getTitle(), "done", 0);
+                updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
+                tasksViewModel.updateAppointment(updateAppointment);
+                List<Appointment> appointments = tasksViewModel.
+                        getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                tasksAdapter.setTasksCardModels(tasksViewModel.getTasksCardModels(appointments, tasks));
             }
-            Collections.copy(appointmentCardModels, updatedAppointmentCardModels);
-            appointmentAdapter.setAppointments(appointmentCardModels);
         });
 
-        appointmentAdapter.setOnItemCancelClickListener(id -> {
-            Appointment curAppointment = tasksViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
-                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
-                    , curAppointment.getPatientForId(), curAppointment.getVisitTime()
-                    , curAppointment.getPrice(), curAppointment.getTitle(), "canceled", 0);
-            updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
-            tasksViewModel.updateAppointment(updateAppointment);
-            List<TasksAppointmentCardModel> updatedAppointmentCardModels = new ArrayList<>();
-            for (TasksAppointmentCardModel appointmentCardModel : appointmentCardModels) {
-                Appointment updatedAppointment = tasksViewModel.getAppointmentById
-                        (appointmentCardModel.getAppointment().getAppointmentId());
-                TasksAppointmentCardModel updatedCardModel = new TasksAppointmentCardModel
-                        (updatedAppointment, appointmentCardModel.getPatientName());
-                updatedAppointmentCardModels.add(updatedCardModel);
+        tasksAdapter.setOnItemCancelClickListener(tasksCardModel -> {
+            if (tasksCardModel.getDescription().equals("")) {
+                Task curTask = tasksViewModel.getTaskById(tasksCardModel.getId());
+                Task updateTask = new Task(curTask.getClinicForId(), curTask.getDentistForId()
+                        , curTask.getUuid(), null, curTask.getTime(), curTask.getTitle()
+                        , "canceled", 0);
+                updateTask.setTaskId(curTask.getTaskId());
+                tasksViewModel.updateTask(updateTask);
+                List<Appointment> appointments = tasksViewModel.
+                        getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                tasksAdapter.setTasksCardModels(tasksViewModel.getTasksCardModels(appointments, tasks));
+            } else {
+                Appointment curAppointment = tasksViewModel.getAppointmentById(tasksCardModel.getId());
+                Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                        , curAppointment.getUuid(), null, curAppointment.getClinicForId()
+                        , curAppointment.getPatientForId(), curAppointment.getVisitTime()
+                        , curAppointment.getPrice(), curAppointment.getTitle(), "canceled", 0);
+                updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
+                tasksViewModel.updateAppointment(updateAppointment);
+                List<Appointment> appointments = tasksViewModel.
+                        getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                tasksAdapter.setTasksCardModels(tasksViewModel.getTasksCardModels(appointments, tasks));
             }
-            Collections.copy(appointmentCardModels, updatedAppointmentCardModels);
-            appointmentAdapter.setAppointments(appointmentCardModels);
         });
 
-        appointmentAdapter.setOnItemUnknownClickListener(id -> {
-            Appointment curAppointment = tasksViewModel.getAppointmentById(id);
-            Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
-                    , curAppointment.getUuid(), null, curAppointment.getClinicForId()
-                    , curAppointment.getPatientForId(), curAppointment.getVisitTime()
-                    , curAppointment.getPrice(), curAppointment.getTitle(), "unknown", 0);
-            updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
-            tasksViewModel.updateAppointment(updateAppointment);
-            List<TasksAppointmentCardModel> updatedAppointmentCardModels = new ArrayList<>();
-            for (TasksAppointmentCardModel appointmentCardModel : appointmentCardModels) {
-                Appointment updatedAppointment = tasksViewModel.getAppointmentById
-                        (appointmentCardModel.getAppointment().getAppointmentId());
-                TasksAppointmentCardModel updatedCardModel = new TasksAppointmentCardModel
-                        (updatedAppointment, appointmentCardModel.getPatientName());
-                updatedAppointmentCardModels.add(updatedCardModel);
+        tasksAdapter.setOnItemUnknownClickListener(tasksCardModel -> {
+            if (tasksCardModel.getDescription().equals("")) {
+                Task curTask = tasksViewModel.getTaskById(tasksCardModel.getId());
+                Task updateTask = new Task(curTask.getClinicForId(), curTask.getDentistForId()
+                        , curTask.getUuid(), null, curTask.getTime(), curTask.getTitle()
+                        , "unknown", 0);
+                updateTask.setTaskId(curTask.getTaskId());
+                tasksViewModel.updateTask(updateTask);
+                List<Appointment> appointments = tasksViewModel.
+                        getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                tasksAdapter.setTasksCardModels(tasksViewModel.getTasksCardModels(appointments, tasks));
+            } else {
+                Appointment curAppointment = tasksViewModel.getAppointmentById(tasksCardModel.getId());
+                Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                        , curAppointment.getUuid(), null, curAppointment.getClinicForId()
+                        , curAppointment.getPatientForId(), curAppointment.getVisitTime()
+                        , curAppointment.getPrice(), curAppointment.getTitle(), "unknown", 0);
+                updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
+                tasksViewModel.updateAppointment(updateAppointment);
+                List<Appointment> appointments = tasksViewModel.
+                        getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                tasksAdapter.setTasksCardModels(tasksViewModel.getTasksCardModels(appointments, tasks));
             }
-            Collections.copy(appointmentCardModels, updatedAppointmentCardModels);
-            appointmentAdapter.setAppointments(appointmentCardModels);
         });
 
         todayBtn.setOnClickListener(v -> {
-
             PersianDate pToday = new PersianDate();
             calendarAdapter.setSelectedPos(pToday.getShDay() - 1);
 
@@ -294,19 +324,17 @@ public class TasksActivity extends AppCompatActivity {
             endCal.set(Calendar.YEAR, pToday.getGrgYear());
             endCal.set(Calendar.MONTH, pToday.getGrgMonth() - 1);
             endCal.set(Calendar.DAY_OF_MONTH, pToday.getGrgDay());
-            appointmentCardModels.clear();
+            List<TasksCardModel> finalTasksCardModels1 = new ArrayList<>();
             try {
                 List<Appointment> appointments = tasksViewModel
                         .getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
-                if (appointments.size() > 0) {
+                List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                        , endCal.getTimeInMillis());
+                if (appointments.size() + tasks.size() > 0) {
                     illustrationIv.setVisibility(View.GONE);
                     emptyTasksTv.setVisibility(View.GONE);
                     appointmentsRv.setVisibility(View.VISIBLE);
-                    for (Appointment appointment : appointments) {
-                        TasksAppointmentCardModel appointmentCardModel = new TasksAppointmentCardModel(appointment
-                                , tasksViewModel.getPatientById(appointment.getPatientForId()).getName());
-                        appointmentCardModels.add(appointmentCardModel);
-                    }
+                    finalTasksCardModels1 = tasksViewModel.getTasksCardModels(appointments, tasks);
                 } else {
                     illustrationIv.setVisibility(View.VISIBLE);
                     emptyTasksTv.setVisibility(View.VISIBLE);
@@ -319,8 +347,11 @@ public class TasksActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            appointmentAdapter.setAppointments(appointmentCardModels);
+            tasksAdapter.setTasksCardModels(finalTasksCardModels1);
         });
+
+        addBtn.setOnClickListener(v -> startActivity(new Intent(this
+                , AddEditTaskActivity.class)));
     }
 
     @Override
