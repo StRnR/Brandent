@@ -37,7 +37,7 @@ public class Patient {
         this.phone = phone;
     }
 
-    public boolean isIs_deleted() {
+    public boolean isDeleted() {
         return is_deleted;
     }
 

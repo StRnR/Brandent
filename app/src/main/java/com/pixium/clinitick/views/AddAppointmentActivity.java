@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pixium.clinitick.ActiveUser;
+import com.pixium.clinitick.DateTools;
 import com.pixium.clinitick.R;
 import com.pixium.clinitick.adapters.AddAppointmentAdapter;
 import com.pixium.clinitick.db.entities.Appointment;
@@ -24,6 +25,7 @@ import com.pixium.clinitick.db.entities.Patient;
 import com.pixium.clinitick.models.AddAppointmentModel;
 import com.pixium.clinitick.viewmodels.AddAppointmentViewModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -148,7 +150,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements
         submitBtn.setOnClickListener(v -> {
             if (patientId == -1) {
                 Patient patient = new Patient(ActiveUser.getInstance().getId(), null
-                        , null, patientName, patientPhone);
+                        , null, patientName, patientPhone, 0);
                 addAppointmentViewModel.insertPatient(patient);
                 try {
                     List<Patient> patients = addAppointmentViewModel.getPatientByNumber(patientPhone);
@@ -156,16 +158,23 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                     List<AddAppointmentModel> addAppointmentModels = adapter.getAddAppointments();
                     for (AddAppointmentModel addAppointmentModel : addAppointmentModels) {
                         if (!addAppointmentModel.getTitle().trim().equals("")) {
+                            long visitTime;
+                            if (addAppointmentModel.getTimeStamp() == null) {
+                                visitTime = DateTools.timestampFromString(DateTools.oldLastUpdated
+                                        , DateTools.apiTimeFormat);
+                            } else {
+                                visitTime = addAppointmentModel.getTimeStamp();
+                            }
                             Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
                                     , null, null, clinics.get(0).getClinicId()
-                                    , patients.get(0).getPatientId(), addAppointmentModel.getTimeStamp()
-                                    , addAppointmentModel.getPrice()
-                                    , addAppointmentModel.getTitle(), "unknown", 0);
+                                    , patients.get(0).getPatientId(), visitTime
+                                    , addAppointmentModel.getPrice(), addAppointmentModel.getTitle()
+                                    , "unknown", 0);
                             addAppointmentViewModel.insertAppointment(appointment);
                         }
                     }
                     startActivity(new Intent(this, HomeActivity.class));
-                } catch (ExecutionException | InterruptedException e) {
+                } catch (ExecutionException | InterruptedException | ParseException e) {
                     Toast.makeText(this
                             , "Something went wrong with inserted patient or clinic"
                             , Toast.LENGTH_SHORT).show();
@@ -175,23 +184,31 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                 try {
                     List<Patient> patients = addAppointmentViewModel.getPatientByNumber(patientPhone);
                     Patient patient = new Patient(ActiveUser.getInstance().getId()
-                            , patients.get(0).getUuid(), null, patientName, patientPhone);
+                            , patients.get(0).getUuid(), null, patientName, patientPhone
+                            , 0);
                     patient.setPatientId(patients.get(0).getPatientId());
                     addAppointmentViewModel.updatePatient(patient);
                     List<Clinic> clinics = addAppointmentViewModel.getClinicByTitle(clinicTitle);
                     List<AddAppointmentModel> addAppointmentModels = adapter.getAddAppointments();
                     for (AddAppointmentModel addAppointmentModel : addAppointmentModels) {
                         if (!addAppointmentModel.getTitle().trim().equals("")) {
+                            long visitTime;
+                            if (addAppointmentModel.getTimeStamp() == null) {
+                                visitTime = DateTools.timestampFromString(DateTools.oldLastUpdated
+                                        , DateTools.apiTimeFormat);
+                            } else {
+                                visitTime = addAppointmentModel.getTimeStamp();
+                            }
                             Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
                                     , null, null, clinics.get(0).getClinicId()
-                                    , patients.get(0).getPatientId(), addAppointmentModel.getTimeStamp()
+                                    , patients.get(0).getPatientId(), visitTime
                                     , addAppointmentModel.getPrice(), addAppointmentModel.getTitle()
                                     , "unknown", 0);
                             addAppointmentViewModel.insertAppointment(appointment);
                         }
                     }
                     startActivity(new Intent(this, HomeActivity.class));
-                } catch (ExecutionException | InterruptedException e) {
+                } catch (ExecutionException | InterruptedException | ParseException e) {
                     Toast.makeText(this
                             , "Something went wrong with inserted patient or clinic"
                             , Toast.LENGTH_SHORT).show();

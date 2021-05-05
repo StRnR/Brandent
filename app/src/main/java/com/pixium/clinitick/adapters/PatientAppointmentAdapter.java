@@ -14,6 +14,7 @@ import com.pixium.clinitick.R;
 import com.pixium.clinitick.db.entities.Appointment;
 import com.pixium.clinitick.utils.DateUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -51,10 +52,15 @@ public class PatientAppointmentAdapter extends
         Appointment current = appointments.get(position);
 
         holder.titleTv.setText(current.getTitle());
-        if (current.getVisitTime().equals(DateTools.noVisitTime)) {
-            holder.dateTv.setText(DateUtils.getPersianStringDate(current.getVisitTime()));
-        } else {
-            holder.dateTv.setText("");
+        try {
+            if (!current.getVisitTime().equals(DateTools.timestampFromString(DateTools.oldLastUpdated
+                    , DateTools.apiTimeFormat))) {
+                holder.dateTv.setText(DateUtils.getPersianStringDate(current.getVisitTime()));
+            } else {
+                holder.dateTv.setText("");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         switch (current.getState()) {
             case "unknown":

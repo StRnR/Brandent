@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_header_patient_detail" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_back_patient_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

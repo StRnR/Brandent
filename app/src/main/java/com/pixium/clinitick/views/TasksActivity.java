@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.pixium.clinitick.ActiveUser;
 import com.pixium.clinitick.R;
+import com.pixium.clinitick.SwipeToDeleteTasksCallback;
 import com.pixium.clinitick.adapters.CalendarAdapter;
 import com.pixium.clinitick.adapters.TasksAdapter;
 import com.pixium.clinitick.db.entities.Appointment;
@@ -34,6 +37,16 @@ import saman.zamani.persiandate.PersianDate;
 public class TasksActivity extends AppCompatActivity {
     private TasksViewModel tasksViewModel;
 
+    private Calendar startCal;
+    private Calendar endCal;
+
+    private TextView emptyTasksTv;
+
+    private ImageView illustrationIv;
+
+    private RecyclerView tasksRv;
+    private TasksAdapter tasksAdapter;
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +54,12 @@ public class TasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks);
 
         TextView todayBtn = findViewById(R.id.btn_today_tasks);
-        TextView emptyTasksTv = findViewById(R.id.tv_empty_tasks);
+        emptyTasksTv = findViewById(R.id.tv_empty_tasks);
         TextView month_tv = findViewById(R.id.tv_month_tasks);
 
         Button addBtn = findViewById(R.id.btn_add_task_tasks);
 
-        ImageView illustrationIv = findViewById(R.id.iv_illustration_tasks);
+        illustrationIv = findViewById(R.id.iv_illustration_tasks);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -87,12 +100,16 @@ public class TasksActivity extends AppCompatActivity {
         });
 
         // Appointments RecyclerView
-        RecyclerView appointmentsRv = findViewById(R.id.rv_appointments_tasks);
-        appointmentsRv.setLayoutManager(new LinearLayoutManager(this));
-        appointmentsRv.setHasFixedSize(true);
+        tasksRv = findViewById(R.id.rv_appointments_tasks);
+        tasksRv.setLayoutManager(new LinearLayoutManager(this));
+        tasksRv.setHasFixedSize(true);
 
-        TasksAdapter tasksAdapter = new TasksAdapter();
-        appointmentsRv.setAdapter(tasksAdapter);
+        tasksAdapter = new TasksAdapter();
+        tasksRv.setAdapter(tasksAdapter);
+
+        ItemTouchHelper itemTouchHelper =
+                new ItemTouchHelper(new SwipeToDeleteTasksCallback(tasksAdapter, getApplicationContext()));
+        itemTouchHelper.attachToRecyclerView(tasksRv);
 
         // Calendar RecyclerView
 
@@ -101,13 +118,13 @@ public class TasksActivity extends AppCompatActivity {
 
         month_tv.setText(pDate.monthName());
 
-        Calendar startCal = Calendar.getInstance();
+        startCal = Calendar.getInstance();
         startCal.set(Calendar.HOUR_OF_DAY, 0);
         startCal.set(Calendar.MINUTE, 0);
         startCal.set(Calendar.SECOND, 0);
         startCal.set(Calendar.MILLISECOND, 0);
 
-        Calendar endCal = (Calendar) startCal.clone();
+        endCal = (Calendar) startCal.clone();
         endCal.set(Calendar.HOUR_OF_DAY, 23);
         endCal.set(Calendar.MINUTE, 59);
         endCal.set(Calendar.SECOND, 59);
@@ -122,17 +139,17 @@ public class TasksActivity extends AppCompatActivity {
             if (appointments.size() + tasks.size() > 0) {
                 illustrationIv.setVisibility(View.GONE);
                 emptyTasksTv.setVisibility(View.GONE);
-                appointmentsRv.setVisibility(View.VISIBLE);
+                tasksRv.setVisibility(View.VISIBLE);
                 tasksCardModels = tasksViewModel.getTasksCardModels(appointments, tasks);
             } else {
                 illustrationIv.setVisibility(View.VISIBLE);
                 emptyTasksTv.setVisibility(View.VISIBLE);
-                appointmentsRv.setVisibility(View.GONE);
+                tasksRv.setVisibility(View.GONE);
             }
         } catch (ExecutionException | InterruptedException e) {
             illustrationIv.setVisibility(View.VISIBLE);
             emptyTasksTv.setVisibility(View.VISIBLE);
-            appointmentsRv.setVisibility(View.GONE);
+            tasksRv.setVisibility(View.GONE);
             e.printStackTrace();
         }
 
@@ -197,17 +214,17 @@ public class TasksActivity extends AppCompatActivity {
                 if (appointments.size() + tasks.size() > 0) {
                     illustrationIv.setVisibility(View.GONE);
                     emptyTasksTv.setVisibility(View.GONE);
-                    appointmentsRv.setVisibility(View.VISIBLE);
+                    tasksRv.setVisibility(View.VISIBLE);
                     finalTasksCardModels = tasksViewModel.getTasksCardModels(appointments, tasks);
                 } else {
                     illustrationIv.setVisibility(View.VISIBLE);
                     emptyTasksTv.setVisibility(View.VISIBLE);
-                    appointmentsRv.setVisibility(View.GONE);
+                    tasksRv.setVisibility(View.GONE);
                 }
             } catch (ExecutionException | InterruptedException e) {
                 illustrationIv.setVisibility(View.VISIBLE);
                 emptyTasksTv.setVisibility(View.VISIBLE);
-                appointmentsRv.setVisibility(View.GONE);
+                tasksRv.setVisibility(View.GONE);
                 e.printStackTrace();
             }
 
@@ -313,6 +330,47 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
 
+        tasksAdapter.setOnItemDeleteListener(tasksCardModel -> {
+            if (tasksCardModel.getDescription().equals("")) {
+                Task curTask = tasksViewModel.getTaskById(tasksCardModel.getId());
+                Task updateTask = new Task(curTask.getClinicForId(), curTask.getDentistForId()
+                        , curTask.getUuid(), null, curTask.getTime(), curTask.getTitle()
+                        , curTask.getState(), 1);
+                updateTask.setTaskId(curTask.getTaskId());
+                tasksViewModel.updateTask(updateTask);
+
+                // Undo SnackBar
+                View view = findViewById(R.id.cl_tasks);
+                Snackbar snackbar = Snackbar.make(view, R.string.snack_bar_text,
+                        Snackbar.LENGTH_LONG);
+                snackbar.setAction(R.string.snack_bar_undo, v -> {
+                    tasksViewModel.updateTask(curTask);
+                    tasksAdapter.undoDelete(tasksCardModel);
+                });
+                snackbar.show();
+
+            } else {
+                Appointment curAppointment = tasksViewModel.getAppointmentById(tasksCardModel.getId());
+                Appointment updateAppointment = new Appointment(ActiveUser.getInstance().getId()
+                        , curAppointment.getUuid(), null, curAppointment.getClinicForId()
+                        , curAppointment.getPatientForId(), curAppointment.getVisitTime()
+                        , curAppointment.getPrice(), curAppointment.getTitle()
+                        , curAppointment.getState(), 1);
+                updateAppointment.setAppointmentId(curAppointment.getAppointmentId());
+                tasksViewModel.updateAppointment(updateAppointment);
+
+                // Undo SnackBar
+                View view = findViewById(R.id.cl_tasks);
+                Snackbar snackbar = Snackbar.make(view, R.string.snack_bar_text,
+                        Snackbar.LENGTH_LONG);
+                snackbar.setAction(R.string.snack_bar_undo, v -> {
+                    tasksViewModel.updateAppointment(curAppointment);
+                    tasksAdapter.undoDelete(tasksCardModel);
+                });
+                snackbar.show();
+            }
+        });
+
         todayBtn.setOnClickListener(v -> {
             PersianDate pToday = new PersianDate();
             calendarAdapter.setSelectedPos(pToday.getShDay() - 1);
@@ -333,17 +391,17 @@ public class TasksActivity extends AppCompatActivity {
                 if (appointments.size() + tasks.size() > 0) {
                     illustrationIv.setVisibility(View.GONE);
                     emptyTasksTv.setVisibility(View.GONE);
-                    appointmentsRv.setVisibility(View.VISIBLE);
+                    tasksRv.setVisibility(View.VISIBLE);
                     finalTasksCardModels1 = tasksViewModel.getTasksCardModels(appointments, tasks);
                 } else {
                     illustrationIv.setVisibility(View.VISIBLE);
                     emptyTasksTv.setVisibility(View.VISIBLE);
-                    appointmentsRv.setVisibility(View.GONE);
+                    tasksRv.setVisibility(View.GONE);
                 }
             } catch (ExecutionException | InterruptedException e) {
                 illustrationIv.setVisibility(View.VISIBLE);
                 emptyTasksTv.setVisibility(View.VISIBLE);
-                appointmentsRv.setVisibility(View.GONE);
+                tasksRv.setVisibility(View.GONE);
                 e.printStackTrace();
             }
 
@@ -359,6 +417,31 @@ public class TasksActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.tasks_page);
+
+        List<TasksCardModel> tasksCardModels = new ArrayList<>();
+        try {
+            List<Appointment> appointments = tasksViewModel
+                    .getAppointmentsByDate(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+            List<Task> tasks = tasksViewModel.getTasksByDate(startCal.getTimeInMillis()
+                    , endCal.getTimeInMillis());
+            if (appointments.size() + tasks.size() > 0) {
+                illustrationIv.setVisibility(View.GONE);
+                emptyTasksTv.setVisibility(View.GONE);
+                tasksRv.setVisibility(View.VISIBLE);
+                tasksCardModels = tasksViewModel.getTasksCardModels(appointments, tasks);
+            } else {
+                illustrationIv.setVisibility(View.VISIBLE);
+                emptyTasksTv.setVisibility(View.VISIBLE);
+                tasksRv.setVisibility(View.GONE);
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            illustrationIv.setVisibility(View.VISIBLE);
+            emptyTasksTv.setVisibility(View.VISIBLE);
+            tasksRv.setVisibility(View.GONE);
+            e.printStackTrace();
+        }
+
+        tasksAdapter.setTasksCardModels(tasksCardModels);
         super.onResume();
     }
 }

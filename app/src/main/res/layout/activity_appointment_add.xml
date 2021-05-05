@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_header_appointment_add" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_back_appointment_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/iv_header_appointment_add"
         tools:listitem="@layout/add_appointment_item" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit_appointment_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

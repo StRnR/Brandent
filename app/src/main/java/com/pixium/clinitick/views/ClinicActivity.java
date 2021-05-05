@@ -94,7 +94,7 @@ public class ClinicActivity extends AppCompatActivity {
             String address = data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_ADDRESS);
 
             Clinic clinic = new Clinic(ActiveUser.getInstance().getId(), null, null
-                    , title, address, color);
+                    , title, address, color, 0);
             clinicViewModel.insert(clinic);
 
             Toast.makeText(this, "Clinic successfully added!", Toast.LENGTH_SHORT)
@@ -116,7 +116,7 @@ public class ClinicActivity extends AppCompatActivity {
             UUID uuid = UUID.fromString(data.getStringExtra(AddEditClinicActivity.EXTRA_CLINIC_UUID));
 
             Clinic clinic = new Clinic(ActiveUser.getInstance().getId(), uuid, null
-                    , title, address, color);
+                    , title, address, color, 0);
             clinic.setClinicId(id);
             clinicViewModel.update(clinic);
 

@@ -56,6 +56,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
 
         timeBtn = findViewById(R.id.btn_time_task_add);
         Button submitBtn = findViewById(R.id.btn_submit_task_add);
+        Button backBtn = findViewById(R.id.btn_back_task_add);
 
         Spinner clinicSpinner = findViewById(R.id.spinner_clinic_task_add);
 
@@ -184,14 +185,16 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
                     }
                 } else {
                     try {
-                        Clinic clinic = addEditTaskViewModel.getClinicByTitle(clinicSpinner.getSelectedItem()
-                                .toString()).get(0);
+                        Clinic clinic = addEditTaskViewModel.getClinicByTitle(clinicSpinner
+                                .getSelectedItem().toString()).get(0);
                         Task task = addEditTaskViewModel.getTaskById(prevTaskId);
                         Task updateTask = new Task(clinic.getClinicId()
                                 , ActiveUser.getInstance().getId(), task.getUuid(), null
                                 , visitCalendar.getTimeInMillis(), titleEt.getText().toString()
                                 , task.getState(), 0);
+                        updateTask.setTaskId(task.getTaskId());
                         addEditTaskViewModel.updateTask(updateTask);
+                        Toast.makeText(this, "Task Updated!", Toast.LENGTH_SHORT).show();
                         finish();
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
@@ -200,7 +203,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
             }
         });
 
-
+        backBtn.setOnClickListener(v -> super.onBackPressed());
     }
 
     @Override

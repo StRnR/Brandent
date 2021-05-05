@@ -24,6 +24,13 @@ public class TasksAdapter extends
     private OnItemCheckClickListener mCheckListener;
     private OnItemCancelClickListener mCancelListener;
     private OnItemUnknownClickListener mUnknownListener;
+    private OnItemDeleteListener mDeleteListener;
+
+    private int recentlyDeletedPosition;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mClickListener = listener;
+    }
 
     public void setOnItemCheckClickListener(OnItemCheckClickListener listener) {
         mCheckListener = listener;
@@ -35,6 +42,10 @@ public class TasksAdapter extends
 
     public void setOnItemUnknownClickListener(OnItemUnknownClickListener listener) {
         mUnknownListener = listener;
+    }
+
+    public void setOnItemDeleteListener(OnItemDeleteListener listener) {
+        mDeleteListener = listener;
     }
 
     @NonNull
@@ -126,6 +137,23 @@ public class TasksAdapter extends
         notifyDataSetChanged();
     }
 
+    public void deleteItem(int position) throws ExecutionException, InterruptedException {
+        TasksCardModel mDeleted = tasksCardModels.get(position);
+        mDeleteListener.onItemDelete(mDeleted);
+        tasksCardModels.remove(position);
+        notifyItemRemoved(position);
+        recentlyDeletedPosition = position;
+    }
+
+    public void undoDelete(TasksCardModel tasksCardModel) {
+        tasksCardModels.add(recentlyDeletedPosition, tasksCardModel);
+        notifyItemInserted(recentlyDeletedPosition);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(TasksCardModel tasksCardModel);
+    }
+
     public interface OnItemCheckClickListener {
         void onItemCheckClick(TasksCardModel tasksCardModel) throws ExecutionException, InterruptedException;
     }
@@ -136,6 +164,10 @@ public class TasksAdapter extends
 
     public interface OnItemUnknownClickListener {
         void onItemUnknownClick(TasksCardModel tasksCardModel) throws ExecutionException, InterruptedException;
+    }
+
+    public interface OnItemDeleteListener {
+        void onItemDelete(TasksCardModel tasksCardModel) throws ExecutionException, InterruptedException;
     }
 
     class TasksHolder extends RecyclerView.ViewHolder {
@@ -159,13 +191,5 @@ public class TasksAdapter extends
                 }
             });
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(TasksCardModel tasksCardModel);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mClickListener = listener;
     }
 }

@@ -4,6 +4,7 @@ import com.pixium.clinitick.api.models.Appointment;
 import com.pixium.clinitick.api.models.Clinic;
 import com.pixium.clinitick.api.models.Finance;
 import com.pixium.clinitick.api.models.Patient;
+import com.pixium.clinitick.api.models.Task;
 
 import java.text.ParseException;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class ModelConverter {
         for (int i = 0; i < clinics.length; i++) {
             res[i] = new com.pixium.clinitick.db.entities.Clinic(ActiveUser.getInstance().getId()
                     , UUID.fromString(clinics[i].getId()), Long.MIN_VALUE, clinics[i].getTitle()
-                    , clinics[i].getAddress(), clinics[i].getColor());
+                    , clinics[i].getAddress(), clinics[i].getColor(), clinics[i].isDeleted() ? 1 : 0);
         }
         return res;
     }
@@ -47,8 +48,8 @@ public class ModelConverter {
                 new com.pixium.clinitick.db.entities.Patient[patients.length];
         for (int i = 0; i < patients.length; i++) {
             res[i] = new com.pixium.clinitick.db.entities.Patient(ActiveUser.getInstance().getId()
-                    , UUID.fromString(patients[i].getId()), Long.MIN_VALUE
-                    , patients[i].getFull_name(), patients[i].getPhone());
+                    , UUID.fromString(patients[i].getId()), Long.MIN_VALUE, patients[i].getFull_name()
+                    , patients[i].getPhone(), patients[i].isDeleted() ? 1 : 0);
         }
         return res;
     }
@@ -74,11 +75,41 @@ public class ModelConverter {
                 new com.pixium.clinitick.db.entities.Appointment[appointments.length];
         for (int i = 0; i < appointments.length; i++) {
             res[i] = new com.pixium.clinitick.db.entities.Appointment(ActiveUser.getInstance().getId()
-                    , UUID.fromString(appointments[i].getId()), Long.MIN_VALUE, clinicIds[i]
-                    , patientIds[i], DateTools.timestampFromString(appointments[i].getVisit_time()
+                    , UUID.fromString(appointments[i].getId())
+                    , DateTools.timestampFromString(DateTools.oldLastUpdated, DateTools.apiTimeFormat)
+                    , clinicIds[i], patientIds[i]
+                    , DateTools.timestampFromString(appointments[i].getVisit_time()
                     , DateTools.apiOldTimeFormat), appointments[i].getPrice()
                     , appointments[i].getDisease(), appointments[i].getState()
                     , appointments[i].isIs_deleted() ? 1 : 0);
+        }
+        return res;
+    }
+
+
+    public static Task[] tasksToSync(String[] clinicUuids
+            , com.pixium.clinitick.db.entities.Task[] dbTasks) {
+        Task[] res = new Task[dbTasks.length];
+        for (int i = 0; i < dbTasks.length; i++) {
+            res[i] = new Task(dbTasks[i].getUuid().toString(), dbTasks[i].getTitle()
+                    , dbTasks[i].getState(), DateTools.stringFromTimestamp(dbTasks[i].getTime()
+                    , DateTools.apiTimeFormat), clinicUuids[i]
+                    , dbTasks[i].getIsDeleted() == 1);
+        }
+        return res;
+    }
+
+
+    public static com.pixium.clinitick.db.entities.Task[] tasksFromSync(int[] clinicIds
+            , Task[] tasks) throws ParseException {
+        com.pixium.clinitick.db.entities.Task[] res =
+                new com.pixium.clinitick.db.entities.Task[tasks.length];
+        for (int i = 0; i < tasks.length; i++) {
+            res[i] = new com.pixium.clinitick.db.entities.Task(clinicIds[i]
+                    , ActiveUser.getInstance().getId(), UUID.fromString(tasks[i].getId())
+                    , DateTools.timestampFromString(DateTools.oldLastUpdated, DateTools.apiTimeFormat)
+                    , DateTools.timestampFromString(tasks[i].getTask_date(), DateTools.apiTimeFormat)
+                    , tasks[i].getTitle(), tasks[i].getState(), tasks[i].isIs_deleted() ? 1 : 0);
         }
         return res;
     }

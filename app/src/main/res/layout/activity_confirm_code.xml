@@ -8,7 +8,7 @@
     android:layoutDirection="ltr"
     tools:context=".views.ConfirmCodeActivity">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_confirm_code_back"
         android:layout_width="8dp"
         android:layout_height="14dp"
@@ -111,7 +111,7 @@
         app:layout_constraintStart_toEndOf="@id/et_confirm_code_third"
         app:layout_constraintTop_toBottomOf="@id/tv_confirm_code_instruction" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit_confirm_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

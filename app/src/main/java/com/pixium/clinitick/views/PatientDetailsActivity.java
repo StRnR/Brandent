@@ -196,7 +196,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
                                     .getPatientById(patientId);
                             Patient updatePatient = new Patient(ActiveUser.getInstance().getId()
                                     , patient.getUuid(), null
-                                    , patient.getName(), phoneEt.getText().toString());
+                                    , patient.getName(), phoneEt.getText().toString(), patient.getIsDeleted());
                             updatePatient.setPatientId(patientId);
                             patientDetailsViewModel.updatePatient(updatePatient);
                             phoneEt.setEnabled(false);
@@ -232,7 +232,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
                         Patient patient = patientDetailsViewModel.getPatientById(patientId);
                         Patient updatePatient = new Patient(ActiveUser.getInstance().getId()
                                 , patient.getUuid(), null
-                                , nameEt.getText().toString(), patient.getPhone());
+                                , nameEt.getText().toString(), patient.getPhone(), patient.getIsDeleted());
                         updatePatient.setPatientId(patientId);
                         patientDetailsViewModel.updatePatient(updatePatient);
                         nameEt.setEnabled(false);

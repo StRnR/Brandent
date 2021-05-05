@@ -28,15 +28,16 @@ public interface AppointmentDao {
     @Query("SELECT * FROM appointment WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
     Appointment[] getUnSynced(long updatedAt, int activeUserId);
 
-    @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end " +
+    @Query("SELECT * FROM appointment WHERE visitTime BETWEEN :start AND :end AND isDeleted = 0 " +
             "AND dentistForId=:activeUserId ORDER BY visitTime ASC")
     List<Appointment> getByDate(long start, long end, int activeUserId);
 
-    @Query("SELECT * FROM appointment WHERE patientForId=:arg AND dentistForId=:activeUserId")
+    @Query("SELECT * FROM appointment WHERE patientForId=:arg AND dentistForId=:activeUserId " +
+            "AND isDeleted = 0")
     List<Appointment> getByPatient(int arg, int activeUserId);
 
     @Query("SELECT price FROM appointment WHERE visitTime BETWEEN :start AND :end " +
-            "AND state = :argState AND dentistForId=:activeUserId")
+            "AND state = :argState AND dentistForId=:activeUserId AND isDeleted = 0")
     List<Integer> getIncomeByDate(long start, long end, String argState, int activeUserId);
 
     @Query("SELECT * FROM appointment WHERE appointmentId=:arg AND dentistForId=:activeUserId")

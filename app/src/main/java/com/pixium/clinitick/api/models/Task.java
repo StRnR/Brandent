@@ -3,10 +3,21 @@ package com.pixium.clinitick.api.models;
 public class Task {
     private String id;
     private String title;
+    private String state;
     private String task_date;
     private String clinic_id;
 
     private boolean is_deleted;
+
+    public Task(String id, String title, String state, String task_date, String clinic_id
+            , boolean is_deleted) {
+        this.id = id;
+        this.title = title;
+        this.state = state;
+        this.task_date = task_date;
+        this.clinic_id = clinic_id;
+        this.is_deleted = is_deleted;
+    }
 
     public String getId() {
         return id;
@@ -22,6 +33,14 @@ public class Task {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getTask_date() {

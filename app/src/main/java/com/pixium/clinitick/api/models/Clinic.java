@@ -47,7 +47,7 @@ public class Clinic {
         this.color = color;
     }
 
-    public boolean isIs_deleted() {
+    public boolean isDeleted() {
         return is_deleted;
     }
 

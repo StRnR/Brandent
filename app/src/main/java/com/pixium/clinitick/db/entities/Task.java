@@ -10,8 +10,8 @@ public class Task {
     @PrimaryKey(autoGenerate = true)
     private int taskId;
 
-    private int clinicForId;
-    private int dentistForId;
+    private final int clinicForId;
+    private final int dentistForId;
 
     private final UUID uuid;
 

@@ -19,7 +19,9 @@ public class Patient {
     private final String name;
     private final String phone;
 
-    public Patient(int dentistForId, UUID uuid, Long modifiedAt, String name, String phone) {
+    private final int isDeleted;
+
+    public Patient(int dentistForId, UUID uuid, Long modifiedAt, String name, String phone, int isDeleted) {
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
         } else {
@@ -35,6 +37,7 @@ public class Patient {
         this.dentistForId = dentistForId;
         this.name = name;
         this.phone = phone;
+        this.isDeleted = isDeleted;
     }
 
     public int getPatientId() {
@@ -63,5 +66,9 @@ public class Patient {
 
     public String getPhone() {
         return phone;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
     }
 }

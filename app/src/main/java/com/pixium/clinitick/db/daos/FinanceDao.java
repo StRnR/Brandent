@@ -29,14 +29,14 @@ public interface FinanceDao {
     Finance getByUuid(UUID arg, int activeUserId);
 
     @Query("SELECT * FROM finances WHERE date BETWEEN :start AND :end " +
-            "AND dentistForId=:activeUserId ORDER BY date ASC")
+            "AND dentistForId=:activeUserId AND isDeleted = 0 ORDER BY date ASC")
     List<Finance> getByDate(long start, long end, int activeUserId);
 
     @Query("SELECT * FROM finances WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
     Finance[] getUnSynced(long updatedAt, int activeUserId);
 
     @Query("SELECT price FROM finances WHERE date BETWEEN :start AND :end AND type = :argType " +
-            "AND dentistForId=:activeUserId ORDER BY date ASC")
+            "AND dentistForId=:activeUserId AND isDeleted = 0 ORDER BY date ASC")
     List<Long> getFinanceSumByDateAndType(long start, long end, String argType
             , int activeUserId);
 }

@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_back_patient_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
         app:layout_constraintStart_toStartOf="@+id/spinner_clinic_patient_add"
         app:layout_constraintTop_toTopOf="@id/spinner_clinic_patient_add" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit_patient_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

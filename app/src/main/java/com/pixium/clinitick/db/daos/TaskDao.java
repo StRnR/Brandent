@@ -28,7 +28,7 @@ public interface TaskDao {
     @Query("SELECT * FROM task WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
     Task[] getUnSynced(long updatedAt, int activeUserId);
 
-    @Query("SELECT * FROM task WHERE time BETWEEN :start AND :end " +
+    @Query("SELECT * FROM task WHERE time BETWEEN :start AND :end AND isDeleted = 0 " +
             "AND dentistForId=:activeUserId ORDER BY time ASC")
     List<Task> getByDate(long start, long end, int activeUserId);
 

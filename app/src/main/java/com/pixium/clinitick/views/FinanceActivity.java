@@ -26,7 +26,6 @@ import java.util.concurrent.ExecutionException;
 import saman.zamani.persiandate.PersianDate;
 
 public class FinanceActivity extends AppCompatActivity {
-    private FinanceViewModel financeViewModel;
     public static final int TOTAL_SUM_REQUEST = 1;
     public static final int APPOINTMENTS_REQUEST = 2;
     public static final int EXTERNAL_INCOME_REQUEST = 3;
@@ -53,7 +52,7 @@ public class FinanceActivity extends AppCompatActivity {
         ImageView externalIncomeIv = findViewById(R.id.iv_bg_external_income_finance);
         ImageView expenseIv = findViewById(R.id.iv_bg_expense_finance);
 
-        financeViewModel = new ViewModelProvider(this,
+        FinanceViewModel financeViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
                 get(FinanceViewModel.class);
 
@@ -205,7 +204,7 @@ public class FinanceActivity extends AppCompatActivity {
                 visitsSumTv.setTransformationMethod(new PasswordTransformationMethod());
                 manualIncomeTv.setTransformationMethod(new PasswordTransformationMethod());
                 manualExpenseTv.setTransformationMethod(new PasswordTransformationMethod());
-                hideBtn.setBackground(getDrawable(R.drawable.ic_hide_orange));
+                hideBtn.setBackground(getDrawable(R.drawable.ic_hide_toggled));
             }
         });
     }

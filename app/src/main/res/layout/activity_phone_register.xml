@@ -8,7 +8,7 @@
     android:layoutDirection="ltr"
     tools:context=".views.PhoneRegisterActivity">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_back_phone_register"
         android:layout_width="8dp"
         android:layout_height="14dp"
@@ -64,7 +64,7 @@
         android:textColorHint="@color/hintGrey"
         app:layout_constraintTop_toBottomOf="@id/tv_instruction_phone_register" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit_phone_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

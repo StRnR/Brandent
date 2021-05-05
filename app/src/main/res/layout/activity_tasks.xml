@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_tasks"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layoutGrey"
@@ -29,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_add_task_tasks"
         android:layout_width="44dp"
         android:layout_height="44dp"
@@ -79,7 +80,7 @@
         android:id="@+id/rv_appointments_tasks"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toBottomOf="@id/rv_calendar_tasks"
@@ -104,10 +105,10 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/vazir_regular"
+        android:gravity="center"
         android:text="برای این روز قراری ندارید"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/iv_illustration_tasks" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

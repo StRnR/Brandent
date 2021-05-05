@@ -17,11 +17,13 @@ import com.pixium.clinitick.db.entities.Clinic;
 import com.pixium.clinitick.db.entities.Dentist;
 import com.pixium.clinitick.db.entities.Finance;
 import com.pixium.clinitick.db.entities.Patient;
+import com.pixium.clinitick.db.entities.Task;
 import com.pixium.clinitick.db.repos.AppointmentRepository;
 import com.pixium.clinitick.db.repos.ClinicRepository;
 import com.pixium.clinitick.db.repos.DentistRepository;
 import com.pixium.clinitick.db.repos.FinanceRepository;
 import com.pixium.clinitick.db.repos.PatientRepository;
+import com.pixium.clinitick.db.repos.TaskRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +36,7 @@ public class IntroViewModel extends AndroidViewModel {
     private final ClinicRepository clinicRepository;
     private final PatientRepository patientRepository;
     private final AppointmentRepository appointmentRepository;
+    private final TaskRepository taskRepository;
     private final FinanceRepository financeRepository;
     private final LiveData<List<Dentist>> allDentists;
 
@@ -45,6 +48,7 @@ public class IntroViewModel extends AndroidViewModel {
         clinicRepository = new ClinicRepository(application);
         patientRepository = new PatientRepository(application);
         appointmentRepository = new AppointmentRepository(application);
+        taskRepository = new TaskRepository(application);
         financeRepository = new FinanceRepository(application);
         allDentists = dentistRepository.getAllLive();
     }
@@ -72,12 +76,16 @@ public class IntroViewModel extends AndroidViewModel {
         return appointmentRepository.getUnsynced(lastUpdated);
     }
 
+    public Task[] getUnsyncedTasks(long lastUpdated) throws ExecutionException, InterruptedException {
+        return taskRepository.getUnsynced(lastUpdated);
+    }
+
     public Finance[] getUnsyncedFinances(long lastUpdated) throws ExecutionException
             , InterruptedException {
         return financeRepository.getUnsynced(lastUpdated);
     }
 
-    public int[] getClinicForIds(com.pixium.clinitick.api.models.Appointment[] appointments)
+    public int[] getAppointmentClinicForIds(com.pixium.clinitick.api.models.Appointment[] appointments)
             throws ExecutionException, InterruptedException {
         int[] res = new int[appointments.length];
         for (int i = 0; i < appointments.length; i++) {
@@ -86,11 +94,29 @@ public class IntroViewModel extends AndroidViewModel {
         return res;
     }
 
-    public String[] getClinicForUuidStrings(Appointment[] appointments)
+    public int[] getTaskClinicForIds(com.pixium.clinitick.api.models.Task[] tasks)
+            throws ExecutionException, InterruptedException {
+        int[] res = new int[tasks.length];
+        for (int i = 0; i < tasks.length; i++) {
+            res[i] = getClinicByUuid(UUID.fromString(tasks[i].getClinic_id())).getClinicId();
+        }
+        return res;
+    }
+
+    public String[] getAppointmentClinicForUuidStrings(Appointment[] appointments)
             throws ExecutionException, InterruptedException {
         String[] res = new String[appointments.length];
         for (int i = 0; i < appointments.length; i++) {
             res[i] = getClinicById(appointments[i].getClinicForId()).getUuid().toString();
+        }
+        return res;
+    }
+
+    public String[] getTaskClinicForUuidStrings(Task[] tasks)
+            throws ExecutionException, InterruptedException {
+        String[] res = new String[tasks.length];
+        for (int i = 0; i < tasks.length; i++) {
+            res[i] = getClinicById(tasks[i].getClinicForId()).getUuid().toString();
         }
         return res;
     }
@@ -158,6 +184,19 @@ public class IntroViewModel extends AndroidViewModel {
         }
     }
 
+    public void insertTasks(Task... tasks)
+            throws ExecutionException, InterruptedException {
+        for (Task task : tasks) {
+            Task existingTask = getTaskByUuid(task.getUuid());
+            if (existingTask == null) {
+                taskRepository.insert(task);
+            } else {
+                task.setTaskId(existingTask.getTaskId());
+                taskRepository.update(task);
+            }
+        }
+    }
+
     public void insertFinances(Finance... finances) throws ExecutionException, InterruptedException {
         for (Finance finance : finances) {
             Finance existingFinance = getFinanceByUuid(finance.getUuid());
@@ -204,6 +243,10 @@ public class IntroViewModel extends AndroidViewModel {
 
     public Appointment getAppointmentByUuid(UUID uuid) throws ExecutionException, InterruptedException {
         return appointmentRepository.getByUuid(uuid);
+    }
+
+    public Task getTaskByUuid(UUID uuid) throws ExecutionException, InterruptedException {
+        return taskRepository.getByUuid(uuid);
     }
 
     public Finance getFinanceByUuid(UUID uuid) throws ExecutionException, InterruptedException {

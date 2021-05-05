@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2C2E51</color>
+    <color name="colorPrimary">#222440</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="black">#000000</color>
@@ -18,6 +18,7 @@
     <color name="clinicBlue">#0098fd</color>
     <color name="clinicCyan">#00c0da</color>
     <color name="clinicTeal">#009989</color>
+    <color name="clinitickGreen">#00d48a</color>
     <color name="clinicGreen">#17b243</color>
     <color name="checkGreen">#6BCF00</color>
     <color name="clinicLightGreen">#7ec630</color>

@@ -26,13 +26,15 @@ public interface PatientDao {
     @Query("SELECT * FROM patient WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
     Patient[] getUnSynced(long updatedAt, int activeUserId);
 
-    @Query("SELECT * FROM patient WHERE dentistForId=:activeUserId")
+    @Query("SELECT * FROM patient WHERE dentistForId=:activeUserId AND isDeleted = 0")
     LiveData<List<Patient>> getAllPatients(int activeUserId);
 
-    @Query("SELECT * FROM patient WHERE name LIKE '%' || :arg || '%' AND dentistForId=:activeUserId")
+    @Query("SELECT * FROM patient WHERE name LIKE '%' || :arg || '%' AND dentistForId=:activeUserId " +
+            "AND isDeleted = 0")
     List<Patient> findPatientsByName(String arg, int activeUserId);
 
-    @Query("SELECT * FROM patient WHERE phone LIKE :arg AND dentistForId=:activeUserId")
+    @Query("SELECT * FROM patient WHERE phone LIKE :arg AND dentistForId=:activeUserId " +
+            "AND isDeleted = 0")
     List<Patient> getPatientByNumber(String arg, int activeUserId);
 
     @Query("SELECT * FROM patient WHERE patientId=:arg AND dentistForId=:activeUserId")

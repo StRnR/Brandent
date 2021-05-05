@@ -3,8 +3,6 @@ package com.pixium.clinitick.db.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.pixium.clinitick.DateTools;
-
 import java.util.UUID;
 
 @Entity
@@ -46,18 +44,13 @@ public class Appointment {
             this.modifiedAt = modifiedAt;
         }
 
-        if (visitTime == null) {
-            this.visitTime = DateTools.noVisitTime;
-        } else {
-            this.visitTime = visitTime;
-        }
-
         if (price == null) {
             this.price = 0L;
         } else {
             this.price = price;
         }
 
+        this.visitTime = visitTime;
         this.title = title;
         this.state = state;
     }

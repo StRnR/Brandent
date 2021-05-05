@@ -20,8 +20,11 @@ public class Clinic {
     private final String address;
     private final String title;
 
+    private final int isDeleted;
 
-    public Clinic(int dentistForId, UUID uuid, Long modifiedAt, String title, String address, String color) {
+
+    public Clinic(int dentistForId, UUID uuid, Long modifiedAt, String title, String address
+            , String color, int isDeleted) {
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
         } else {
@@ -38,6 +41,7 @@ public class Clinic {
         this.title = title;
         this.address = address;
         this.color = color;
+        this.isDeleted = isDeleted;
     }
 
     public int getClinicId() {
@@ -70,5 +74,9 @@ public class Clinic {
 
     public String getTitle() {
         return title;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
     }
 }

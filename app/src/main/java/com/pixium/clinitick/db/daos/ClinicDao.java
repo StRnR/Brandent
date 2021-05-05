@@ -26,24 +26,19 @@ public interface ClinicDao {
     @Query("SELECT * FROM clinics WHERE modifiedAt > :updatedAt AND dentistForId=:activeUserId")
     Clinic[] getUnSynced(long updatedAt, int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE dentistForId=:activeUserId")
+    @Query("SELECT * FROM clinics WHERE dentistForId=:activeUserId AND isDeleted = 0")
     LiveData<List<Clinic>> getAllClinicsLive(int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE dentistForId=:activeUserId")
+    @Query("SELECT * FROM clinics WHERE dentistForId=:activeUserId AND isDeleted = 0")
     List<Clinic> getAllClinics(int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE title LIKE :argTitle AND dentistForId=:activeUserId")
+    @Query("SELECT * FROM clinics WHERE title LIKE :argTitle AND dentistForId=:activeUserId " +
+            "AND isDeleted = 0")
     List<Clinic> getClinicByTitle(String argTitle, int activeUserId);
 
     @Query("SELECT * FROM clinics WHERE clinicId=:arg AND dentistForId=:activeUserId")
     Clinic getById(int arg, int activeUserId);
 
-    @Query("SELECT * FROM clinics WHERE clinicId=:argId AND dentistForId=:activeUserId")
-    LiveData<Clinic> getClinicById(int argId, int activeUserId);
-
     @Query("SELECT * FROM clinics WHERE uuid=:arg AND dentistForId=:activeUserId")
     Clinic getByUuid(UUID arg, int activeUserId);
-
-    @Query("SELECT * FROM clinics WHERE color LIKE :argColor AND dentistForId=:activeUserId")
-    List<Clinic> loadClinicByColor(String argColor, int activeUserId);
 }
