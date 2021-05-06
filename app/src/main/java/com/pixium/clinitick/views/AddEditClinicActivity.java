@@ -60,7 +60,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
                 get(ClinicViewModel.class);
 
         redBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicRed);
+            clinicColor = "color_8";
             redBtn.setBackground(getDrawable(R.drawable.bg_selected_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
             purpleBtn.setBackground(getDrawable(R.drawable.bg_purple_clinic));
@@ -72,7 +72,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         pinkBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicPink);
+            clinicColor = "color_7";
             pinkBtn.setBackground(getDrawable(R.drawable.bg_selected_pink_clinic));
             redBtn.setBackground(getDrawable(R.drawable.bg_red_clinic));
             purpleBtn.setBackground(getDrawable(R.drawable.bg_purple_clinic));
@@ -84,7 +84,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         purpleBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicPurple);
+            clinicColor = "color_6";
             purpleBtn.setBackground(getDrawable(R.drawable.bg_selected_purple_clinic));
             redBtn.setBackground(getDrawable(R.drawable.bg_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
@@ -96,7 +96,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         blueBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicBlue);
+            clinicColor = "color_5";
             blueBtn.setBackground(getDrawable(R.drawable.bg_selected_blue_clinic));
             redBtn.setBackground(getDrawable(R.drawable.bg_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
@@ -108,7 +108,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         cyanBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicCyan);
+            clinicColor = "color_4";
             cyanBtn.setBackground(getDrawable(R.drawable.bg_selected_cyan_clinic));
             redBtn.setBackground(getDrawable(R.drawable.bg_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
@@ -120,7 +120,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         tealBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicTeal);
+            clinicColor = "color_3";
             tealBtn.setBackground(getDrawable(R.drawable.bg_selected_teal_clinic));
             redBtn.setBackground(getDrawable(R.drawable.bg_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
@@ -132,7 +132,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         greenBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicGreen);
+            clinicColor = "color_2";
             greenBtn.setBackground(getDrawable(R.drawable.bg_selected_green_clinic));
             redBtn.setBackground(getDrawable(R.drawable.bg_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
@@ -144,7 +144,7 @@ public class AddEditClinicActivity extends AppCompatActivity {
         });
 
         lightGreenBtn.setOnClickListener(v -> {
-            clinicColor = getResources().getString(R.color.clinicLightGreen);
+            clinicColor = "color_1";
             lightGreenBtn.setBackground(getDrawable(R.drawable.bg_selected_light_green_clinic));
             redBtn.setBackground(getDrawable(R.drawable.bg_red_clinic));
             pinkBtn.setBackground(getDrawable(R.drawable.bg_pink_clinic));
@@ -164,28 +164,28 @@ public class AddEditClinicActivity extends AppCompatActivity {
             String oldColor = intent.getStringExtra(EXTRA_CLINIC_COLOR);
 
             switch (oldColor) {
-                case "#ffff2927":
+                case "color_8":
                     redBtn.performClick();
                     break;
-                case "#fffc2479":
+                case "#color_7":
                     pinkBtn.performClick();
                     break;
-                case "#ff7033bf":
+                case "#color_6":
                     purpleBtn.performClick();
                     break;
-                case "#ff0098fd":
+                case "color_5":
                     blueBtn.performClick();
                     break;
-                case "#ff00c0da":
+                case "color_4":
                     cyanBtn.performClick();
                     break;
-                case "#ff009989":
+                case "color_3":
                     tealBtn.performClick();
                     break;
-                case "#ff17b243":
+                case "color_2":
                     greenBtn.performClick();
                     break;
-                case "#ff7ec630":
+                case "color_1":
                     lightGreenBtn.performClick();
                     break;
             }
