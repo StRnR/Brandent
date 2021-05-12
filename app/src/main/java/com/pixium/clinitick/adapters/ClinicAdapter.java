@@ -110,13 +110,10 @@ public class ClinicAdapter extends ListAdapter<Clinic, ClinicAdapter.ClinicHolde
             titleTv = itemView.findViewById(R.id.tv_clinic_title_cv);
             colorIv = itemView.findViewById(R.id.iv_clinic_color_cv);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(getItem(position));
-                    }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(getItem(position));
                 }
             });
         }

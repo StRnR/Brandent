@@ -1,5 +1,7 @@
 package com.pixium.clinitick.views;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,7 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pixium.clinitick.ActiveUser;
+import com.pixium.clinitick.AlertReceiver;
 import com.pixium.clinitick.DateTools;
+import com.pixium.clinitick.NotificationStatic;
 import com.pixium.clinitick.R;
 import com.pixium.clinitick.adapters.AddAppointmentAdapter;
 import com.pixium.clinitick.db.entities.Appointment;
@@ -171,6 +175,20 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                                     , addAppointmentModel.getPrice(), addAppointmentModel.getTitle()
                                     , "unknown", 0);
                             addAppointmentViewModel.insertAppointment(appointment);
+
+                            // Notification
+                            NotificationStatic.createNotificationChannel(this);
+
+                            Intent intent = new Intent(this, AlertReceiver.class);
+                            intent.putExtra(NotificationStatic.intentTitleKey, appointment.getTitle());
+                            String notificationTxt = patients.get(0).getName() + " در " + clinics.get(0).getTitle();
+                            intent.putExtra(NotificationStatic.intentTextKey, notificationTxt);
+                            intent.putExtra(NotificationStatic.intentIdKey, appointment.getAppointmentId());
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(this
+                                    , 0, intent, 0);
+
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, appointment.getVisitTime(), pendingIntent);
                         }
                     }
                     startActivity(new Intent(this, HomeActivity.class));
@@ -205,6 +223,20 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                                     , addAppointmentModel.getPrice(), addAppointmentModel.getTitle()
                                     , "unknown", 0);
                             addAppointmentViewModel.insertAppointment(appointment);
+
+                            // Notification
+                            NotificationStatic.createNotificationChannel(this);
+
+                            Intent intent = new Intent(this, AlertReceiver.class);
+                            intent.putExtra(NotificationStatic.intentTitleKey, appointment.getTitle());
+                            String notificationTxt = patients.get(0).getName() + " در " + clinics.get(0).getTitle();
+                            intent.putExtra(NotificationStatic.intentTextKey, notificationTxt);
+                            intent.putExtra(NotificationStatic.intentIdKey, appointment.getAppointmentId());
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(this
+                                    , 0, intent, 0);
+
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, appointment.getVisitTime(), pendingIntent);
                         }
                     }
                     startActivity(new Intent(this, HomeActivity.class));

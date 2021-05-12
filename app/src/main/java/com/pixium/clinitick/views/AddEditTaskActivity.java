@@ -1,5 +1,7 @@
 package com.pixium.clinitick.views;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -20,6 +22,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.pixium.clinitick.ActiveUser;
+import com.pixium.clinitick.AlertReceiver;
+import com.pixium.clinitick.NotificationStatic;
 import com.pixium.clinitick.R;
 import com.pixium.clinitick.db.entities.Clinic;
 import com.pixium.clinitick.db.entities.Task;
@@ -179,6 +183,20 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
                                 , null, null, visitCalendar.getTimeInMillis()
                                 , titleEt.getText().toString(), "unknown", 0);
                         addEditTaskViewModel.insertTask(task);
+
+                        // Notification
+                        NotificationStatic.createNotificationChannel(this);
+
+                        Intent intent1 = new Intent(this, AlertReceiver.class);
+                        intent.putExtra(NotificationStatic.intentTitleKey, "کار");
+                        intent.putExtra(NotificationStatic.intentTextKey, task.getTitle());
+                        intent.putExtra(NotificationStatic.intentIdKey, task.getTaskId());
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(this
+                                , 0, intent1, 0);
+
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, task.getTime(), pendingIntent);
+
                         finish();
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
@@ -195,6 +213,20 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
                         updateTask.setTaskId(task.getTaskId());
                         addEditTaskViewModel.updateTask(updateTask);
                         Toast.makeText(this, "Task Updated!", Toast.LENGTH_SHORT).show();
+
+                        // Notification
+                        NotificationStatic.createNotificationChannel(this);
+
+                        Intent intent1 = new Intent(this, AlertReceiver.class);
+                        intent.putExtra(NotificationStatic.intentTitleKey, "کار");
+                        intent.putExtra(NotificationStatic.intentTextKey, task.getTitle());
+                        intent.putExtra(NotificationStatic.intentIdKey, task.getTaskId());
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(this
+                                , 0, intent1, 0);
+
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, task.getTime(), pendingIntent);
+                        
                         finish();
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();

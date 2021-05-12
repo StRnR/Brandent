@@ -45,8 +45,7 @@ public class ClinicActivity extends AppCompatActivity {
         clinicViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
                 get(ClinicViewModel.class);
-        clinicViewModel.getAllClinics().observe(this,
-                adapter::submitList);
+        clinicViewModel.getAllClinics().observe(this, adapter::submitList);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -59,7 +58,7 @@ public class ClinicActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                clinicViewModel.delete(adapter.getClinicAt(viewHolder.getAdapterPosition()));
+                clinicViewModel.delete(adapter.getClinicAt(viewHolder.getBindingAdapterPosition()));
                 Toast.makeText(ClinicActivity.this, "Clinic Deleted!"
                         , Toast.LENGTH_SHORT).show();
             }
