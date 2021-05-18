@@ -180,10 +180,12 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                             NotificationStatic.createNotificationChannel(this);
 
                             Intent intent = new Intent(this, AlertReceiver.class);
-                            intent.putExtra(NotificationStatic.intentTitleKey, appointment.getTitle());
+
+                            NotificationStatic.setLastTitle(appointment.getTitle());
                             String notificationTxt = patients.get(0).getName() + " در " + clinics.get(0).getTitle();
-                            intent.putExtra(NotificationStatic.intentTextKey, notificationTxt);
-                            intent.putExtra(NotificationStatic.intentIdKey, appointment.getAppointmentId());
+                            NotificationStatic.setLastText(notificationTxt);
+                            NotificationStatic.setLastId(appointment.getAppointmentId() * 1000);
+
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                     , 0, intent, 0);
 
@@ -228,10 +230,12 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                             NotificationStatic.createNotificationChannel(this);
 
                             Intent intent = new Intent(this, AlertReceiver.class);
-                            intent.putExtra(NotificationStatic.intentTitleKey, appointment.getTitle());
+
+                            NotificationStatic.setLastTitle(appointment.getTitle());
                             String notificationTxt = patients.get(0).getName() + " در " + clinics.get(0).getTitle();
-                            intent.putExtra(NotificationStatic.intentTextKey, notificationTxt);
-                            intent.putExtra(NotificationStatic.intentIdKey, appointment.getAppointmentId());
+                            NotificationStatic.setLastText(notificationTxt);
+                            NotificationStatic.setLastId(appointment.getAppointmentId() * 1000);
+
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                     , 0, intent, 0);
 

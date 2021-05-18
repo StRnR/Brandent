@@ -188,9 +188,9 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
                         NotificationStatic.createNotificationChannel(this);
 
                         Intent intent1 = new Intent(this, AlertReceiver.class);
-                        intent.putExtra(NotificationStatic.intentTitleKey, "کار");
-                        intent.putExtra(NotificationStatic.intentTextKey, task.getTitle());
-                        intent.putExtra(NotificationStatic.intentIdKey, task.getTaskId());
+                        NotificationStatic.setLastTitle("کار");
+                        NotificationStatic.setLastText(task.getTitle());
+                        NotificationStatic.setLastId(task.getTaskId() * 100);
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                 , 0, intent1, 0);
 
@@ -218,15 +218,15 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
                         NotificationStatic.createNotificationChannel(this);
 
                         Intent intent1 = new Intent(this, AlertReceiver.class);
-                        intent.putExtra(NotificationStatic.intentTitleKey, "کار");
-                        intent.putExtra(NotificationStatic.intentTextKey, task.getTitle());
-                        intent.putExtra(NotificationStatic.intentIdKey, task.getTaskId());
+                        NotificationStatic.setLastTitle("کار");
+                        NotificationStatic.setLastText(task.getTitle());
+                        NotificationStatic.setLastId(task.getTaskId() * 100);
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                 , 0, intent1, 0);
 
                         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                         alarmManager.set(AlarmManager.RTC_WAKEUP, task.getTime(), pendingIntent);
-                        
+
                         finish();
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
