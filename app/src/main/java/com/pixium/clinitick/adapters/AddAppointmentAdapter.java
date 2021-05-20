@@ -138,7 +138,7 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
         return addAppointmentModels;
     }
 
-    class AddAppointmentHolder extends RecyclerView.ViewHolder {
+    static class AddAppointmentHolder extends RecyclerView.ViewHolder {
         private final EditText titleEt;
         private final EditText priceEt;
         private final Button timeBtn;

@@ -163,17 +163,22 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                     for (AddAppointmentModel addAppointmentModel : addAppointmentModels) {
                         if (!addAppointmentModel.getTitle().trim().equals("")) {
                             long visitTime;
+                            long price;
                             if (addAppointmentModel.getTimeStamp() == null) {
                                 visitTime = DateTools.timestampFromString(DateTools.oldLastUpdated
                                         , DateTools.apiTimeFormat);
                             } else {
                                 visitTime = addAppointmentModel.getTimeStamp();
                             }
+                            if (addAppointmentModel.getPrice() == null) {
+                                price = -1;
+                            } else {
+                                price = addAppointmentModel.getPrice();
+                            }
                             Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
                                     , null, null, clinics.get(0).getClinicId()
-                                    , patients.get(0).getPatientId(), visitTime
-                                    , addAppointmentModel.getPrice(), addAppointmentModel.getTitle()
-                                    , "unknown", 0);
+                                    , patients.get(0).getPatientId(), visitTime, price
+                                    , addAppointmentModel.getTitle(), "unknown", 0);
                             addAppointmentViewModel.insertAppointment(appointment);
 
                             // Notification
@@ -213,17 +218,22 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                     for (AddAppointmentModel addAppointmentModel : addAppointmentModels) {
                         if (!addAppointmentModel.getTitle().trim().equals("")) {
                             long visitTime;
+                            long price;
                             if (addAppointmentModel.getTimeStamp() == null) {
                                 visitTime = DateTools.timestampFromString(DateTools.oldLastUpdated
                                         , DateTools.apiTimeFormat);
                             } else {
                                 visitTime = addAppointmentModel.getTimeStamp();
                             }
+                            if (addAppointmentModel.getPrice() == null) {
+                                price = -1;
+                            } else {
+                                price = addAppointmentModel.getPrice();
+                            }
                             Appointment appointment = new Appointment(ActiveUser.getInstance().getId()
                                     , null, null, clinics.get(0).getClinicId()
-                                    , patients.get(0).getPatientId(), visitTime
-                                    , addAppointmentModel.getPrice(), addAppointmentModel.getTitle()
-                                    , "unknown", 0);
+                                    , patients.get(0).getPatientId(), visitTime, price
+                                    , addAppointmentModel.getTitle(), "unknown", 0);
                             addAppointmentViewModel.insertAppointment(appointment);
 
                             // Notification

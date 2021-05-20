@@ -68,7 +68,7 @@ public class FinanceAdapter extends RecyclerView.Adapter<FinanceAdapter.FinanceH
             dateTv = itemView.findViewById(R.id.tv_date_finance_cv);
 
             itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 if (listener != null && position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(finances.get(position));
                 }

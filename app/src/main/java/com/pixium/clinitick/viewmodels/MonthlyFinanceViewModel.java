@@ -90,13 +90,15 @@ public class MonthlyFinanceViewModel extends AndroidViewModel {
             if (!financesDone && !appointmentsDone) {
                 if (appointments.get(appointmentsIndex).getVisitTime() <= finances.get(financesIndex).getDate()) {
                     Appointment appointment = appointments.get(appointmentsIndex);
-                    FinanceCardModel financeCardModel =
-                            new FinanceCardModel(appointment.getAppointmentId()
-                                    , getPatientById(appointment.getPatientForId()).getName()
-                                    , appointment.getTitle(), appointment.getPrice()
-                                    , DateTools.timestampToSimpleJalali(appointment.getVisitTime())
-                                    , false);
-                    res.add(financeCardModel);
+                    if (appointment.getPrice() >= 0) {
+                        FinanceCardModel financeCardModel =
+                                new FinanceCardModel(appointment.getAppointmentId()
+                                        , getPatientById(appointment.getPatientForId()).getName()
+                                        , appointment.getTitle(), appointment.getPrice()
+                                        , DateTools.timestampToSimpleJalali(appointment.getVisitTime())
+                                        , false);
+                        res.add(financeCardModel);
+                    }
                     appointmentsIndex++;
                 } else {
                     Finance finance = finances.get(financesIndex);
@@ -110,13 +112,15 @@ public class MonthlyFinanceViewModel extends AndroidViewModel {
                 }
             } else if (financesDone) {
                 Appointment appointment = appointments.get(appointmentsIndex);
-                FinanceCardModel financeCardModel =
-                        new FinanceCardModel(appointment.getAppointmentId()
-                                , getPatientById(appointment.getPatientForId()).getName()
-                                , appointment.getTitle(), appointment.getPrice()
-                                , DateTools.timestampToSimpleJalali(appointment.getVisitTime())
-                                , false);
-                res.add(financeCardModel);
+                if (appointment.getPrice() >= 0) {
+                    FinanceCardModel financeCardModel =
+                            new FinanceCardModel(appointment.getAppointmentId()
+                                    , getPatientById(appointment.getPatientForId()).getName()
+                                    , appointment.getTitle(), appointment.getPrice()
+                                    , DateTools.timestampToSimpleJalali(appointment.getVisitTime())
+                                    , false);
+                    res.add(financeCardModel);
+                }
                 appointmentsIndex++;
             } else {
                 Finance finance = finances.get(financesIndex);

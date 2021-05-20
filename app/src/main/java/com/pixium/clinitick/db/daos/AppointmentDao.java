@@ -37,7 +37,7 @@ public interface AppointmentDao {
     List<Appointment> getByPatient(int arg, int activeUserId);
 
     @Query("SELECT price FROM appointment WHERE visitTime BETWEEN :start AND :end " +
-            "AND state = :argState AND dentistForId=:activeUserId AND isDeleted = 0")
+            "AND price >= 0 AND state = :argState AND dentistForId=:activeUserId AND isDeleted = 0")
     List<Integer> getIncomeByDate(long start, long end, String argState, int activeUserId);
 
     @Query("SELECT * FROM appointment WHERE appointmentId=:arg AND dentistForId=:activeUserId")
