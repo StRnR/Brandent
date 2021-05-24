@@ -39,14 +39,16 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
     @Override
     public void onBindViewHolder(@NonNull AddAppointmentHolder holder, int position) {
         AddAppointmentModel currentAdd = addAppointmentModels.get(position);
+        holder.setIsRecyclable(false);
+
         if (!holder.titleEt.getText().toString().equals(currentAdd.getTitle())) {
             holder.titleEt.setText(currentAdd.getTitle());
         }
+
         try {
-            if (currentAdd.getPrice() != null) {
-                if (!UiTools.stringToPrice(holder.priceEt.getText().toString()).equals(currentAdd.getPrice())) {
-                    holder.priceEt.setText(UiTools.priceToString(currentAdd.getPrice(), true));
-                }
+            if (currentAdd.getPrice() != null &&
+                    !currentAdd.getPrice().equals(UiTools.stringToPrice(holder.priceEt.getText().toString()))) {
+                holder.priceEt.setText(UiTools.priceToString(currentAdd.getPrice(), true));
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -66,6 +68,7 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+
         holder.titleEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -79,7 +82,6 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
 
             @Override
             public void afterTextChanged(Editable s) {
-                AddAppointmentModel currentAdd = addAppointmentModels.get(position);
                 currentAdd.setTitle(holder.titleEt.getText().toString());
                 addAppointmentModels.set(position, currentAdd);
             }
@@ -102,26 +104,24 @@ public class AddAppointmentAdapter extends RecyclerView.Adapter<AddAppointmentAd
                     current = formatted;
                     holder.priceEt.setText(formatted);
                     holder.priceEt.setSelection(formatted.length() - 6);
-
                     holder.priceEt.addTextChangedListener(this);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                AddAppointmentModel currentAdd = addAppointmentModels.get(position);
-                currentAdd.setPrice(UiTools.stringToPrice(holder.priceEt.getText().toString()));
-                addAppointmentModels.set(position, currentAdd);
+                if (position != RecyclerView.NO_POSITION) {
+                    currentAdd.setPrice(UiTools.stringToPrice(holder.priceEt.getText().toString()));
+                    addAppointmentModels.set(position, currentAdd);
+                }
             }
         });
 
-        if (listener != null) {
-            holder.timeBtn.setOnClickListener(v -> {
-                if (listener != null && position != RecyclerView.NO_POSITION) {
-                    listener.onDateClick(position);
-                }
-            });
-        }
+        holder.timeBtn.setOnClickListener(v -> {
+            if (listener != null && position != RecyclerView.NO_POSITION) {
+                listener.onDateClick(position);
+            }
+        });
     }
 
     @Override

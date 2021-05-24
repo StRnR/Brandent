@@ -190,7 +190,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
                         Intent intent1 = new Intent(this, AlertReceiver.class);
                         NotificationStatic.setLastTitle("کار");
                         NotificationStatic.setLastText(task.getTitle());
-                        NotificationStatic.setLastId(task.getTaskId() * 100);
+                        NotificationStatic.setLastId(task.getTaskId() * 10 + 1);
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                 , 0, intent1, 0);
 
@@ -220,7 +220,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements TimePicker
                         Intent intent1 = new Intent(this, AlertReceiver.class);
                         NotificationStatic.setLastTitle("کار");
                         NotificationStatic.setLastText(task.getTitle());
-                        NotificationStatic.setLastId(task.getTaskId() * 100);
+                        NotificationStatic.setLastId(task.getTaskId() * 10 + 1);
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                 , 0, intent1, 0);
 

@@ -189,7 +189,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                             NotificationStatic.setLastTitle(appointment.getTitle());
                             String notificationTxt = patients.get(0).getName() + " در " + clinics.get(0).getTitle();
                             NotificationStatic.setLastText(notificationTxt);
-                            NotificationStatic.setLastId(appointment.getAppointmentId() * 1000);
+                            NotificationStatic.setLastId(appointment.getAppointmentId() * 10 + 2);
 
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                     , 0, intent, 0);
@@ -244,7 +244,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements
                             NotificationStatic.setLastTitle(appointment.getTitle());
                             String notificationTxt = patients.get(0).getName() + " در " + clinics.get(0).getTitle();
                             NotificationStatic.setLastText(notificationTxt);
-                            NotificationStatic.setLastId(appointment.getAppointmentId() * 1000);
+                            NotificationStatic.setLastId(appointment.getAppointmentId() * 10 + 2);
 
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(this
                                     , 0, intent, 0);
@@ -270,9 +270,11 @@ public class AddAppointmentActivity extends AppCompatActivity implements
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         visitCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         visitCalendar.set(Calendar.MINUTE, minute);
-        AddAppointmentModel addAppointmentModel = adapter.getAddAppointments().get(curPosition);
-        addAppointmentModel.setTimeStamp(visitCalendar.getTimeInMillis());
         List<AddAppointmentModel> addAppointmentModels = new ArrayList<>(adapter.getAddAppointments());
+        AddAppointmentModel addAppointmentModel =
+                new AddAppointmentModel(addAppointmentModels.get(curPosition).getTitle()
+                        , addAppointmentModels.get(curPosition).getPrice()
+                        , visitCalendar.getTimeInMillis());
         addAppointmentModels.set(curPosition, addAppointmentModel);
         adapter.setAddAppointments(addAppointmentModels);
     }

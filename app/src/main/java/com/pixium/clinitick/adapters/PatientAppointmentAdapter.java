@@ -80,8 +80,6 @@ public class PatientAppointmentAdapter extends
         holder.checkBtn.setOnClickListener(v -> {
             if (current.getState().equals("unknown") ||
                     current.getState().equals("canceled")) {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_enabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 if (mCheckListener != null) {
                     try {
                         mCheckListener.onItemCheckClick(current.getAppointmentId());
@@ -90,8 +88,6 @@ public class PatientAppointmentAdapter extends
                     }
                 }
             } else {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 if (mUnknownListener != null) {
                     try {
                         mUnknownListener.onItemUnknownClick(current.getAppointmentId());
@@ -105,8 +101,6 @@ public class PatientAppointmentAdapter extends
         holder.cancelBtn.setOnClickListener(v -> {
             if (current.getState().equals("unknown") ||
                     current.getState().equals("done")) {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_enabled);
                 if (mCancelListener != null) {
                     try {
                         mCancelListener.onItemCancelClick(current.getAppointmentId());
@@ -115,8 +109,6 @@ public class PatientAppointmentAdapter extends
                     }
                 }
             } else {
-                holder.checkBtn.setBackgroundResource(R.drawable.bg_circle_check_disabled);
-                holder.cancelBtn.setBackgroundResource(R.drawable.bg_circle_close_disabled);
                 if (mUnknownListener != null) {
                     try {
                         mUnknownListener.onItemUnknownClick(current.getAppointmentId());
