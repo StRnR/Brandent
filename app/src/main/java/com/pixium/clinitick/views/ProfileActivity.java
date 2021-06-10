@@ -35,6 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
         Button clinicsBtn = findViewById(R.id.btn_clinics_profile);
         Button patientsBtn = findViewById(R.id.btn_patients_profile);
         Button logoutBtn = findViewById(R.id.btn_logout_profile);
+        Button aboutBtn = findViewById(R.id.btn_about_us_profile);
+        Button membershipBtn = findViewById(R.id.btn_membership_profile);
 
         profileViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
@@ -106,6 +108,17 @@ public class ProfileActivity extends AppCompatActivity {
         patientsBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext()
                 , PatientsActivity.class)));
 
+        aboutBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, WebViewActivity.class);
+            intent.putExtra(WebViewActivity.EXTRA_REQUEST, WebViewActivity.ABOUT_REQUEST);
+            startActivity(intent);
+        });
+
+        membershipBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, WebViewActivity.class);
+            intent.putExtra(WebViewActivity.EXTRA_REQUEST, WebViewActivity.MEMBERSHIP_REQUEST);
+            startActivity(intent);
+        });
 
     }
 
