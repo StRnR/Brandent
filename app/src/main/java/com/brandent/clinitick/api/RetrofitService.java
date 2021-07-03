@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitService {
 
     private static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://app.clinitick.com/api/")
+            .baseUrl("https://app.clinitick.com/api/")
             .addConverterFactory(GsonConverterFactory.create()).build();
 
     public static <S> S createService(Class<S> serviceClass) {
