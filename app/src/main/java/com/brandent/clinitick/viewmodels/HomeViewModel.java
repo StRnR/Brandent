@@ -4,7 +4,10 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
+import com.brandent.clinitick.api.models.blog.Post;
+import com.brandent.clinitick.api.repos.BlogRepository;
 import com.brandent.clinitick.db.entities.Appointment;
 import com.brandent.clinitick.db.entities.Clinic;
 import com.brandent.clinitick.db.entities.Dentist;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class HomeViewModel extends AndroidViewModel {
+    private final BlogRepository blogRepository;
     private final DentistRepository dentistRepository;
     private final AppointmentRepository appointmentRepository;
     private final ClinicRepository clinicRepository;
@@ -25,10 +29,15 @@ public class HomeViewModel extends AndroidViewModel {
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
+        blogRepository = BlogRepository.getInstance();
         appointmentRepository = new AppointmentRepository(application);
         clinicRepository = new ClinicRepository(application);
         patientRepository = new PatientRepository(application);
         dentistRepository = new DentistRepository(application);
+    }
+
+    public LiveData<List<Post>> getBolgPosts() {
+        return blogRepository.getPosts();
     }
 
     public Dentist getDentistById(int id) throws ExecutionException, InterruptedException {

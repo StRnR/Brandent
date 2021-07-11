@@ -2,7 +2,7 @@ package com.brandent.clinitick.api.repos;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.brandent.clinitick.api.RetrofitService;
+import com.brandent.clinitick.api.MainService;
 import com.brandent.clinitick.api.SyncApi;
 import com.brandent.clinitick.api.models.sync.SyncRequest;
 import com.brandent.clinitick.api.models.sync.SyncResponse;
@@ -18,7 +18,7 @@ public class SyncRepository {
     private final SyncApi syncApi;
 
     public SyncRepository() {
-        syncApi = RetrofitService.createService(SyncApi.class);
+        syncApi = MainService.createService(SyncApi.class);
     }
 
     public static SyncRepository getInstance() {

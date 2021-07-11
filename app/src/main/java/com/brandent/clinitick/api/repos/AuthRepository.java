@@ -3,7 +3,7 @@ package com.brandent.clinitick.api.repos;
 import androidx.lifecycle.MutableLiveData;
 
 import com.brandent.clinitick.api.AuthApi;
-import com.brandent.clinitick.api.RetrofitService;
+import com.brandent.clinitick.api.MainService;
 import com.brandent.clinitick.api.models.MessageResponse;
 import com.brandent.clinitick.api.models.auth.AuthResponse;
 import com.brandent.clinitick.api.models.auth.CodeRequest;
@@ -23,7 +23,7 @@ public class AuthRepository {
 
 
     public AuthRepository() {
-        authApi = RetrofitService.createService(AuthApi.class);
+        authApi = MainService.createService(AuthApi.class);
     }
 
     public static AuthRepository getInstance() {
