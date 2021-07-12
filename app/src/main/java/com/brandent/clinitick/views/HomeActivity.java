@@ -6,26 +6,33 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.brandent.clinitick.ActiveUser;
 import com.brandent.clinitick.R;
+import com.brandent.clinitick.adapters.BlogAdapter;
 import com.brandent.clinitick.adapters.TodayHomeAdapter;
+import com.brandent.clinitick.api.models.blog.Post;
 import com.brandent.clinitick.db.entities.Appointment;
 import com.brandent.clinitick.db.entities.Clinic;
+import com.brandent.clinitick.models.BlogCardModel;
 import com.brandent.clinitick.models.TodayItem;
 import com.brandent.clinitick.viewmodels.HomeViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import saman.zamani.persiandate.PersianDate;
@@ -199,6 +206,58 @@ public class HomeActivity extends AppCompatActivity {
         todayRv.setLayoutManager(todayLM);
         todayRv.setAdapter(todayAdapter);
         todayRv.setNestedScrollingEnabled(false);
+
+
+        // Blog Recyclerview
+        RecyclerView blogRecyclerView = findViewById(R.id.rv_home_blog);
+        RecyclerView.LayoutManager blogLayoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, true);
+        blogRecyclerView.setLayoutManager(blogLayoutManager);
+
+        BlogAdapter blogAdapter = new BlogAdapter();
+        blogRecyclerView.setAdapter(blogAdapter);
+
+        List<Post> loadedPosts = new ArrayList<>();
+        MutableLiveData<List<BlogCardModel>> loadedBlogCards = new MutableLiveData<>();
+        List<BlogCardModel> blogCardModels = new ArrayList<>();
+
+        homeViewModel.getBolgPosts().observe(this, posts -> {
+            if (!posts.isEmpty()) {
+                Toast.makeText(this, "posts received", Toast.LENGTH_SHORT).show();
+                for (Post post : posts) {
+                    Toast.makeText(this, String.valueOf(post.getFeatured_media()), Toast.LENGTH_SHORT).show();
+                    homeViewModel.getBlogMedia(String.valueOf(post.getFeatured_media()))
+                            .observe(HomeActivity.this, media -> {
+                                if (!Objects.isNull(media)) {
+                                    blogCardModels.add(new BlogCardModel(post.getId()
+                                            , post.getTitle().getRendered(), media.getSource_url()));
+                                    loadedBlogCards.setValue(new ArrayList<>(blogCardModels));
+                                }
+                            });
+                }
+            } else {
+                Toast.makeText(this, "posts not received", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        loadedPosts.observe(this, changedPosts -> {
+//            for (Post post : changedPosts) {
+//                homeViewModel.getBlogMedia(String.valueOf(post.getFeatured_media()))
+//                        .observe(HomeActivity.this, media -> {
+//                            if (!Objects.isNull(media)) {
+//                                blogCardModels.add(new BlogCardModel(post.getTitle().getRendered()
+//                                        , media.getSource_url()));
+//                                loadedBlogCards.setValue(new ArrayList<>(blogCardModels));
+//                            }
+//                        });
+//            }
+//        });
+        loadedBlogCards.observe(this, blogCardModels1 -> {
+            Toast.makeText(HomeActivity.this, String.valueOf(blogCardModels1.size())
+                    , Toast.LENGTH_SHORT).show();
+            blogAdapter.setBlogCardModels(loadedBlogCards.getValue());
+        });
+
     }
 
     @Override
@@ -212,5 +271,6 @@ public class HomeActivity extends AppCompatActivity {
         // Set Selected NavBar item
         bottomNavigationView.setSelectedItemId(R.id.home_page);
     }
+
 
 }

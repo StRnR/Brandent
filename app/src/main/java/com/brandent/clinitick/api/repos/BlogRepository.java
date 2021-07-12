@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.brandent.clinitick.api.BlogApi;
 import com.brandent.clinitick.api.BlogService;
+import com.brandent.clinitick.api.models.blog.Media;
 import com.brandent.clinitick.api.models.blog.Post;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,5 +47,23 @@ public class BlogRepository {
             }
         });
         return posts;
+    }
+
+    public MutableLiveData<Media> getMedia(String id){
+        MutableLiveData<Media> media = new MutableLiveData<>();
+        blogApi.getMedia(id).enqueue(new Callback<Media>() {
+            @Override
+            public void onResponse(Call<Media> call, Response<Media> response) {
+                if (response.isSuccessful()){
+                    media.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Media> call, Throwable t) {
+                media.setValue(null);
+            }
+        });
+        return media;
     }
 }

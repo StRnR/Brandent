@@ -33,6 +33,7 @@ public class FinanceAdapter extends RecyclerView.Adapter<FinanceAdapter.FinanceH
     @Override
     public void onBindViewHolder(@NonNull FinanceHolder holder, int position) {
         FinanceCardModel financeCardModel = finances.get(position);
+        holder.setIsRecyclable(false);
         holder.titleTv.setText(financeCardModel.getTitle());
         holder.descriptionTv.setText(financeCardModel.getDescription());
         holder.amountTv.setText(UiTools.priceToString(financeCardModel.getAmount(), true));
