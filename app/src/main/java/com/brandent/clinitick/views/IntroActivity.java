@@ -35,6 +35,7 @@ public class IntroActivity extends AppCompatActivity {
 
         Button registerBtn = findViewById(R.id.btn_register_intro);
         Button loginBtn = findViewById(R.id.btn_login_intro);
+        Button forgotPassBtn = findViewById(R.id.btn_intro_forgot_pass);
 
         EditText phoneEt = findViewById(R.id.et_phone_intro);
         EditText passwordEt = findViewById(R.id.et_password_intro);
@@ -141,6 +142,10 @@ public class IntroActivity extends AppCompatActivity {
 
         registerBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, PhoneRegisterActivity.class)));
+
+        forgotPassBtn.setOnClickListener(v ->
+                startActivity(new Intent(this, ForgotPassActivity.class)));
+
     }
 
 

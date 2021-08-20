@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.brandent.clinitick.ActiveUser;
 import com.brandent.clinitick.R;
 import com.brandent.clinitick.api.models.auth.RegisterRequest;
+import com.brandent.clinitick.db.entities.Clinic;
 import com.brandent.clinitick.db.entities.Dentist;
 import com.brandent.clinitick.viewmodels.RegisterViewModel;
 
@@ -37,12 +38,14 @@ public class RegisterActivity extends AppCompatActivity {
         EditText lastNameEt = findViewById(R.id.et_register_last_name);
         EditText specialityEt = findViewById(R.id.et_register_speciality);
         EditText passwordEt = findViewById(R.id.et_register_password);
+        EditText clinicEt = findViewById(R.id.et_register_clinic);
 
         submitBtn.setOnClickListener(v -> {
-            if (!firstNameEt.getText().toString().equals("")
-                    && !lastNameEt.getText().toString().equals("")
-                    && !specialityEt.getText().toString().equals("")
-                    && !passwordEt.getText().toString().equals("")) {
+            if (!firstNameEt.getText().toString().trim().equals("")
+                    && !lastNameEt.getText().toString().trim().equals("")
+                    && !specialityEt.getText().toString().trim().equals("")
+                    && !passwordEt.getText().toString().trim().equals("")
+                    && !clinicEt.getText().toString().trim().equals("")) {
                 RegisterRequest registerRequest = new RegisterRequest(phone
                         , passwordEt.getText().toString(), firstNameEt.getText().toString()
                         , lastNameEt.getText().toString(), specialityEt.getText().toString());
@@ -63,6 +66,11 @@ public class RegisterActivity extends AppCompatActivity {
                                             , System.currentTimeMillis());
                                     registerViewModel.insertDentist(dentist);
                                     ActiveUser.setActiveUser(dentist.getDentistId());
+
+                                    Clinic clinic = new Clinic(dentist.getDentistId(), null
+                                            , null, clinicEt.getText().toString()
+                                            , "", "color_1", 0);
+                                    registerViewModel.insertClinic(clinic);
                                     startActivity(new Intent(this, HomeActivity.class));
                                     finish();
                                 }

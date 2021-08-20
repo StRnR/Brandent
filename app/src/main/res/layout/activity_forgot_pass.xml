@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutGrey"
+    android:layoutDirection="ltr"
+    tools:context=".views.ForgotPassActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_back_forgot_pass"
+        android:layout_width="8dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/ic_arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header_forgot_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/vazir_bold"
+        android:text="فراموشی رمز"
+        android:textColor="@color/navyBlue"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_instruction_forgot_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/vazir_regular"
+        android:text="لطفا شماره موبایل خود را وارد کنید"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header_forgot_pass" />
+
+    <EditText
+        android:id="@+id/et_phone_forgot_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_et_rounded_rectangle"
+        android:fontFamily="@font/vazir_regular"
+        android:gravity="center"
+        android:hint="09123456789"
+        android:imeOptions="actionDone"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hintGrey"
+        app:layout_constraintTop_toBottomOf="@id/tv_instruction_forgot_pass" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_submit_forgot_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_rounded_orange_btn"
+        android:fontFamily="@font/vazir_bold"
+        android:padding="8dp"
+        android:text="دریافت کد"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/et_phone_forgot_pass" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

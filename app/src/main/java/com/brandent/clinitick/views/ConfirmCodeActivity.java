@@ -18,6 +18,7 @@ import com.brandent.clinitick.viewmodels.ConfirmCodeViewModel;
 public class ConfirmCodeActivity extends AppCompatActivity {
     private ConfirmCodeViewModel confirmCodeViewModel;
     private String phone;
+    private String scenario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class ConfirmCodeActivity extends AppCompatActivity {
                 , ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).
                 get(ConfirmCodeViewModel.class);
         phone = getIntent().getStringExtra("phone");
+        scenario = getIntent().getStringExtra("scenario");
 
         Button resendBtn = findViewById(R.id.btn_submit_confirm_code);
         Button backBtn = findViewById(R.id.btn_confirm_code_back);

@@ -88,6 +88,21 @@
         app:layout_constraintTop_toBottomOf="@id/et_phone_intro" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_intro_forgot_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/vazir_regular"
+        android:elevation="@null"
+        android:text="فراموشی رمز؟"
+        android:textColor="@color/clinitickPurple"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/et_password_intro"
+        app:layout_constraintStart_toStartOf="@id/et_password_intro"
+        app:layout_constraintTop_toTopOf="@id/et_password_intro" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login_intro"
         android:layout_width="136dp"
         android:layout_height="wrap_content"

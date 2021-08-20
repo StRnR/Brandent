@@ -47,6 +47,17 @@
             android:textColorHint="@color/hintGrey"
             android:textSize="16sp" />
 
+<!--        <TextView-->
+<!--            android:id="@+id/tv_tooth_header_appointment_add"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/et_price_appointment_add"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:fontFamily="@font/vazir_regular"-->
+<!--            android:text="شماره دندان"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="16sp" />-->
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_time_appointment_add"
             android:layout_width="match_parent"

@@ -17,7 +17,7 @@ public class PhoneRegisterViewModel extends ViewModel {
     }
 
 
-    public LiveData<MessageResponse> postPhone() {
+    public LiveData<MessageResponse> postRegisterPhone() {
         return mutableLiveData;
     }
 }

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -119,8 +118,8 @@ public class HomeActivity extends AppCompatActivity {
         endCal.set(Calendar.SECOND, 59);
         endCal.set(Calendar.MILLISECOND, 999);
         try {
-            List<Appointment> appointments = homeViewModel.getAppointmentsByDate(System.currentTimeMillis()
-                    , endCal.getTimeInMillis());
+            List<Appointment> appointments = homeViewModel.
+                    getAppointmentsByDate(System.currentTimeMillis(), endCal.getTimeInMillis());
             if (appointments.size() > 0) {
                 upcomingAppointmentTv.setText(appointments.get(0).getTitle());
                 Timestamp timestamp = new Timestamp(appointments.get(0).getVisitTime());
@@ -217,46 +216,30 @@ public class HomeActivity extends AppCompatActivity {
         BlogAdapter blogAdapter = new BlogAdapter();
         blogRecyclerView.setAdapter(blogAdapter);
 
-        List<Post> loadedPosts = new ArrayList<>();
         MutableLiveData<List<BlogCardModel>> loadedBlogCards = new MutableLiveData<>();
         List<BlogCardModel> blogCardModels = new ArrayList<>();
 
         homeViewModel.getBolgPosts().observe(this, posts -> {
-            if (!posts.isEmpty()) {
-                Toast.makeText(this, "posts received", Toast.LENGTH_SHORT).show();
-                for (Post post : posts) {
-                    Toast.makeText(this, String.valueOf(post.getFeatured_media()), Toast.LENGTH_SHORT).show();
-                    homeViewModel.getBlogMedia(String.valueOf(post.getFeatured_media()))
-                            .observe(HomeActivity.this, media -> {
-                                if (!Objects.isNull(media)) {
-                                    blogCardModels.add(new BlogCardModel(post.getId()
-                                            , post.getTitle().getRendered(), media.getSource_url()));
-                                    loadedBlogCards.setValue(new ArrayList<>(blogCardModels));
-                                }
-                            });
+            try {
+                if (!posts.isEmpty()) {
+                    for (Post post : posts) {
+                        homeViewModel.getBlogMedia(String.valueOf(post.getFeatured_media()))
+                                .observe(HomeActivity.this, media -> {
+                                    if (!Objects.isNull(media)) {
+                                        blogCardModels.add(new BlogCardModel(post.getId()
+                                                , post.getTitle().getRendered(), media.getSource_url()));
+                                        loadedBlogCards.setValue(new ArrayList<>(blogCardModels));
+                                    }
+                                });
+                    }
                 }
-            } else {
-                Toast.makeText(this, "posts not received", Toast.LENGTH_SHORT).show();
+            } catch (NullPointerException e) {
+                Toast.makeText(HomeActivity.this, "Couldn't retrieve blog posts"
+                        , Toast.LENGTH_SHORT).show();
             }
         });
-
-//        loadedPosts.observe(this, changedPosts -> {
-//            for (Post post : changedPosts) {
-//                homeViewModel.getBlogMedia(String.valueOf(post.getFeatured_media()))
-//                        .observe(HomeActivity.this, media -> {
-//                            if (!Objects.isNull(media)) {
-//                                blogCardModels.add(new BlogCardModel(post.getTitle().getRendered()
-//                                        , media.getSource_url()));
-//                                loadedBlogCards.setValue(new ArrayList<>(blogCardModels));
-//                            }
-//                        });
-//            }
-//        });
-        loadedBlogCards.observe(this, blogCardModels1 -> {
-            Toast.makeText(HomeActivity.this, String.valueOf(blogCardModels1.size())
-                    , Toast.LENGTH_SHORT).show();
-            blogAdapter.setBlogCardModels(loadedBlogCards.getValue());
-        });
+        loadedBlogCards.observe(this, blogCardModels1 ->
+                blogAdapter.setBlogCardModels(loadedBlogCards.getValue()));
 
     }
 

@@ -29,17 +29,18 @@ public class PhoneRegisterActivity extends AppCompatActivity {
         EditText phoneEt = findViewById(R.id.et_phone_register);
 
         submitBtn.setOnClickListener(v -> {
-            if (!phoneEt.getText().toString().equals("")
+            if (!phoneEt.getText().toString().trim().equals("")
                     && phoneEt.getText().toString().length() == 11) {
                 String phoneNo = phoneEt.getText().toString();
                 phoneRegisterViewModel.init(phoneNo);
-                phoneRegisterViewModel.postPhone().observe(this, messageResponse -> {
+                phoneRegisterViewModel.postRegisterPhone().observe(this, messageResponse -> {
                     try {
                         String message = messageResponse.getMessage();
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                         if (message.equals("code sent")) {
                             Intent intent = new Intent(this, ConfirmCodeActivity.class);
                             intent.putExtra("phone", phoneNo);
+                            intent.putExtra("scenario", "register");
                             startActivity(intent);
                         }
                     } catch (NullPointerException e) {

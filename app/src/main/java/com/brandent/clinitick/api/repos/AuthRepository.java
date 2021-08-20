@@ -128,4 +128,27 @@ public class AuthRepository {
 
         return authResponse;
     }
+
+    public MutableLiveData<Integer> forgotPass(String phone) {
+        MutableLiveData<Integer> responseCode = new MutableLiveData<>();
+        PhoneRequest phoneRequest = new PhoneRequest(phone);
+
+        authApi.forgotPass(phoneRequest).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    responseCode.setValue(response.code());
+                } else {
+                    responseCode.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                responseCode.setValue(null);
+            }
+        });
+
+        return responseCode;
+    }
 }

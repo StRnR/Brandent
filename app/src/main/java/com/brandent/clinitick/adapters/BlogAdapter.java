@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.brandent.clinitick.R;
 import com.brandent.clinitick.models.BlogCardModel;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,8 +39,11 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogHolder> {
         holder.setIsRecyclable(false);
         holder.textView.setText(current.getTitle());
         if (position != RecyclerView.NO_POSITION && !Objects.isNull(current)) {
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions = requestOptions.transform(new CenterCrop()
+                    , new RoundedCorners(20));
             Glide.with(holder.imageView.getContext()).load(current.getSource_url())
-                    .into(holder.imageView);
+                    .apply(requestOptions).into(holder.imageView);
         } else {
             Glide.with(holder.imageView.getContext()).clear(holder.imageView);
             holder.imageView.setImageDrawable(null);
